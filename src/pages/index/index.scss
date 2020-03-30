@@ -1,0 +1,27 @@
+.index {
+  display: flex;
+  flex-direction: column;
+  padding: 0 48px 0 48px;
+}
+
+.logo {
+  height: 240px;
+  width: 240px;
+  align-self: center;
+}
+
+.group {
+  margin-top: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  margin-top: 48px;
+  background-color: yellow;
+  height: 96px;
+  display: flex;
+  padding: 0 24px 0 24px;
+  align-items: center;
+  border-radius: 12px;
+}

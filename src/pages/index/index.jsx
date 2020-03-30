@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import { View, Image, Input } from "@tarojs/components";
 import "./index.scss";
 
 export default class Index extends Component {
@@ -13,14 +13,17 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
-  config = {
-    navigationBarTitleText: "首页"
-  };
+  config = {};
 
   render() {
     return (
       <View className="index">
-        <Text>Hello Taroooo!</Text>
+        <View className="group">
+          <Image className="logo" src="https://via.placeholder.com/240"/>
+          <View className="input-container">
+            <Input type='text' placeholder='请输入错误信息' />
+          </View>
+        </View>
       </View>
     );
   }
