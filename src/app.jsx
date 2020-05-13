@@ -24,12 +24,13 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/result/result'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '九桥同步智能客服',
+      navigationBarTitleText: '智能客服',
       navigationBarTextStyle: 'black'
     }
   }

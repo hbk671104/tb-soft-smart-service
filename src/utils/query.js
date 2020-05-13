@@ -19,8 +19,7 @@ const query = async (value) => {
   )
 
   // query
-  const reports = await query.find()
-  return reports
+  return await query.find()
 }
 
 export default query
