@@ -26,7 +26,7 @@ export default class Index extends Component {
 
   queryReport = async value => {
     try {
-      Taro.showLoading();
+      Taro.showLoading({title : '查询中...'});
       const reports = await query(value);
       Taro.navigateTo({
         url: `../result/result?data=${JSON.stringify({

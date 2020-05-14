@@ -81,7 +81,7 @@ const ResultItem = ({ query, data, displayQueryFieldOnly, onClick }) => {
         </View>
       }
       {
-        !!error_detail && error_detail.includes(query) && displayQueryFieldOnly &&
+        (!!error_detail && ((error_detail.includes(query) && displayQueryFieldOnly) || !displayQueryFieldOnly)) &&
         <View className="item-container">
           <Text className="title">
             报错代码信息（详细）：
@@ -92,7 +92,7 @@ const ResultItem = ({ query, data, displayQueryFieldOnly, onClick }) => {
         </View>
       }
       {
-        !!ora_error_detail && ora_error_detail.includes(query) && displayQueryFieldOnly &&
+        (!!ora_error_detail && ((ora_error_detail.includes(query) && displayQueryFieldOnly) || !displayQueryFieldOnly)) &&
         <View className="item-container">
           <Text className="title">
             ORA 报错信息（详细）：
@@ -103,7 +103,7 @@ const ResultItem = ({ query, data, displayQueryFieldOnly, onClick }) => {
         </View>
       }
       {
-        !!error_cause_detail && error_cause_detail.includes(query) && displayQueryFieldOnly &&
+       (!!error_cause_detail && ((error_cause_detail.includes(query) && displayQueryFieldOnly) || !displayQueryFieldOnly)) &&
         <View className="item-container">
           <Text className="title">
             故障原因（详细）：
@@ -114,7 +114,7 @@ const ResultItem = ({ query, data, displayQueryFieldOnly, onClick }) => {
         </View>
       }
       {
-        !!solution_detail && solution_detail.includes(query) && displayQueryFieldOnly &&
+        (!!solution_detail && ((solution_detail.includes(query) && displayQueryFieldOnly) || !displayQueryFieldOnly)) &&
         <View className="item-container">
           <Text className="title">
             处理方案（详细）：
