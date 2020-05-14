@@ -127,4 +127,11 @@ const ResultItem = ({ data }) => {
   )
 }
 
+ResultItem.defaultProps = {
+  query: null,
+  data: {
+    client_name: null
+  }
+}
+
 export default ResultItem
