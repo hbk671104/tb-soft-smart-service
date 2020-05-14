@@ -45,7 +45,13 @@ export default class Result extends Component {
         </View>
         {
           result.length > 0 ? 
-          result.map(item => <ResultItem key={item.objectId} query={query} data={item} />) 
+          result.map(item => 
+          <ResultItem 
+            key={item.objectId} 
+            query={query} 
+            data={item} 
+            displayQueryFieldOnly
+          />) 
           : 
           <View>
             <Text>暂无数据</Text>

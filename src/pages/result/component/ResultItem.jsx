@@ -1,7 +1,8 @@
 import { View, Text } from "@tarojs/components"
+import Highlighter from '../../../components/Highlighter'
 import "./ResultItem.scss"
 
-const ResultItem = ({ data }) => {
+const ResultItem = ({ query, data, displayQueryFieldOnly }) => {
   const { 
     client_name,
     serviced_at,
@@ -80,46 +81,46 @@ const ResultItem = ({ data }) => {
         </View>
       }
       {
-        !!error_detail &&
+        !!error_detail && error_detail.includes(query) && displayQueryFieldOnly &&
         <View className="item-container">
           <Text className="title">
             报错代码信息（详细）：
           </Text>
           <View className="content-container">
-            <Text className="content">{error_detail}</Text>
+            <Highlighter custom-class="content" text={error_detail} query={query} />
           </View>
         </View>
       }
       {
-        !!ora_error_detail &&
+        !!ora_error_detail && ora_error_detail.includes(query) && displayQueryFieldOnly &&
         <View className="item-container">
           <Text className="title">
             ORA 报错信息（详细）：
           </Text>
           <View className="content-container">
-            <Text className="content">{ora_error_detail}</Text>
+            <Highlighter custom-class="content" text={ora_error_detail} query={query} />
           </View>
         </View>
       }
       {
-        !!error_cause_detail &&
+        !!error_cause_detail && error_cause_detail.includes(query) && displayQueryFieldOnly &&
         <View className="item-container">
           <Text className="title">
             故障原因（详细）：
           </Text>
           <View className="content-container">
-            <Text className="content">{error_cause_detail}</Text>
+            <Highlighter custom-class="content" text={error_cause_detail} query={query} />
           </View>
         </View>
       }
       {
-        !!solution_detail &&
+        !!solution_detail && solution_detail.includes(query) && displayQueryFieldOnly &&
         <View className="item-container">
           <Text className="title">
             处理方案（详细）：
           </Text>
           <View className="content-container">
-            <Text className="content">{solution_detail}</Text>
+            <Highlighter custom-class="content" text={solution_detail} query={query} />
           </View>
         </View>
       }
@@ -131,7 +132,8 @@ ResultItem.defaultProps = {
   query: null,
   data: {
     client_name: null
-  }
+  },
+  displayQueryFieldOnly: false
 }
 
 export default ResultItem
