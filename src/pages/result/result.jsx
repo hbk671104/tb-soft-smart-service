@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './result.scss'
 
-import ResultItem from './component/result_item'
+import ResultItem from './component/ResultItem'
 
 export default class Result extends Component {
 
@@ -40,7 +40,17 @@ export default class Result extends Component {
 
     return (
       <View className='page result'>
-        {result.map((i, index) => <ResultItem key={`${index}`} data={i} />)}
+        <View className='header'>
+          <Text className='title'>关键词: "{query}"</Text>
+        </View>
+        {
+          result.length > 0 ? 
+          result.map(item => <ResultItem key={item.objectId} data={item} />) 
+          : 
+          <View>
+            <Text>暂无数据</Text>
+          </View>
+        }
       </View>
     )
   }

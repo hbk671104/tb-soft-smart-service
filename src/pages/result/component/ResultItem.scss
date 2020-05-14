@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.item-container {
+  margin-bottom: 12px;
+}
+
+.content-container {
+  margin-top: 12px;
+}
+
+.title {
+  font-size: 28px;
+}
+
+.content {
+  font-size: 28px;
+  color: rgba(0, 0, 0, 0.6);
+}
