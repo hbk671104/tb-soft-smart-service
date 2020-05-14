@@ -32,6 +32,16 @@ export default class Result extends Component {
     navigationBarTitleText: '查询结果'
   }
 
+  handleOnItemClick = item => e => {
+    e.stopPropagation()
+    Taro.navigateTo({
+      url: `./detail?data=${JSON.stringify({
+        query: this.state.query,
+        result: item
+      })}`
+    });
+  }
+
   render () {
     const { query, result } = this.state
     if (!result) {
@@ -46,12 +56,14 @@ export default class Result extends Component {
         {
           result.length > 0 ? 
           result.map(item => 
-          <ResultItem 
-            key={item.objectId} 
-            query={query} 
-            data={item} 
-            displayQueryFieldOnly
-          />) 
+            <ResultItem 
+              key={item.objectId} 
+              query={query} 
+              data={item} 
+              displayQueryFieldOnly
+              onClick={this.handleOnItemClick(item)}
+            />
+          ) 
           : 
           <View>
             <Text>暂无数据</Text>

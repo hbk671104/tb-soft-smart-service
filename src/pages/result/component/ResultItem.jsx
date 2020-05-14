@@ -2,7 +2,7 @@ import { View, Text } from "@tarojs/components"
 import Highlighter from '../../../components/Highlighter'
 import "./ResultItem.scss"
 
-const ResultItem = ({ query, data, displayQueryFieldOnly }) => {
+const ResultItem = ({ query, data, displayQueryFieldOnly, onClick }) => {
   const { 
     client_name,
     serviced_at,
@@ -16,7 +16,7 @@ const ResultItem = ({ query, data, displayQueryFieldOnly }) => {
     software_state
   } = data
   return (
-    <View className="container">
+    <View className="container" onClick={onClick}>
       {
         !!client_name && 
         <View className="item-container">
@@ -133,7 +133,8 @@ ResultItem.defaultProps = {
   data: {
     client_name: null
   },
-  displayQueryFieldOnly: false
+  displayQueryFieldOnly: false,
+  onClick: () => null
 }
 
 export default ResultItem
