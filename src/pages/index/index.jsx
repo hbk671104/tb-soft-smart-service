@@ -61,6 +61,9 @@ export default class Index extends Component {
               onConfirm={this.onConfirm}
             />
           </View>
+          <View className='copyright-container'>
+            <Text className='copyright-text'>© 2020 九桥同步</Text>
+          </View>
         </View>
       </View>
     );

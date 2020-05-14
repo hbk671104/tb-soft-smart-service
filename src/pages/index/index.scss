@@ -31,3 +31,15 @@
 .input {
   flex: 1;
 }
+
+.copyright-container {
+  display: flex;
+  position: absolute;
+  align-self: center;
+  bottom: 196px;
+}
+
+.copyright-text {
+  font-size: 24px;
+  color: rgba($color: #000000, $alpha: 0.6);
+}
