@@ -2,7 +2,7 @@ import { View, Text } from "@tarojs/components"
 import Highlighter from '../../../components/Highlighter'
 import "./ResultItem.scss"
 
-const ResultItem = ({ query, data, onClick }) => {
+const ResultDetail = ({ query, data, onClick }) => {
   const { 
     client_name,
     serviced_at,
@@ -15,7 +15,6 @@ const ResultItem = ({ query, data, onClick }) => {
     solution_detail,
     software_state
   } = data
-  const query_regex = new RegExp(`(${query})`, 'gi')
   return (
     <View className="container" onClick={onClick}>
       {
@@ -82,46 +81,62 @@ const ResultItem = ({ query, data, onClick }) => {
         </View>
       }
       {
-        !!error_detail && query_regex.test(error_detail) &&
+        !!error_detail &&
         <View className="item-container">
           <Text className="title">
             报错代码信息（详细）：
           </Text>
           <View className="content-container">
-            <Highlighter custom-class="content" text={error_detail} query={query} />
+            <Highlighter
+              custom-class="content" 
+              text={error_detail} 
+              query={query} 
+            />
           </View>
         </View>
       }
       {
-        !!ora_error_detail && query_regex.test(ora_error_detail) &&
+        !!ora_error_detail &&
         <View className="item-container">
           <Text className="title">
             ORA 报错信息（详细）：
           </Text>
           <View className="content-container">
-            <Highlighter custom-class="content" text={ora_error_detail} query={query} />
+            <Highlighter
+              custom-class="content" 
+              text={ora_error_detail} 
+              query={query} 
+            />
           </View>
         </View>
       }
       {
-       !!error_cause_detail && query_regex.test(error_cause_detail) &&
+       !!error_cause_detail &&
         <View className="item-container">
           <Text className="title">
             故障原因（详细）：
           </Text>
           <View className="content-container">
-            <Highlighter custom-class="content" text={error_cause_detail} query={query} />
+            <Highlighter
+              custom-class="content" 
+              text={error_cause_detail} 
+              query={query} 
+            />
           </View>
         </View>
       }
       {
-        !!solution_detail && query_regex.test(solution_detail) &&
+        !!solution_detail &&
         <View className="item-container">
           <Text className="title">
             处理方案（详细）：
           </Text>
           <View className="content-container">
-            <Highlighter custom-class="content" text={solution_detail} query={query} />
+            <Highlighter
+              custom-class="content" 
+              text={solution_detail} 
+              query={query} 
+            />
           </View>
         </View>
       }
@@ -129,7 +144,7 @@ const ResultItem = ({ query, data, onClick }) => {
   )
 }
 
-ResultItem.defaultProps = {
+ResultDetail.defaultProps = {
   query: null,
   data: {
     client_name: null
@@ -137,4 +152,4 @@ ResultItem.defaultProps = {
   onClick: () => null
 }
 
-export default ResultItem
+export default ResultDetail

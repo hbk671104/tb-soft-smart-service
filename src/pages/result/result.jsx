@@ -51,7 +51,7 @@ export default class Result extends Component {
     return (
       <View className='page result'>
         <View className='header'>
-          <Text className='title'>关键词: "{query}"</Text>
+          <Text className='query_title'>"{query}"</Text>
         </View>
         {
           result.length > 0 ? 
@@ -59,8 +59,7 @@ export default class Result extends Component {
             <ResultItem 
               key={item.objectId} 
               query={query} 
-              data={item} 
-              displayQueryFieldOnly
+              data={item}
               onClick={this.handleOnItemClick(item)}
             />
           ) 

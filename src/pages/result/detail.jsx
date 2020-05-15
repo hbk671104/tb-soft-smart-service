@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './result.scss'
 
-import ResultItem from './component/ResultItem'
+import ResultDetail from './component/ResultDetail'
 
 export default class Detail extends Component {
 
@@ -40,10 +40,9 @@ export default class Detail extends Component {
 
     return (
       <View className='page result'>
-        <ResultItem
+        <ResultDetail
           query={query} 
-          data={result} 
-          displayQueryFieldOnly={false}
+          data={result}
         />
       </View>
     )
