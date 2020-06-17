@@ -1,26 +1,28 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Icon } from '@tarojs/components'
 import './result.scss'
 
-import query from "../../utils/query"
+import { constructQueryObject } from "../../utils/query"
 import ResultItem from './component/ResultItem'
 
 export default class Result extends Component {
 
   config = {
-    navigationBarTitleText: '查询结果'
+    navigationBarTitleText: '查询结果',
+    onReachBottomDistance: 360
   }
 
   state = {
-    query: null,
-    result: null
+    result: null,
+    total: 0
   }
 
   componentWillMount() { }
 
   componentDidMount() {
     const { query_string } = this.$router.params
-    this.queryReport(query_string)
+    this.queryObject = constructQueryObject(query_string)
+    this.queryReport()
   }
 
   componentWillUnmount() { }
@@ -29,13 +31,35 @@ export default class Result extends Component {
 
   componentDidHide() { }
 
-  queryReport = async value => {
+  onReachBottom() {
+    this.queryMore()
+  }
+
+  queryReport = async () => {
     try {
       Taro.showLoading({ title: '查询中...' })
-      const reports = await query(value)
+      const reports = await this.queryObject.find()
       this.setState({
-        query: value,
-        result: reports.map(i => i.toJSON())
+        result: reports.map(i => i.toJSON()),
+        total: this.queryObject.hits()
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideLoading()
+    }
+  }
+
+  queryMore = async () => {
+    const { total, result } = this.state
+    if (total === result.length) return
+    try {
+      Taro.showLoading({ title: '加载更多...' })
+      const reports = await this.queryObject.find()
+      this.setState(({ result: prevResult }) => {
+        return {
+          result: [...prevResult, ...reports.map(i => i.toJSON())]
+        }
       })
     } catch (error) {
       console.error(error)
@@ -46,13 +70,15 @@ export default class Result extends Component {
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
+    const { query_string } = this.$router.params
     Taro.navigateTo({
-      url: `./detail?query_string=${this.state.query}&data=${JSON.stringify(item)}`
+      url: `./detail?query_string=${query_string}&data=${JSON.stringify(item)}`
     })
   }
 
   render() {
-    const { query, result } = this.state
+    const { query_string } = this.$router.params
+    const { result, total } = this.state
     if (!result) {
       return null
     }
@@ -60,21 +86,38 @@ export default class Result extends Component {
     return (
       <View className='page result'>
         <View className='header'>
-          <Text className='query_title'>"{query}"</Text>
+          <Text className='query_title'>
+            <Text style={'font-weight: bold;'}>"{query_string}"</Text>
+            {' '}共找到{' '}
+            <Text style={'font-weight: bold;text-decoration: underline;'}>{total}</Text>
+            {' '}条记录
+          </Text>
         </View>
         {
           result.length > 0 ?
-            result.map(item =>
-              <ResultItem
-                key={item.objectId}
-                query={query}
-                data={item}
-                onClick={this.handleOnItemClick(item)}
-              />
-            )
+            <View>
+              {
+                result.map(item =>
+                  <ResultItem
+                    key={item.objectId}
+                    query={query_string}
+                    data={item}
+                    onClick={this.handleOnItemClick(item)}
+                  />
+                )
+              }
+              <View className='footer'>
+                <Text className='footer_text'>
+                  {'--------- 我是有底线的 ---------'}
+                </Text>
+              </View>
+            </View>
             :
             <View>
-              <Text>暂无数据</Text>
+              <View className='empty'>
+                <Icon size='60' type='info' color='#ccc' />
+                <Text className='empty_text'>暂无记录</Text>
+              </View>
             </View>
         }
       </View>

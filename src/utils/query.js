@@ -1,10 +1,8 @@
 import AV from "leancloud-storage/dist/av-weapp.js"
 
-const query = async value => {
-  const query = new AV.SearchQuery("ErrorReport")
-  query.queryString(value)
-  query.limit(10)
-  return await query.find()
+export const constructQueryObject = value => {
+    const queryObject = new AV.SearchQuery("ErrorReport")
+    queryObject.queryString(value)
+    queryObject.limit(15)
+    return queryObject
 }
-
-export default query

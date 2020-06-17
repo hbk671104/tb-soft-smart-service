@@ -11,16 +11,14 @@ export default class Detail extends Component {
   }
 
   state = {
-    query: null,
     result: null
   }
 
   componentWillMount() { }
 
   componentDidMount() {
-    const { query_string, data } = this.$router.params
+    const { data } = this.$router.params
     this.setState({
-      query: query_string,
       result: JSON.parse(data)
     })
   }
@@ -32,7 +30,8 @@ export default class Detail extends Component {
   componentDidHide() { }
 
   render() {
-    const { query, result } = this.state
+    const { query_string } = this.$router.params
+    const { result } = this.state
     if (!result) {
       return null
     }
@@ -40,7 +39,7 @@ export default class Detail extends Component {
     return (
       <View className='page result'>
         <ResultDetail
-          query={query}
+          query={query_string}
           data={result}
         />
       </View>
