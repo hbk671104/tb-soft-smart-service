@@ -1,45 +1,29 @@
-import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Text, Icon, Input } from "@tarojs/components";
-import "./index.scss";
-
-import query from "../../utils/query";
+import Taro, { Component } from "@tarojs/taro"
+import { View, Image, Text, Icon, Input } from "@tarojs/components"
+import "./index.scss"
 
 export default class Index extends Component {
+
   config = {
     navigationBarTitleText: "自助查询"
-  };
+  }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onConfirm = ({ detail: { value } }) => {
-    if (!value.trim()) return;
-    this.queryReport(value);
-  };
-
-  queryReport = async value => {
-    try {
-      Taro.showLoading({title : '查询中...'});
-      const reports = await query(value);
-      Taro.navigateTo({
-        url: `../result/result?data=${JSON.stringify({
-          query: value,
-          result: reports
-        })}`
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      Taro.hideLoading();
-    }
-  };
+    if (!value.trim()) return
+    Taro.navigateTo({
+      url: `../result/result?query_string=${value}`
+    })
+  }
 
   render() {
     return (
@@ -66,6 +50,6 @@ export default class Index extends Component {
           </View>
         </View>
       </View>
-    );
+    )
   }
 }

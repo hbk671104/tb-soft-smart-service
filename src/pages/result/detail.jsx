@@ -6,33 +6,32 @@ import ResultDetail from './component/ResultDetail'
 
 export default class Detail extends Component {
 
+  config = {
+    navigationBarTitleText: '查询详情'
+  }
+
   state = {
     query: null,
     result: null
   }
 
-  componentWillMount () { 
-    const { data } = this.$router.params
-    const { query, result } = JSON.parse(data)
+  componentWillMount() { }
+
+  componentDidMount() {
+    const { query_string, data } = this.$router.params
     this.setState({
-      query,
-      result
+      query: query_string,
+      result: JSON.parse(data)
     })
   }
 
-  componentDidMount () { }
+  componentWillUnmount() { }
 
-  componentWillUnmount () { }
+  componentDidShow() { }
 
-  componentDidShow () { }
+  componentDidHide() { }
 
-  componentDidHide () { }
-
-  config = {
-    navigationBarTitleText: '查询详情'
-  }
-
-  render () {
+  render() {
     const { query, result } = this.state
     if (!result) {
       return null
@@ -41,7 +40,7 @@ export default class Detail extends Component {
     return (
       <View className='page result'>
         <ResultDetail
-          query={query} 
+          query={query}
           data={result}
         />
       </View>
