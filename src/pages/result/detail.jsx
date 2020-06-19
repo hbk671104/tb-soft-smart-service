@@ -1,11 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import './result.scss'
 
 import ResultDetail from './component/ResultDetail'
 
 export default class Detail extends Component {
-
   config = {
     navigationBarTitleText: '查询详情'
   }
@@ -38,10 +37,7 @@ export default class Detail extends Component {
 
     return (
       <View className='page result'>
-        <ResultDetail
-          query={query_string}
-          data={result}
-        />
+        <ResultDetail query={query_string} data={result} />
       </View>
     )
   }

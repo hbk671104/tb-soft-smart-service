@@ -1,11 +1,10 @@
-import Taro, { Component } from "@tarojs/taro"
-import { View, Image, Text, Icon, Input } from "@tarojs/components"
-import "./index.scss"
+import Taro, { Component } from '@tarojs/taro'
+import { View, Image, Text, Icon, Input } from '@tarojs/components'
+import './index.scss'
 
 export default class Index extends Component {
-
   config = {
-    navigationBarTitleText: "自助查询"
+    navigationBarTitleText: '自助查询'
   }
 
   componentWillMount() { }
@@ -27,21 +26,21 @@ export default class Index extends Component {
 
   render() {
     return (
-      <View className="page index">
-        <View className="group">
-          <Image className="logo" src="../../assets/logo.png" />
-          <View className="input-container">
+      <View className='page index'>
+        <View className='group'>
+          <Image className='logo' src='../../assets/logo.png' />
+          <View className='input-container'>
             <Icon
-              className="search_icon"
-              size="16"
-              type="search"
-              color="#9AA0A6"
+              className='search_icon'
+              size='16'
+              type='search'
+              color='#9AA0A6'
             />
             <Input
               adjustPosition
-              className="input"
-              placeholder="请输入故障原因 / 处理方案"
-              confirmType="search"
+              className='input'
+              placeholder='请输入故障原因 / 处理方案'
+              confirmType='search'
               onConfirm={this.onConfirm}
             />
           </View>

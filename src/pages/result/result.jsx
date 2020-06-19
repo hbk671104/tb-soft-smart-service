@@ -2,11 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Icon } from '@tarojs/components'
 import './result.scss'
 
-import { constructQueryObject } from "../../utils/query"
+import { constructQueryObject } from '../../utils/query'
 import ResultItem from './component/ResultItem'
 
 export default class Result extends Component {
-
   config = {
     navigationBarTitleText: '查询结果',
     onReachBottomDistance: 360
@@ -87,39 +86,37 @@ export default class Result extends Component {
       <View className='page result'>
         <View className='header'>
           <Text className='query_title'>
-            <Text style={'font-weight: bold;'}>"{query_string}"</Text>
-            {' '}共找到{' '}
-            <Text style={'font-weight: bold;text-decoration: underline;'}>{total}</Text>
-            {' '}条记录
+            <Text style={'font-weight: bold;'}>"{query_string}"</Text> 共找到{' '}
+            <Text style={'font-weight: bold;text-decoration: underline;'}>
+              {total}
+            </Text>{' '}
+            条记录
           </Text>
         </View>
-        {
-          result.length > 0 ?
-            <View>
-              {
-                result.map(item =>
-                  <ResultItem
-                    key={item.objectId}
-                    query={query_string}
-                    data={item}
-                    onClick={this.handleOnItemClick(item)}
-                  />
-                )
-              }
-              <View className='footer'>
-                <Text className='footer_text'>
-                  {'--------- 我是有底线的 ---------'}
-                </Text>
-              </View>
+        {result.length > 0 ? (
+          <View>
+            {result.map(item => (
+              <ResultItem
+                key={item.objectId}
+                query={query_string}
+                data={item}
+                onClick={this.handleOnItemClick(item)}
+              />
+            ))}
+            <View className='footer'>
+              <Text className='footer_text'>
+                {'--------- 我是有底线的 ---------'}
+              </Text>
             </View>
-            :
+          </View>
+        ) : (
             <View>
               <View className='empty'>
                 <Icon size='60' type='info' color='#ccc' />
                 <Text className='empty_text'>暂无记录</Text>
               </View>
             </View>
-        }
+          )}
       </View>
     )
   }
