@@ -1,10 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Text, Icon, Input } from '@tarojs/components'
+import { View, Image, Text, Icon, Input, Button } from '@tarojs/components'
 import './index.scss'
 
 export default class Index extends Component {
   config = {
-    navigationBarTitleText: '自助查询'
+    navigationBarTitleText: '自助查询',
+    disableScroll: true
   }
 
   componentWillMount() { }
@@ -46,6 +47,9 @@ export default class Index extends Component {
           </View>
           <View className='copyright-container'>
             <Text className='copyright-text'>© 2020 九桥同步</Text>
+          </View>
+          <View className='add-container'>
+            <Button className='add-button box-shadow'>添加</Button>
           </View>
         </View>
       </View>
