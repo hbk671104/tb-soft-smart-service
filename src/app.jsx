@@ -15,17 +15,18 @@ class App extends Component {
     init()
   }
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
-  componentDidCatchError() { }
+  componentDidCatchError() {}
 
   config = {
     pages: [
       'pages/index/index',
       'pages/result/result',
-      'pages/result/detail'
+      'pages/result/detail',
+      'pages/dataform/dataform'
     ],
     window: {
       backgroundTextStyle: 'light',

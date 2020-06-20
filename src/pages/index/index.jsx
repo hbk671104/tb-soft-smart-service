@@ -8,20 +8,27 @@ export default class Index extends Component {
     disableScroll: true
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return
     Taro.navigateTo({
       url: `../result/result?query_string=${value}`
+    })
+  }
+
+  onAddPress = e => {
+    e.stopPropagation()
+    Taro.navigateTo({
+      url: '../dataform/dataform'
     })
   }
 
@@ -40,6 +47,7 @@ export default class Index extends Component {
             <Input
               adjustPosition
               className='input'
+              placeholderClass='input-placeholder'
               placeholder='请输入故障原因 / 处理方案'
               confirmType='search'
               onConfirm={this.onConfirm}
@@ -49,8 +57,11 @@ export default class Index extends Component {
             <Text className='copyright-text'>© 2020 九桥同步</Text>
           </View>
           <View className='add-container'>
-            <Button className='add-button'>
-              <Image className='add-image' src={require('../../assets/add.png')} />
+            <Button className='add-button' onClick={this.onAddPress}>
+              <Image
+                className='add-image'
+                src={require('../../assets/add.png')}
+              />
             </Button>
           </View>
         </View>

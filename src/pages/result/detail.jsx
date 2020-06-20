@@ -13,7 +13,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { data } = this.$router.params
@@ -22,11 +22,11 @@ export default class Detail extends Component {
     })
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   render() {
     const { query_string } = this.$router.params

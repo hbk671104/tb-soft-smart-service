@@ -1,0 +1,61 @@
+.data-form {
+  padding: 0 48px 24px 48px;
+}
+
+.item-container {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.item-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.input-container {
+  margin-top: 24px;
+  display: flex;
+  padding: 12px 24px 12px 24px;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid #dfe1e5;
+}
+
+.input-placeholder {
+  color: #9aa0a6;
+}
+
+.radio-container {
+  margin-top: 24px;
+}
+
+.radio {
+  font-size: 28px;
+}
+
+.input {
+  flex: 1;
+  font-size: 28px;
+}
+
+.area-input {
+  flex: 1;
+  font-size: 28px;
+  min-height: 6rem;
+  line-height: 1.2rem;
+}
+
+.submit-button-container {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.submit-button {
+  font-size: 32px;
+  background-color: rgb(186, 44, 40);
+  color: white;
+}
+
+.submit-button-hover {
+  background-color: rgba(186, 44, 40, 0.8);
+}
