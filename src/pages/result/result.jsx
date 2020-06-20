@@ -85,7 +85,7 @@ export default class Result extends Component {
     return (
       <View className='page result'>
         <View className='header'>
-          <Text className='query_title'>
+          <Text className='query-title'>
             <Text style={'font-weight: bold;'}>"{query_string}"</Text> 共找到{' '}
             <Text style={'font-weight: bold;text-decoration: underline;'}>
               {total}
@@ -104,7 +104,7 @@ export default class Result extends Component {
               />
             ))}
             <View className='footer'>
-              <Text className='footer_text'>
+              <Text className='footer-text'>
                 {'--------- 我是有底线的 ---------'}
               </Text>
             </View>
@@ -112,8 +112,8 @@ export default class Result extends Component {
         ) : (
             <View>
               <View className='empty'>
-                <Icon size='60' type='info' color='#ccc' />
-                <Text className='empty_text'>暂无记录</Text>
+                <Image className='empty-image' src={require('../../assets/empty.png')} />
+                <Text className='empty-text'>暂无记录</Text>
               </View>
             </View>
           )}

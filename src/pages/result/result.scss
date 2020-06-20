@@ -6,7 +6,7 @@
   margin: 0 0 24px 0;
 }
 
-.query_title {
+.query-title {
   font-size: 28px;
   color: rgba($color: #000000, $alpha: 0.6);
 }
@@ -18,7 +18,7 @@
   margin-bottom: 36px;
 }
 
-.footer_text {
+.footer-text {
   font-size: 24px;
   color: rgba($color: #000000, $alpha: 0.4);
 }
@@ -27,9 +27,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 120px;
 }
 
-.empty_text {
+.empty-image {
+  width: 60px;
+  height: 60px;
+}
+
+.empty-text {
   font-size: 24px;
   color: rgba($color: #000000, $alpha: 0.4);
   margin-top: 12px;
