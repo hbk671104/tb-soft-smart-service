@@ -29,7 +29,7 @@ export default class Index extends Component {
     return (
       <View className='page index'>
         <View className='group'>
-          <Image className='logo' src='../../assets/logo.png' />
+          <Image className='logo' src={require('../../assets/logo.png')} />
           <View className='input-container'>
             <Icon
               className='search_icon'
@@ -49,7 +49,9 @@ export default class Index extends Component {
             <Text className='copyright-text'>© 2020 九桥同步</Text>
           </View>
           <View className='add-container'>
-            <Button className='add-button box-shadow'>添加</Button>
+            <Button className='add-button'>
+              <Image className='add-image' src={require('../../assets/add.png')} />
+            </Button>
           </View>
         </View>
       </View>
