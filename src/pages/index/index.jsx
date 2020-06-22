@@ -2,21 +2,23 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text, Icon, Input, Button } from '@tarojs/components'
 import './index.scss'
 
+import Floater from '../../components/Floater'
+
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '自助查询',
     disableScroll: true
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return
@@ -56,14 +58,10 @@ export default class Index extends Component {
           <View className='copyright-container'>
             <Text className='copyright-text'>© 2020 九桥同步</Text>
           </View>
-          <View className='add-container'>
-            <Button className='add-button' onClick={this.onAddPress}>
-              <Image
-                className='add-image'
-                src={require('../../assets/add.png')}
-              />
-            </Button>
-          </View>
+          <Floater
+            image={require('../../assets/add.png')}
+            onClick={this.onAddPress}
+          />
         </View>
       </View>
     )

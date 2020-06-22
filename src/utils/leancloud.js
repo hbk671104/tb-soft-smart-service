@@ -17,3 +17,7 @@ export const constructReportObject = form_data => {
   })
   return report
 }
+
+export const constructObjectToDelete = id => {
+  return AV.Object.createWithoutData('ErrorReport', id);
+}
