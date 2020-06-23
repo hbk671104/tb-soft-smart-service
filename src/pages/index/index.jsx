@@ -6,8 +6,7 @@ import Floater from '../../components/Floater'
 
 export default class Index extends Component {
   config = {
-    navigationBarTitleText: '自助查询',
-    disableScroll: true
+    navigationBarTitleText: '自助查询'
   }
 
   componentWillMount() { }

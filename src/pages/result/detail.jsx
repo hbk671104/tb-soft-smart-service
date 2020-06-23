@@ -2,7 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import './result.scss'
 
-import { constructObjectToDelete } from '../../utils/leancloud'
+import {
+  constructObjectToDelete,
+  constructSearchQuery
+} from '../../utils/leancloud'
 import ResultDetail from './component/ResultDetail'
 import Floater from '../../components/Floater'
 
@@ -15,20 +18,33 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
-    const { data } = this.$router.params
-    this.setState({
-      result: JSON.parse(data)
-    })
+    const { id } = this.$router.params
+    this.queryObject = constructSearchQuery()
+    this.queryItem(id)
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
+
+  queryItem = async id => {
+    try {
+      Taro.showLoading({ title: '获取中...' })
+      const report = await this.queryObject.get(id)
+      this.setState({
+        result: report.toJSON()
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideLoading()
+    }
+  }
 
   onDeletePress = e => {
     e.stopPropagation()
@@ -36,7 +52,7 @@ export default class Detail extends Component {
       title: '提示',
       content: '确认删除？',
       confirmText: '删除',
-      confirmColor: 'rgb(186, 44, 40)',
+      confirmColor: '#BA2C28',
       success: ({ confirm }) => {
         if (confirm) {
           const { result } = this.state

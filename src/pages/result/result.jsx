@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Icon } from '@tarojs/components'
 import './result.scss'
 
-import { constructQueryObject } from '../../utils/leancloud'
+import { constructSearchQueryObject } from '../../utils/leancloud'
 import ResultItem from './component/ResultItem'
 
 export default class Result extends Component {
@@ -20,7 +20,7 @@ export default class Result extends Component {
 
   componentDidMount() {
     const { query_string } = this.$router.params
-    this.queryObject = constructQueryObject(query_string)
+    this.queryObject = constructSearchQueryObject(query_string)
     this.queryReport()
   }
 
@@ -71,7 +71,7 @@ export default class Result extends Component {
     e.stopPropagation()
     const { query_string } = this.$router.params
     Taro.navigateTo({
-      url: `./detail?query_string=${query_string}&data=${JSON.stringify(item)}`
+      url: `./detail?query_string=${query_string}&id=${item.objectId}`
     })
   }
 

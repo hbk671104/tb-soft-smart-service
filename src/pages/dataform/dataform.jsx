@@ -21,15 +21,15 @@ export default class DataForm extends Component {
     serviced_at: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '添加记录'
@@ -40,10 +40,12 @@ export default class DataForm extends Component {
   }
 
   onFormSubmit = ({ detail: { value } }) => {
-    if (!value.error_detail
-      && !value.ora_error_detail
-      && !value.error_cause_detail
-      && !value.solution_detail) {
+    if (
+      !value.error_detail &&
+      !value.ora_error_detail &&
+      !value.error_cause_detail &&
+      !value.solution_detail
+    ) {
       Taro.showToast({
         title: '请填写报错信息/解决方案',
         icon: 'none',
@@ -61,11 +63,10 @@ export default class DataForm extends Component {
     const report = constructReportObject(value)
     try {
       Taro.showLoading({ title: '保存中...' })
-      const result = await report.save()
+      let result = await report.save()
+      result = result.toJSON()
       Taro.redirectTo({
-        url: `../result/detail?query_string=''&data=${JSON.stringify(
-          result.toJSON()
-        )}`
+        url: `../result/detail?query_string=''&id=${result.objectId}`
       })
       Taro.showToast({
         title: '保存成功!',

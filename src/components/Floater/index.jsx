@@ -5,10 +5,7 @@ const Floater = ({ image, onClick }) => {
   return (
     <View className='container custom-container'>
       <Button className='button' onClick={onClick}>
-        <Image
-          className='image'
-          src={image}
-        />
+        <Image className='image' src={image} />
       </Button>
     </View>
   )

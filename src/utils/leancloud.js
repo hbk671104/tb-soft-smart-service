@@ -1,6 +1,6 @@
 import AV from 'leancloud-storage/dist/av-weapp.js'
 
-export const constructQueryObject = query_string => {
+export const constructSearchQueryObject = query_string => {
   const queryObject = new AV.SearchQuery('ErrorReport')
   queryObject.queryString(query_string)
   queryObject.limit(15)
@@ -18,6 +18,10 @@ export const constructReportObject = form_data => {
   return report
 }
 
+export const constructSearchQuery = () => {
+  return new AV.Query('ErrorReport')
+}
+
 export const constructObjectToDelete = id => {
-  return AV.Object.createWithoutData('ErrorReport', id);
+  return AV.Object.createWithoutData('ErrorReport', id)
 }
