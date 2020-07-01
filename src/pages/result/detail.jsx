@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +26,11 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryItem = async id => {
     try {
@@ -53,7 +53,7 @@ export default class Detail extends Component {
         title: '提示',
         content: '确认删除？',
         confirmText: '删除',
-        confirmColor: '#BA2C28',
+        confirmColor: '#BA2C28'
       })
       if (confirm) {
         const { result } = this.state

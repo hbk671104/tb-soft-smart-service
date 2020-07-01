@@ -26,15 +26,15 @@ export default class DataForm extends Component {
     upload_files: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '添加记录'
@@ -107,7 +107,9 @@ export default class DataForm extends Component {
     const docs = files.map(({ name, path }) => buildDocument(name, path))
     try {
       Taro.showLoading({ title: '上传中...' })
-      let result = await Promise.all(docs.map(d => d.save({ keepFileName: true })))
+      let result = await Promise.all(
+        docs.map(d => d.save({ keepFileName: true }))
+      )
       result = result.map(r => r.toJSON())
       this.setState(({ upload_files }) => {
         return {
@@ -301,22 +303,31 @@ export default class DataForm extends Component {
             <View className='document-title-container'>
               <Text className='item-title'>相关文档：</Text>
               <View style='display:flex;align-items:center;'>
-                <Button size='mini' onClick={this.onDocChoose}>选择</Button>
+                <Button size='mini' onClick={this.onDocChoose}>
+                  选择
+                </Button>
               </View>
             </View>
-            {
-              !!upload_files && upload_files.length > 0 &&
+            {!!upload_files && upload_files.length > 0 && (
               <View className='document-container'>
                 {upload_files.map((f, i) => (
                   <View key={f.objectId} className='document-item-container'>
                     <Text className='document-item-text'>
-                      {i + 1}. <Text style='color:blue;text-decoration:underline;'>{f.name}</Text>
+                      {i + 1}.{' '}
+                      <Text style='color:blue;text-decoration:underline;'>
+                        {f.name}
+                      </Text>
                     </Text>
-                    <Text className='document-item-delete-text' onClick={this.onDeleteClick(f)}>删除</Text>
+                    <Text
+                      className='document-item-delete-text'
+                      onClick={this.onDeleteClick(f)}
+                    >
+                      删除
+                    </Text>
                   </View>
                 ))}
               </View>
-            }
+            )}
           </View>
           <View className='submit-button-container'>
             <Button
