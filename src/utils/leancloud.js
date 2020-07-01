@@ -25,3 +25,11 @@ export const constructSearchQuery = () => {
 export const constructObjectToDelete = id => {
   return AV.Object.createWithoutData('ErrorReport', id)
 }
+
+export const buildDocument = (name, path) => {
+  return new AV.File(name, { blob: { uri: path } })
+}
+
+export const buildDocumentToDelete = id => {
+  return AV.File.createWithoutData(id)
+}

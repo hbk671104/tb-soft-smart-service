@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +26,11 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   queryItem = async id => {
     try {
@@ -46,21 +46,23 @@ export default class Detail extends Component {
     }
   }
 
-  onDeletePress = e => {
+  onDeletePress = async e => {
     e.stopPropagation()
-    Taro.showModal({
-      title: '提示',
-      content: '确认删除？',
-      confirmText: '删除',
-      confirmColor: '#BA2C28',
-      success: ({ confirm }) => {
-        if (confirm) {
-          const { result } = this.state
-          this.deleteObject = constructObjectToDelete(result.objectId)
-          this.deleteItem()
-        }
+    try {
+      const { confirm } = await Taro.showModal({
+        title: '提示',
+        content: '确认删除？',
+        confirmText: '删除',
+        confirmColor: '#BA2C28',
+      })
+      if (confirm) {
+        const { result } = this.state
+        this.deleteObject = constructObjectToDelete(result.objectId)
+        this.deleteItem()
       }
-    })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   deleteItem = async () => {
@@ -79,6 +81,27 @@ export default class Detail extends Component {
     }
   }
 
+  onDocClick = ({ name, url }) => e => {
+    e.stopPropagation()
+    Taro.showLoading({ title: '正在下载...' })
+    Taro.downloadFile({
+      url: url.replace(/^http/, 'https'),
+      filePath: `${Taro.env.USER_DATA_PATH}/${name}`,
+      success: async ({ filePath }) => {
+        try {
+          await Taro.openDocument({
+            filePath
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      complete: () => {
+        Taro.hideLoading()
+      }
+    })
+  }
+
   render() {
     const { query_string } = this.$router.params
     const { result } = this.state
@@ -88,7 +111,11 @@ export default class Detail extends Component {
 
     return (
       <View className='page result'>
-        <ResultDetail query={query_string} data={result} />
+        <ResultDetail
+          query={query_string}
+          data={result}
+          onDocClick={this.onDocClick}
+        />
         <Floater
           image={require('../../assets/delete.png')}
           onClick={this.onDeletePress}

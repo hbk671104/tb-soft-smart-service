@@ -12,24 +12,29 @@ import {
 } from '@tarojs/components'
 import './dataform.scss'
 
-import { constructReportObject } from '../../utils/leancloud'
+import {
+  constructReportObject,
+  buildDocument,
+  buildDocumentToDelete
+} from '../../utils/leancloud'
 
 const radio_color = 'rgb(186, 44, 40)'
 
 export default class DataForm extends Component {
   state = {
-    serviced_at: null
+    serviced_at: null,
+    upload_files: null
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '添加记录'
@@ -56,6 +61,11 @@ export default class DataForm extends Component {
     if (!value.software_version) {
       value.software_version = '所有版本'
     }
+    // add files
+    const { upload_files } = this.state
+    if (upload_files && upload_files.length > 0) {
+      value.related_files = upload_files
+    }
     this.saveReport(value)
   }
 
@@ -80,8 +90,71 @@ export default class DataForm extends Component {
     }
   }
 
+  onDocChoose = async e => {
+    e.stopPropagation()
+    try {
+      const { tempFiles } = await Taro.chooseMessageFile({
+        count: 5,
+        type: 'file'
+      })
+      this.saveFile(tempFiles)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  saveFile = async files => {
+    const docs = files.map(({ name, path }) => buildDocument(name, path))
+    try {
+      Taro.showLoading({ title: '上传中...' })
+      let result = await Promise.all(docs.map(d => d.save({ keepFileName: true })))
+      result = result.map(r => r.toJSON())
+      this.setState(({ upload_files }) => {
+        return {
+          upload_files: !upload_files ? result : [...upload_files, ...result]
+        }
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideLoading()
+    }
+  }
+
+  onDeleteClick = item => async e => {
+    e.stopPropagation()
+    try {
+      const { confirm } = await Taro.showModal({
+        title: '提示',
+        content: `确认删除「${item.name}」？`,
+        confirmText: '删除',
+        confirmColor: '#BA2C28'
+      })
+      if (confirm) {
+        this.deleteFile(item.objectId)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  deleteFile = async id => {
+    const file = buildDocumentToDelete(id)
+    try {
+      Taro.showLoading({ title: '正在删除...' })
+      await file.destroy()
+      this.setState(({ upload_files }) => ({
+        upload_files: upload_files.filter(f => f.objectId !== id)
+      }))
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideLoading()
+    }
+  }
+
   render() {
-    const { serviced_at } = this.state
+    const { serviced_at, upload_files } = this.state
     return (
       <View className='page data-form'>
         <Form onSubmit={this.onFormSubmit}>
@@ -223,6 +296,27 @@ export default class DataForm extends Component {
                 placeholder='请输入处理方案'
               />
             </View>
+          </View>
+          <View className='item-container'>
+            <View className='document-title-container'>
+              <Text className='item-title'>相关文档：</Text>
+              <View style='display:flex;align-items:center;'>
+                <Button size='mini' onClick={this.onDocChoose}>选择</Button>
+              </View>
+            </View>
+            {
+              !!upload_files && upload_files.length > 0 &&
+              <View className='document-container'>
+                {upload_files.map((f, i) => (
+                  <View key={f.objectId} className='document-item-container'>
+                    <Text className='document-item-text'>
+                      {i + 1}. <Text style='color:blue;text-decoration:underline;'>{f.name}</Text>
+                    </Text>
+                    <Text className='document-item-delete-text' onClick={this.onDeleteClick(f)}>删除</Text>
+                  </View>
+                ))}
+              </View>
+            }
           </View>
           <View className='submit-button-container'>
             <Button

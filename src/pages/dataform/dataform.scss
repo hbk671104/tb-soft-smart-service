@@ -45,6 +45,38 @@
   line-height: 1.2rem;
 }
 
+.document-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.document-container {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.document-item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.document-item-text {
+  flex: 1;
+  font-size: 28px;
+}
+
+.document-item-delete-text {
+  font-size: 28px;
+  color: red;
+  text-decoration: underline;
+  margin-left: 12px;
+}
+
 .submit-button-container {
   margin-top: 24px;
   margin-bottom: 24px;

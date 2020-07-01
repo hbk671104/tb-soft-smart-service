@@ -2,7 +2,7 @@ import { View, Text } from '@tarojs/components'
 import Highlighter from '../../../components/Highlighter'
 import './ResultItem.scss'
 
-const ResultDetail = ({ query, data, onClick }) => {
+const ResultDetail = ({ query, data, onDocClick }) => {
   const {
     client_name,
     serviced_at,
@@ -13,10 +13,11 @@ const ResultDetail = ({ query, data, onClick }) => {
     error_cause_detail,
     software_type,
     solution_detail,
-    software_state
+    software_state,
+    related_files
   } = data
   return (
-    <View className='container' onClick={onClick}>
+    <View className='container'>
       {!!client_name && (
         <View className='item-container'>
           <Text className='title'>
@@ -111,6 +112,20 @@ const ResultDetail = ({ query, data, onClick }) => {
           </View>
         </View>
       )}
+      {!!related_files && related_files.length > 0 &&
+        <View className='item-container'>
+          <Text className='title'>相关文档：</Text>
+          <View className='content-container'>
+            {related_files.map((f, i) => (
+              <View key={f.objectId} className='document-item-container'>
+                <Text className='document-item-text' onClick={onDocClick(f)}>
+                  {i + 1}. <Text style='color:blue;text-decoration:underline;'>{f.name}</Text>
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      }
     </View>
   )
 }
@@ -120,7 +135,7 @@ ResultDetail.defaultProps = {
   data: {
     client_name: null
   },
-  onClick: () => null
+  onDocClick: () => null
 }
 
 export default ResultDetail
