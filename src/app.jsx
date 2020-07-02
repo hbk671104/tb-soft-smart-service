@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
-import Index from './pages/index'
+// import Index from './pages/index'
+import Login from './pages/login'
 import './app.scss'
 
-import init from './utils/init'
+import { initLeancloud } from './utils/init'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -12,17 +13,18 @@ import init from './utils/init'
 
 class App extends Component {
   componentDidMount() {
-    init()
+    initLeancloud()
   }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [
+      'pages/login/login',
       'pages/index/index',
       'pages/result/result',
       'pages/result/detail',
@@ -39,7 +41,7 @@ class App extends Component {
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render() {
-    return <Index />
+    return <Login />
   }
 }
 
