@@ -20,13 +20,16 @@ export default class Login extends Component {
 
   login = async () => {
     try {
+      Taro.showLoading({ title: '登录中...' })
       const { code } = await wechatLogin()
-      console.log(code)
-      Taro.redirectTo({
+      // to-do pass on the code
+      Taro.reLaunch({
         url: '../index/index'
       })
     } catch (error) {
       console.log(error)
+    } finally {
+      Taro.hideLoading()
     }
   }
 
