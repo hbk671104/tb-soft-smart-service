@@ -28,8 +28,29 @@ class App extends Component {
       'pages/index/index',
       'pages/result/result',
       'pages/result/detail',
-      'pages/dataform/dataform'
+      'pages/dataform/dataform',
+      'pages/mine/mine',
     ],
+    tabBar: {
+      color: '#9AA0A6',
+      selectedColor: '#BA2C28',
+      backgroundColor: '#FFFFFF',
+      borderStyle: 'white',
+      list: [
+        {
+          pagePath: 'pages/index/index',
+          text: '首页',
+          iconPath: './assets/tab/home.png',
+          selectedIconPath: './assets/tab/home_selected.png',
+        },
+        {
+          pagePath: 'pages/mine/mine',
+          text: '我的',
+          iconPath: './assets/tab/mine.png',
+          selectedIconPath: './assets/tab/mine_selected.png',
+        }
+      ]
+    },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
