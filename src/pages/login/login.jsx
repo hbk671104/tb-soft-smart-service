@@ -34,13 +34,16 @@ export default class Login extends Component {
     try {
       Taro.showLoading({ title: '登录中...' })
       await smsLogin(number, code)
+      Taro.hideLoading()
       Taro.reLaunch({
         url: '../index/index'
       })
     } catch (error) {
-      console.error('Login', error)
-    } finally {
-      Taro.hideLoading()
+      Taro.showToast({
+        title: error.message,
+        icon: 'none',
+        duration: 1500
+      })
     }
   }
 
@@ -48,17 +51,14 @@ export default class Login extends Component {
     try {
       Taro.showLoading({ title: '获取验证码...' })
       await requestSMSCode(number)
+      Taro.hideLoading()
       this.startCountdown()
     } catch (error) {
-      if (error.code === 213) {
-        Taro.showToast({
-          title: '未授权的手机号',
-          icon: 'none',
-          duration: 3000
-        })
-      }
-    } finally {
-      Taro.hideLoading()
+      Taro.showToast({
+        title: error.message,
+        icon: 'none',
+        duration: 1500
+      })
     }
   }
 
@@ -81,12 +81,22 @@ export default class Login extends Component {
   onPhoneNumberInput = ({ detail }) => {
     this.setState({
       phone_number: detail.value
+    }, () => {
+      const { phone_number } = this.state
+      if (/^1\d{10}/.test(phone_number)) {
+        this.getSMSCode(phone_number)
+      }
     })
   }
 
   onSMSCodeInput = ({ detail }) => {
     this.setState({
       sms_code: detail.value
+    }, () => {
+      const { phone_number, sms_code } = this.state
+      if (/^\d{6}/.test(sms_code)) {
+        this.doLogin(phone_number, sms_code)
+      }
     })
   }
 

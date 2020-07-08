@@ -32,7 +32,8 @@ export const requestSMSCode = async number => {
 
 export const smsLogin = async (number, code) => {
   try {
-    const user = await AV.User.logInWithMobilePhoneSmsCode(number, code)
+    let user = await AV.User.logInWithMobilePhoneSmsCode(number, code)
+    user = await user.associateWithMiniApp()
     return Promise.resolve(user.toJSON())
   } catch (error) {
     return Promise.reject(error)
