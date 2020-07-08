@@ -30,7 +30,7 @@ export default class Login extends Component {
     navigationBarTitleText: '用户登录'
   }
 
-  login = async (number, code) => {
+  doLogin = async (number, code) => {
     try {
       Taro.showLoading({ title: '登录中...' })
       await smsLogin(number, code)
@@ -38,7 +38,7 @@ export default class Login extends Component {
         url: '../index/index'
       })
     } catch (error) {
-      console.error(error)
+      console.error('Login', error)
     } finally {
       Taro.hideLoading()
     }
@@ -50,7 +50,13 @@ export default class Login extends Component {
       await requestSMSCode(number)
       this.startCountdown()
     } catch (error) {
-      console.error(error)
+      if (error.code === 213) {
+        Taro.showToast({
+          title: '未授权的手机号',
+          icon: 'none',
+          duration: 3000
+        })
+      }
     } finally {
       Taro.hideLoading()
     }
@@ -91,7 +97,7 @@ export default class Login extends Component {
 
   onLoginClick = e => {
     e.stopPropagation()
-    this.login(this.state.phone_number, this.state.sms_code)
+    this.doLogin(this.state.phone_number, this.state.sms_code)
   }
 
   render() {
