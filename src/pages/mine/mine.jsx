@@ -8,7 +8,9 @@ export default class Mine extends Component {
 
   componentWillMount() { }
 
-  componentDidMount() { }
+  componentDidMount() {
+    // this.fetchUserInfo()
+  }
 
   componentWillUnmount() { }
 
@@ -18,6 +20,22 @@ export default class Mine extends Component {
 
   config = {
     navigationBarTitleText: '我的'
+  }
+
+  fetchUserInfo = async () => {
+    try {
+      const { authSetting } = await Taro.getSetting()
+      if (authSetting['scope.userInfo']) {
+        const info = await Taro.getUserInfo()
+      } else {
+        const result = await Taro.authorize({
+          scope: 'scope.userInfo'
+        })
+        console.log('Auth Result', result)
+      }
+    } catch (error) {
+      console.error('Fetch UserInfo', error)
+    }
   }
 
   doLogout = async () => {

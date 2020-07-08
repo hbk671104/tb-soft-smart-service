@@ -82,10 +82,11 @@ export default class Login extends Component {
     this.setState({
       phone_number: detail.value
     }, () => {
-      const { phone_number } = this.state
-      if (/^1\d{10}/.test(phone_number)) {
-        this.getSMSCode(phone_number)
-      }
+      // TODO: bring it back later
+      // const { phone_number } = this.state
+      // if (/^1\d{10}/.test(phone_number)) {
+      //   this.getSMSCode(phone_number)
+      // }
     })
   }
 
