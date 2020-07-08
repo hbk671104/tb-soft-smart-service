@@ -38,3 +38,16 @@ export const smsLogin = async (number, code) => {
     return Promise.reject(error)
   }
 }
+
+export const getCurrentUser = () => {
+  return AV.User.current()
+}
+
+export const logout = async () => {
+  try {
+    const res = await AV.User.logOut()
+    return Promise.resolve(res)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}

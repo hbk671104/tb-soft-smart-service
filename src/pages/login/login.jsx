@@ -20,18 +20,23 @@ export default class Login extends Component {
 
   componentWillUnmount() { }
 
-  componentDidShow() { }
+  componentDidShow() {
+    Taro.hideHomeButton()
+  }
 
   componentDidHide() { }
+
+  config = {
+    navigationBarTitleText: '用户登录'
+  }
 
   login = async (number, code) => {
     try {
       Taro.showLoading({ title: '登录中...' })
-      const res = await smsLogin(number, code)
-      console.log('user', res)
-      // Taro.reLaunch({
-      //   url: '../index/index'
-      // })
+      await smsLogin(number, code)
+      Taro.reLaunch({
+        url: '../index/index'
+      })
     } catch (error) {
       console.error(error)
     } finally {
