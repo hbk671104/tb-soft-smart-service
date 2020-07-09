@@ -19,7 +19,9 @@ export default class Mine extends Component {
   componentDidHide() { }
 
   config = {
-    navigationBarTitleText: '我的'
+    navigationBarTitleText: '我的',
+    navigationBarBackgroundColor: '#BA2C28',
+    navigationBarTextStyle: 'white'
   }
 
   fetchUserInfo = async () => {
@@ -59,9 +61,11 @@ export default class Mine extends Component {
 
   render() {
     return (
-      <View className='mine'>
+      <View className='page mine'>
         <Text>我的页面这，还是得听我的</Text>
-        <Button onClick={this.onLogoutClick}>退出登录</Button>
+        <View>
+          <Button onClick={this.onLogoutClick}>退出登录</Button>
+        </View>
       </View>
     )
   }
