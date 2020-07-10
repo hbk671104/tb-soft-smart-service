@@ -2,14 +2,15 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
 import './mine.scss'
 
-import { logout } from '../../utils/login'
+import { getCurrentUser, logout } from '../../utils/login'
 
 export default class Mine extends Component {
 
   componentWillMount() { }
 
   componentDidMount() {
-    // this.fetchUserInfo()
+    this.currentUser = getCurrentUser().toJSON()
+    console.log(this.currentUser)
   }
 
   componentWillUnmount() { }
@@ -22,22 +23,6 @@ export default class Mine extends Component {
     navigationBarTitleText: '我的',
     navigationBarBackgroundColor: '#BA2C28',
     navigationBarTextStyle: 'white'
-  }
-
-  fetchUserInfo = async () => {
-    try {
-      const { authSetting } = await Taro.getSetting()
-      if (authSetting['scope.userInfo']) {
-        const info = await Taro.getUserInfo()
-      } else {
-        const result = await Taro.authorize({
-          scope: 'scope.userInfo'
-        })
-        console.log('Auth Result', result)
-      }
-    } catch (error) {
-      console.error('Fetch UserInfo', error)
-    }
   }
 
   doLogout = async () => {

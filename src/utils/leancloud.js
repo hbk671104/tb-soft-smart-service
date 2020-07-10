@@ -1,4 +1,5 @@
 import AV from 'leancloud-storage/dist/av-weapp.js'
+import { avObjectMultiSet } from './util'
 
 export const constructSearchQueryObject = query_string => {
   const queryObject = new AV.SearchQuery('ErrorReport')
@@ -9,13 +10,7 @@ export const constructSearchQueryObject = query_string => {
 
 export const constructReportObject = form_data => {
   const report = new AV.Object('ErrorReport')
-  Object.keys(form_data).forEach(k => {
-    const value = form_data[k]
-    if (value) {
-      report.set(k, value)
-    }
-  })
-  return report
+  return avObjectMultiSet(form_data)(report)
 }
 
 export const constructSearchQuery = () => {

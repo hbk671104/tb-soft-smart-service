@@ -30,10 +30,10 @@ export default class Login extends Component {
     navigationBarTitleText: '用户登录'
   }
 
-  doLogin = async (number, code) => {
+  doLogin = async (number, code, misc) => {
     try {
       Taro.showLoading({ title: '登录中...' })
-      await smsLogin(number, code)
+      await smsLogin(number, code, misc)
       Taro.hideLoading()
       Taro.reLaunch({
         url: '../index/index'
@@ -94,10 +94,10 @@ export default class Login extends Component {
     this.setState({
       sms_code: detail.value
     }, () => {
-      const { phone_number, sms_code } = this.state
-      if (/^\d{6}/.test(sms_code)) {
-        this.doLogin(phone_number, sms_code)
-      }
+      // const { phone_number, sms_code } = this.state
+      // if (/^\d{6}/.test(sms_code)) {
+      //   this.doLogin(phone_number, sms_code)
+      // }
     })
   }
 
@@ -108,7 +108,19 @@ export default class Login extends Component {
 
   onLoginClick = e => {
     e.stopPropagation()
-    this.doLogin(this.state.phone_number, this.state.sms_code)
+    const { phone_number, sms_code } = this.state
+    this.doLogin(phone_number, sms_code)
+  }
+
+  onGetUserInfo = ({ detail }) => {
+    const { userInfo } = detail
+    const { phone_number, sms_code } = this.state
+    let misc = {}
+    if (userInfo) {
+      const { nickName, avatarUrl } = userInfo
+      misc = { nickName, avatarUrl }
+    }
+    this.doLogin(phone_number, sms_code, misc)
   }
 
   render() {
@@ -154,7 +166,9 @@ export default class Login extends Component {
           <Button
             className='login-button'
             hoverClass='login-button-hover'
-            onClick={this.onLoginClick}
+            openType='getUserInfo'
+            onGetUserInfo={this.onGetUserInfo}
+          // onClick={this.onLoginClick}
           >
             登录
           </Button>

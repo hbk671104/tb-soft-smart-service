@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import AV from 'leancloud-storage/dist/av-weapp.js'
 import { WEAPP_ID, WEAPP_KEY } from './constant'
+import { avObjectMultiSet } from './util'
 
 export const wechatLogin = async () => {
   try {
@@ -30,10 +31,11 @@ export const requestSMSCode = async number => {
   }
 }
 
-export const smsLogin = async (number, code) => {
+export const smsLogin = async (number, code, misc = {}) => {
   try {
     let user = await AV.User.logInWithMobilePhoneSmsCode(number, code)
-    user = await user.associateWithMiniApp()
+    // user = await user.associateWithMiniApp()
+    user = await (avObjectMultiSet(misc)(user)).save()
     return Promise.resolve(user.toJSON())
   } catch (error) {
     return Promise.reject(error)
