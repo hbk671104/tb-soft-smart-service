@@ -128,7 +128,7 @@ export default class DataForm extends Component {
     try {
       const { confirm } = await Taro.showModal({
         title: '提示',
-        content: `确认删除「${item.name}」？`,
+        content: `确认删除「${item.name}」吗？`,
         confirmText: '删除',
         confirmColor: '#BA2C28'
       })

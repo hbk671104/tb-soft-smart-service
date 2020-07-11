@@ -1,3 +1,56 @@
 .mine {
-  padding: 0 48px 0 48px;
+  height: 100vh;
+  .header {
+    height: 240px;
+    background-color: #ba2c28;
+    padding: 0 48px 0 48px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .avatar_wrapper {
+      height: 156px;
+      width: 156px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      border-radius: 78px;
+      box-sizing: border-box;
+      .avatar {
+        height: 144px;
+        width: 144px;
+        border-radius: 72px;
+        box-sizing: border-box;
+      }
+    }
+    .user_info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      margin-left: 42px;
+      .nick_name {
+        font-size: 40px;
+        color: white;
+        font-weight: bold;
+      }
+      .phone_number {
+        font-size: 32px;
+        color: white;
+        margin-top: 6px;
+      }
+    }
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 48px 0 48px;
+    flex: 1;
+    .main {
+      flex: 1;
+    }
+    .button {
+      margin-bottom: 24px;
+    }
+  }
 }

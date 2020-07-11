@@ -7,24 +7,23 @@ import { requestSMSCode, smsLogin } from '../../utils/login'
 const COUNTDOWN_LENGTH = 30
 
 export default class Login extends Component {
-
   state = {
     phone_number: null,
     sms_code: null,
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -79,26 +78,32 @@ export default class Login extends Component {
   }
 
   onPhoneNumberInput = ({ detail }) => {
-    this.setState({
-      phone_number: detail.value
-    }, () => {
-      // TODO: bring it back later
-      // const { phone_number } = this.state
-      // if (/^1\d{10}/.test(phone_number)) {
-      //   this.getSMSCode(phone_number)
-      // }
-    })
+    this.setState(
+      {
+        phone_number: detail.value
+      },
+      () => {
+        // TODO: bring it back later
+        // const { phone_number } = this.state
+        // if (/^1\d{10}/.test(phone_number)) {
+        //   this.getSMSCode(phone_number)
+        // }
+      }
+    )
   }
 
   onSMSCodeInput = ({ detail }) => {
-    this.setState({
-      sms_code: detail.value
-    }, () => {
-      // const { phone_number, sms_code } = this.state
-      // if (/^\d{6}/.test(sms_code)) {
-      //   this.doLogin(phone_number, sms_code)
-      // }
-    })
+    this.setState(
+      {
+        sms_code: detail.value
+      },
+      () => {
+        // const { phone_number, sms_code } = this.state
+        // if (/^\d{6}/.test(sms_code)) {
+        //   this.doLogin(phone_number, sms_code)
+        // }
+      }
+    )
   }
 
   onSMSRequestClick = e => {
@@ -156,7 +161,9 @@ export default class Login extends Component {
               </View>
               <View className='sms-button-container'>
                 <Button className='sms-button' onClick={this.onSMSRequestClick}>
-                  {countdown === COUNTDOWN_LENGTH ? '发送验证码' : `${countdown}秒后重试`}
+                  {countdown === COUNTDOWN_LENGTH
+                    ? '发送验证码'
+                    : `${countdown}秒后重试`}
                 </Button>
               </View>
             </View>
@@ -168,7 +175,7 @@ export default class Login extends Component {
             hoverClass='login-button-hover'
             openType='getUserInfo'
             onGetUserInfo={this.onGetUserInfo}
-          // onClick={this.onLoginClick}
+            // onClick={this.onLoginClick}
           >
             登录
           </Button>

@@ -9,13 +9,13 @@ import './app.scss'
 // }
 
 class App extends Component {
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
-  componentDidCatchError() { }
+  componentDidCatchError() {}
 
   config = {
     pages: [
@@ -25,7 +25,7 @@ class App extends Component {
       'pages/result/result',
       'pages/result/detail',
       'pages/dataform/dataform',
-      'pages/mine/mine',
+      'pages/mine/mine'
     ],
     tabBar: {
       color: '#9AA0A6',
@@ -37,13 +37,13 @@ class App extends Component {
           pagePath: 'pages/index/index',
           text: '首页',
           iconPath: './assets/tab/home.png',
-          selectedIconPath: './assets/tab/home_selected.png',
+          selectedIconPath: './assets/tab/home_selected.png'
         },
         {
           pagePath: 'pages/mine/mine',
           text: '我的',
           iconPath: './assets/tab/mine.png',
-          selectedIconPath: './assets/tab/mine_selected.png',
+          selectedIconPath: './assets/tab/mine_selected.png'
         }
       ]
     },

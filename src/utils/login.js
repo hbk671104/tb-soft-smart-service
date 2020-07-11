@@ -34,15 +34,27 @@ export const requestSMSCode = async number => {
 export const smsLogin = async (number, code, misc = {}) => {
   try {
     let user = await AV.User.logInWithMobilePhoneSmsCode(number, code)
-    // user = await user.associateWithMiniApp()
-    user = await (avObjectMultiSet(misc)(user)).save()
+    user = avObjectMultiSet(misc)(user)
+    user = await user.save()
     return Promise.resolve(user.toJSON())
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
-export const getCurrentUser = () => {
+export const getCurrentUser = async () => {
+  let user = AV.User.current()
+  try {
+    let roles = await user.getRoles()
+    user = user.toJSON()
+    user.roles = roles.map(r => r.getName())
+    return Promise.resolve(user)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const isLoggedIn = () => {
   return AV.User.current()
 }
 

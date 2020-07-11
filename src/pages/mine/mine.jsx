@@ -1,23 +1,28 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Button } from '@tarojs/components'
+import { View, Text, Button, ScrollView } from '@tarojs/components'
 import './mine.scss'
 
+import Floater from '../../components/Floater'
 import { getCurrentUser, logout } from '../../utils/login'
 
 export default class Mine extends Component {
-
-  componentWillMount() { }
-
-  componentDidMount() {
-    this.currentUser = getCurrentUser().toJSON()
-    console.log(this.currentUser)
+  state = {
+    currentUser: null
   }
 
-  componentWillUnmount() { }
+  componentWillMount() {}
 
-  componentDidShow() { }
+  async componentDidMount() {
+    this.setState({
+      currentUser: await getCurrentUser()
+    })
+  }
 
-  componentDidHide() { }
+  componentWillUnmount() {}
+
+  componentDidShow() {}
+
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '我的',
@@ -41,16 +46,45 @@ export default class Mine extends Component {
 
   onLogoutClick = e => {
     e.stopPropagation()
-    this.doLogout()
+    Taro.showModal({
+      title: '提示',
+      content: '确定要退出登录吗？',
+      confirmColor: '#BA2C28',
+      confirmText: '退出登录',
+      success: res => {
+        if (res.confirm) {
+          this.doLogout()
+        }
+      }
+    })
   }
 
   render() {
+    const { currentUser } = this.state
+    if (!currentUser) {
+      return null
+    }
+    const { nickName, avatarUrl, mobilePhoneNumber } = currentUser
     return (
       <View className='page mine'>
-        <Text>我的页面这，还是得听我的</Text>
-        <View>
-          <Button onClick={this.onLogoutClick}>退出登录</Button>
+        <View className='header'>
+          <View className='avatar_wrapper'>
+            <Image className='avatar' src={avatarUrl} />
+          </View>
+          <View className='user_info'>
+            <Text className='nick_name'>{nickName}</Text>
+            <Text className='phone_number'>{mobilePhoneNumber}</Text>
+          </View>
         </View>
+        <View className='content'>
+          <View className='main'>
+            <Text>内容在这里</Text>
+          </View>
+        </View>
+        <Floater
+          image={require('../../assets/logout.png')}
+          onClick={this.onLogoutClick}
+        />
       </View>
     )
   }
