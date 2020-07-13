@@ -8,6 +8,7 @@ import {
 } from '../../utils/leancloud'
 import ResultDetail from './component/ResultDetail'
 import Floater from '../../components/Floater'
+import { getCurrentUser } from '../../utils/login'
 
 export default class Detail extends Component {
   config = {
@@ -15,10 +16,11 @@ export default class Detail extends Component {
   }
 
   state = {
-    result: null
+    result: null,
+    currentUser: null
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,18 +28,19 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   queryItem = async id => {
     try {
       Taro.showLoading({ title: '获取中...' })
       const report = await this.queryObject.get(id)
       this.setState({
-        result: report.toJSON()
+        result: report.toJSON(),
+        currentUser: await getCurrentUser()
       })
     } catch (error) {
       console.error(error)
@@ -104,11 +107,12 @@ export default class Detail extends Component {
 
   render() {
     const { query_string } = this.$router.params
-    const { result } = this.state
+    const { result, currentUser } = this.state
     if (!result) {
       return null
     }
 
+    const { roles } = currentUser
     return (
       <View className='page result'>
         <ResultDetail
@@ -116,10 +120,13 @@ export default class Detail extends Component {
           data={result}
           onDocClick={this.onDocClick}
         />
-        <Floater
-          image={require('../../assets/delete.png')}
-          onClick={this.onDeletePress}
-        />
+        {
+          roles.includes('technician') &&
+          <Floater
+            image={require('../../assets/delete.png')}
+            onClick={this.onDeletePress}
+          />
+        }
       </View>
     )
   }
