@@ -2,6 +2,9 @@ import Taro, { Component } from '@tarojs/taro'
 import Launcher from './pages/launcher'
 import './app.scss'
 
+// init
+import './utils/init'
+
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -9,13 +12,13 @@ import './app.scss'
 // }
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [

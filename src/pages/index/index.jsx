@@ -3,23 +3,26 @@ import { View, Image, Text, Icon, Input, Button } from '@tarojs/components'
 import './index.scss'
 
 import Floater from '../../components/Floater'
+import { getCurrentUser } from '../../utils/login'
 
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '自助查询'
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    this.currentUser = getCurrentUser()
+  }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return
@@ -36,6 +39,8 @@ export default class Index extends Component {
   }
 
   render() {
+    if (!this.currentUser) return null
+    const { roles } = this.currentUser
     return (
       <View className='page index'>
         <View className='group'>
@@ -56,13 +61,13 @@ export default class Index extends Component {
               onConfirm={this.onConfirm}
             />
           </View>
-          {/* <View className='copyright-container'>
-            <Text className='copyright-text'>© 2020 九桥同步</Text>
-          </View> */}
-          <Floater
-            image={require('../../assets/add.png')}
-            onClick={this.onAddPress}
-          />
+          {
+            roles.includes('technician') &&
+            <Floater
+              image={require('../../assets/add.png')}
+              onClick={this.onAddPress}
+            />
+          }
         </View>
       </View>
     )

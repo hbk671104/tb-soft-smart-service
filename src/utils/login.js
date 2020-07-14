@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 import AV from 'leancloud-storage/dist/av-weapp.js'
 import { WEAPP_ID, WEAPP_KEY } from './constant'
 import { avObjectMultiSet } from './util'
+import { set as setGlobalData, get as getGlobalData } from './global'
 
 export const wechatLogin = async () => {
   try {
@@ -42,7 +43,15 @@ export const smsLogin = async (number, code, misc = {}) => {
   }
 }
 
-export const getCurrentUser = async () => {
+export const setCurrentUser = user => {
+  setGlobalData('currentUser', user)
+}
+
+export const getCurrentUser = () => {
+  return getGlobalData('currentUser')
+}
+
+export const initCurrentUser = async () => {
   let user = AV.User.current()
   try {
     let roles = await user.getRoles()

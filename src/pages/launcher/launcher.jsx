@@ -1,28 +1,36 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './launcher.scss'
-
-import { initLeanCloud } from '../../utils/init'
-import { isLoggedIn } from '../../utils/login'
+import {
+  isLoggedIn,
+  setCurrentUser,
+  initCurrentUser
+} from '../../utils/login'
 
 export default class Launcher extends Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {
-    initLeanCloud()
-
+  async componentDidMount() {
     // check login status
     const loggedIn = isLoggedIn()
-    Taro.reLaunch({
-      url: loggedIn ? '../index/index' : '../login/login'
-    })
+    if (loggedIn) {
+      const user = await initCurrentUser()
+      setCurrentUser(user)
+      Taro.reLaunch({
+        url: '../index/index'
+      })
+    } else {
+      Taro.reLaunch({
+        url: '../login/login'
+      })
+    }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   render() {
     return (

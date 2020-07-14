@@ -8,3 +8,5 @@ export const initLeanCloud = () => {
     serverURLs: 'https://ocwjrild.lc-cn-n1-shared.com'
   })
 }
+
+initLeanCloud()

@@ -8,7 +8,6 @@ import {
 } from '../../utils/leancloud'
 import ResultDetail from './component/ResultDetail'
 import Floater from '../../components/Floater'
-import { getCurrentUser } from '../../utils/login'
 
 export default class Detail extends Component {
   config = {
@@ -16,8 +15,7 @@ export default class Detail extends Component {
   }
 
   state = {
-    result: null,
-    currentUser: null
+    result: null
   }
 
   componentWillMount() { }
@@ -40,7 +38,6 @@ export default class Detail extends Component {
       const report = await this.queryObject.get(id)
       this.setState({
         result: report.toJSON(),
-        currentUser: await getCurrentUser()
       })
     } catch (error) {
       console.error(error)
@@ -107,12 +104,11 @@ export default class Detail extends Component {
 
   render() {
     const { query_string } = this.$router.params
-    const { result, currentUser } = this.state
+    const { result } = this.state
     if (!result) {
       return null
     }
 
-    const { roles } = currentUser
     return (
       <View className='page result'>
         <ResultDetail
@@ -120,13 +116,10 @@ export default class Detail extends Component {
           data={result}
           onDocClick={this.onDocClick}
         />
-        {
-          roles.includes('technician') &&
-          <Floater
-            image={require('../../assets/delete.png')}
-            onClick={this.onDeletePress}
-          />
-        }
+        {/* <Floater
+          image={require('../../assets/delete.png')}
+          onClick={this.onDeletePress}
+        /> */}
       </View>
     )
   }
