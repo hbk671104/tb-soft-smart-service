@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,18 +26,18 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryItem = async id => {
     try {
       Taro.showLoading({ title: '获取中...' })
       const report = await this.queryObject.get(id)
       this.setState({
-        result: report.toJSON(),
+        result: report.toJSON()
       })
     } catch (error) {
       console.error(error)

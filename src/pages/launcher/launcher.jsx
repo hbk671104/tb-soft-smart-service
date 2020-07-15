@@ -1,14 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './launcher.scss'
-import {
-  isLoggedIn,
-  setCurrentUser,
-  initCurrentUser
-} from '../../utils/login'
+import { isLoggedIn, setCurrentUser, initCurrentUser } from '../../utils/login'
 
 export default class Launcher extends Component {
-  componentWillMount() { }
+  componentWillMount() {}
 
   async componentDidMount() {
     // check login status
@@ -26,11 +22,11 @@ export default class Launcher extends Component {
     }
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   render() {
     return (

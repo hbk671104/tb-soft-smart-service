@@ -14,15 +14,15 @@ export default class Index extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return
@@ -61,13 +61,12 @@ export default class Index extends Component {
               onConfirm={this.onConfirm}
             />
           </View>
-          {
-            roles.includes('technician') &&
+          {roles.includes('technician') && (
             <Floater
               image={require('../../assets/add.png')}
               onClick={this.onAddPress}
             />
-          }
+          )}
         </View>
       </View>
     )
