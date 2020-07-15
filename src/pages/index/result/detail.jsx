@@ -5,9 +5,9 @@ import './result.scss'
 import {
   constructObjectToDelete,
   constructSearchQuery
-} from '../../utils/leancloud'
+} from '../../../utils/leancloud'
 import ResultDetail from './component/ResultDetail'
-import Floater from '../../components/Floater'
+import Floater from '../../../components/Floater'
 
 export default class Detail extends Component {
   config = {
@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +26,11 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   queryItem = async id => {
     try {

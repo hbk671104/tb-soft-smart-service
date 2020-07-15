@@ -12,23 +12,24 @@ import './utils/init'
 // }
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [
       'pages/launcher/launcher',
       'pages/login/login',
       'pages/index/index',
-      'pages/result/result',
-      'pages/result/detail',
+      'pages/index/result/result',
+      'pages/index/result/detail',
       'pages/dataform/dataform',
-      'pages/mine/mine'
+      'pages/mine/mine',
+      'pages/mine/entry/entry'
     ],
     tabBar: {
       color: '#9AA0A6',

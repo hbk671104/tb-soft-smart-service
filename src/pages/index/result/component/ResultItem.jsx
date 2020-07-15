@@ -1,8 +1,8 @@
 import { View, Text } from '@tarojs/components'
-import Highlighter from '../../../components/Highlighter'
+import Highlighter from '../../../../components/Highlighter'
 import './ResultItem.scss'
 
-const ResultDetail = ({ query, data, onDocClick }) => {
+const ResultItem = ({ query, data, onClick }) => {
   const {
     client_name,
     serviced_at,
@@ -13,11 +13,11 @@ const ResultDetail = ({ query, data, onDocClick }) => {
     error_cause_detail,
     software_type,
     solution_detail,
-    software_state,
-    related_files
+    software_state
   } = data
+  const query_regex = new RegExp(`(${query})`, 'gi')
   return (
-    <View className='container'>
+    <View className='container' onClick={onClick}>
       {!!client_name && (
         <View className='item-container'>
           <Text className='title'>
@@ -64,7 +64,7 @@ const ResultDetail = ({ query, data, onDocClick }) => {
           </Text>
         </View>
       )}
-      {!!error_detail && (
+      {!!error_detail && query_regex.test(error_detail) && (
         <View className='item-container'>
           <Text className='title'>报错代码信息（详细）：</Text>
           <View className='content-container'>
@@ -76,7 +76,7 @@ const ResultDetail = ({ query, data, onDocClick }) => {
           </View>
         </View>
       )}
-      {!!ora_error_detail && (
+      {!!ora_error_detail && query_regex.test(ora_error_detail) && (
         <View className='item-container'>
           <Text className='title'>ORA 报错信息（详细）：</Text>
           <View className='content-container'>
@@ -88,7 +88,7 @@ const ResultDetail = ({ query, data, onDocClick }) => {
           </View>
         </View>
       )}
-      {!!error_cause_detail && (
+      {!!error_cause_detail && query_regex.test(error_cause_detail) && (
         <View className='item-container'>
           <Text className='title'>故障原因（详细）：</Text>
           <View className='content-container'>
@@ -100,7 +100,7 @@ const ResultDetail = ({ query, data, onDocClick }) => {
           </View>
         </View>
       )}
-      {!!solution_detail && (
+      {!!solution_detail && query_regex.test(solution_detail) && (
         <View className='item-container'>
           <Text className='title'>处理方案（详细）：</Text>
           <View className='content-container'>
@@ -112,33 +112,16 @@ const ResultDetail = ({ query, data, onDocClick }) => {
           </View>
         </View>
       )}
-      {!!related_files && related_files.length > 0 && (
-        <View className='item-container'>
-          <Text className='title'>相关文档：</Text>
-          <View className='content-container'>
-            {related_files.map((f, i) => (
-              <View key={f.objectId} className='document-item-container'>
-                <Text className='document-item-text' onClick={onDocClick(f)}>
-                  {i + 1}.{' '}
-                  <Text style='color:blue;text-decoration:underline;'>
-                    {f.name}
-                  </Text>
-                </Text>
-              </View>
-            ))}
-          </View>
-        </View>
-      )}
     </View>
   )
 }
 
-ResultDetail.defaultProps = {
+ResultItem.defaultProps = {
   query: null,
   data: {
     client_name: null
   },
-  onDocClick: () => null
+  onClick: () => null
 }
 
-export default ResultDetail
+export default ResultItem

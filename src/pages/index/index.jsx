@@ -14,20 +14,20 @@ export default class Index extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return
     Taro.navigateTo({
-      url: `../result/result?query_string=${value}`
+      url: `./result/result?query_string=${value}`
     })
   }
 
