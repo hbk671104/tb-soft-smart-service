@@ -31,13 +31,13 @@ export default class DataForm extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '添加记录'
@@ -82,7 +82,7 @@ export default class DataForm extends Component {
       let result = await report.save()
       result = result.toJSON()
       Taro.redirectTo({
-        url: `../result/detail?query_string=''&id=${result.objectId}`
+        url: `../result/detail?id=${result.objectId}`
       })
       Taro.showToast({
         title: '保存成功!',

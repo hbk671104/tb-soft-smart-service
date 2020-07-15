@@ -6,12 +6,12 @@ import {
   constructObjectToDelete,
   constructSearchQuery
 } from '../../../utils/leancloud'
-import ResultDetail from './component/ResultDetail'
+import ResultDetail from '../../../components/ResultItem/detail'
 import Floater from '../../../components/Floater'
 
 export default class Detail extends Component {
   config = {
-    navigationBarTitleText: '查询详情'
+    navigationBarTitleText: '报告详情'
   }
 
   state = {
@@ -112,7 +112,7 @@ export default class Detail extends Component {
     return (
       <View className='page result'>
         <ResultDetail
-          query={query_string}
+          {...!!query_string ? { query: query_string } : {}}
           data={result}
           onDocClick={this.onDocClick}
         />

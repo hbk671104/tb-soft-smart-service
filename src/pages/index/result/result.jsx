@@ -3,7 +3,7 @@ import { View, Text, Icon } from '@tarojs/components'
 import './result.scss'
 
 import { constructSearchQueryObject } from '../../../utils/leancloud'
-import ResultItem from './component/ResultItem'
+import ResultItem from '../../../components/ResultItem'
 
 export default class Result extends Component {
   config = {

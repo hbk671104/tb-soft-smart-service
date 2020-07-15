@@ -64,6 +64,9 @@ export default class Mine extends Component {
 
   onMyEntryClick = e => {
     e.stopPropagation()
+    Taro.navigateTo({
+      url: './entry/entry'
+    })
   }
 
   onBrowsingHistoryClick = e => {

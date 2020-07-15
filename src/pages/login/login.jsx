@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Button } from '@tarojs/components'
 import './login.scss'
 
-import { requestSMSCode, smsLogin } from '../../utils/login'
+import { requestSMSCode, smsLogin, setCurrentUser, initCurrentUser } from '../../utils/login'
 
 const COUNTDOWN_LENGTH = 30
 
@@ -13,17 +13,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -33,6 +33,8 @@ export default class Login extends Component {
     try {
       Taro.showLoading({ title: '登录中...' })
       await smsLogin(number, code, misc)
+      const user = await initCurrentUser()
+      setCurrentUser(user)
       Taro.hideLoading()
       Taro.reLaunch({
         url: '../index/index'
@@ -98,6 +100,7 @@ export default class Login extends Component {
         sms_code: detail.value
       },
       () => {
+        // TODO: bring it back later
         // const { phone_number, sms_code } = this.state
         // if (/^\d{6}/.test(sms_code)) {
         //   this.doLogin(phone_number, sms_code)
@@ -175,7 +178,7 @@ export default class Login extends Component {
             hoverClass='login-button-hover'
             openType='getUserInfo'
             onGetUserInfo={this.onGetUserInfo}
-            // onClick={this.onLoginClick}
+          // onClick={this.onLoginClick}
           >
             登录
           </Button>
