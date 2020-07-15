@@ -48,13 +48,13 @@
   .content {
     display: flex;
     flex-direction: column;
-    padding: 0 48px 0 48px;
     flex: 1;
-    .main {
-      flex: 1;
-    }
-    .button {
-      margin-bottom: 24px;
+    .list {
+      // padding-left: 48px;
+      // margin-top: 24px;
+      .list_item {
+        padding-left: 48px;
+      }
     }
   }
 }

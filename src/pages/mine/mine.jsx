@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Button, ScrollView } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { AtList, AtListItem } from "taro-ui"
 import './mine.scss'
 
 import Floater from '../../components/Floater'
@@ -10,13 +11,13 @@ export default class Mine extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '我的',
@@ -53,6 +54,26 @@ export default class Mine extends Component {
     })
   }
 
+  onCollectionClick = e => {
+    e.stopPropagation()
+    Taro.showToast({
+      title: '即将上线，敬请期待。',
+      icon: 'none'
+    })
+  }
+
+  onMyEntryClick = e => {
+    e.stopPropagation()
+  }
+
+  onBrowsingHistoryClick = e => {
+    e.stopPropagation()
+    Taro.showToast({
+      title: '即将上线，敬请期待。',
+      icon: 'none'
+    })
+  }
+
   render() {
     if (!this.currentUser) return null
     const {
@@ -76,9 +97,29 @@ export default class Mine extends Component {
           </View>
         </View>
         <View className='content'>
-          <View className='main'>
-            <Text>内容在这里</Text>
-          </View>
+          <AtList className='list' hasBorder={false}>
+            <AtListItem
+              className='list_item'
+              title='我的收藏'
+              onClick={this.onCollectionClick}
+              arrow='right'
+              thumb={require('../../assets/collection.png')}
+            />
+            <AtListItem
+              className='list_item'
+              title='我的录入'
+              onClick={this.onMyEntryClick}
+              arrow='right'
+              thumb={require('../../assets/upload.png')}
+            />
+            <AtListItem
+              className='list_item'
+              title='我的足迹'
+              onClick={this.onBrowsingHistoryClick}
+              arrow='right'
+              thumb={require('../../assets/footprint.png')}
+            />
+          </AtList>
         </View>
         <Floater
           image={require('../../assets/logout.png')}
