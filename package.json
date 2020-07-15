@@ -27,7 +27,7 @@
 		"dev:quickapp": "npm run build:quickapp -- --watch",
 		"prettify": "yarn prettier --no-semi --single-quote --jsx-single-quote --tab-width 2 --trailing-comma none --arrow-parens avoid --write  src/"
 	},
-	"author": "",
+	"author": "hbk671104",
 	"license": "MIT",
 	"dependencies": {
 		"@tarojs/components": "2.2.7",
