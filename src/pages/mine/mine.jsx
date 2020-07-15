@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem } from "taro-ui"
+import { AtList, AtListItem } from 'taro-ui'
 import './mine.scss'
 
 import Floater from '../../components/Floater'
@@ -11,13 +11,13 @@ export default class Mine extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '我的',

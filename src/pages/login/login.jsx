@@ -2,7 +2,12 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Button } from '@tarojs/components'
 import './login.scss'
 
-import { requestSMSCode, smsLogin, setCurrentUser, initCurrentUser } from '../../utils/login'
+import {
+  requestSMSCode,
+  smsLogin,
+  setCurrentUser,
+  initCurrentUser
+} from '../../utils/login'
 
 const COUNTDOWN_LENGTH = 30
 
@@ -13,17 +18,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -178,7 +183,7 @@ export default class Login extends Component {
             hoverClass='login-button-hover'
             openType='getUserInfo'
             onGetUserInfo={this.onGetUserInfo}
-          // onClick={this.onLoginClick}
+            // onClick={this.onLoginClick}
           >
             登录
           </Button>

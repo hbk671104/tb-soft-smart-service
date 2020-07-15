@@ -25,17 +25,17 @@ export default class Entry extends Component {
     this.queryMyEntry()
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryMyEntry = async () => {
     try {
       Taro.showLoading({ title: '加载中...' })
       const { username } = this.currentUser
-      this.queryObject.equalTo('technican', username);
+      this.queryObject.equalTo('technican', username)
       const reports = await this.queryObject.find()
       this.setState({
         result: reports.map(i => i.toJSON()),
@@ -87,18 +87,17 @@ export default class Entry extends Component {
             </View>
           </View>
         ) : (
-            <View>
-              <View className='empty'>
-                <Image
-                  className='empty-image'
-                  src={require('../../../assets/empty.png')}
-                />
-                <Text className='empty-text'>暂无记录</Text>
-              </View>
+          <View>
+            <View className='empty'>
+              <Image
+                className='empty-image'
+                src={require('../../../assets/empty.png')}
+              />
+              <Text className='empty-text'>暂无记录</Text>
             </View>
-          )}
+          </View>
+        )}
       </View>
     )
   }
 }
-

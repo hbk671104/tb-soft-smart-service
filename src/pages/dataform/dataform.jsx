@@ -31,13 +31,13 @@ export default class DataForm extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '添加记录'

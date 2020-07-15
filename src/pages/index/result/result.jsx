@@ -16,7 +16,7 @@ export default class Result extends Component {
     total: 0
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { query_string } = this.$router.params
@@ -24,11 +24,11 @@ export default class Result extends Component {
     this.queryReport()
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onReachBottom() {
     this.queryMore()
@@ -110,16 +110,16 @@ export default class Result extends Component {
             </View>
           </View>
         ) : (
-            <View>
-              <View className='empty'>
-                <Image
-                  className='empty-image'
-                  src={require('../../../assets/empty.png')}
-                />
-                <Text className='empty-text'>暂无记录</Text>
-              </View>
+          <View>
+            <View className='empty'>
+              <Image
+                className='empty-image'
+                src={require('../../../assets/empty.png')}
+              />
+              <Text className='empty-text'>暂无记录</Text>
             </View>
-          )}
+          </View>
+        )}
       </View>
     )
   }

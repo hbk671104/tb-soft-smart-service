@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +26,11 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryItem = async id => {
     try {
@@ -112,7 +112,7 @@ export default class Detail extends Component {
     return (
       <View className='page result'>
         <ResultDetail
-          {...!!query_string ? { query: query_string } : {}}
+          {...(!!query_string ? { query: query_string } : {})}
           data={result}
           onDocClick={this.onDocClick}
         />
