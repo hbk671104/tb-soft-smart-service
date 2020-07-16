@@ -1,7 +1,7 @@
 {
 	"miniprogramRoot": "dist/",
 	"projectname": "tb-soft-smart-service",
-	"description": "九桥同步智能客服",
+	"description": "九桥小助手",
 	"appid": "wx682a8d21a7a6bfe2",
 	"setting": {
 		"urlCheck": true,
