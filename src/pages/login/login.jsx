@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Button } from '@tarojs/components'
+import { View, Image, Button, Checkbox, CheckboxGroup } from '@tarojs/components'
 import './login.scss'
 
 import {
@@ -15,6 +15,7 @@ export default class Login extends Component {
   state = {
     phone_number: null,
     sms_code: null,
+    privacy_checked: false,
     countdown: COUNTDOWN_LENGTH
   }
 
@@ -136,8 +137,22 @@ export default class Login extends Component {
     this.doLogin(phone_number, sms_code, misc)
   }
 
+  onPrivacyCheckChange = ({ detail: { value } }) => {
+    const [agreed] = value
+    this.setState({
+      privacy_checked: !!agreed
+    })
+  }
+
+  onPrivacyTextClick = e => {
+    e.stopPropagation()
+    Taro.navigateTo({
+      url: './privacy/privacy'
+    })
+  }
+
   render() {
-    const { countdown, phone_number, sms_code } = this.state
+    const { countdown, phone_number, sms_code, privacy_checked } = this.state
     return (
       <View className='page login'>
         <View className='group'>
@@ -182,13 +197,23 @@ export default class Login extends Component {
           </View>
         </View>
         <View className='button-group'>
+          <View className='privacy-group'>
+            <CheckboxGroup onChange={this.onPrivacyCheckChange}>
+              <Checkbox value='agreed' color='#BA2C28' onChange={this.onPrivacyCheckChange} />
+            </CheckboxGroup>
+            <Text className='privacy-text' onClick={this.onPrivacyTextClick}>
+              阅读并同意
+              <Text style='color:blue;'>
+                《隐私协议》
+              </Text>
+            </Text>
+          </View>
           <Button
             className='login-button'
             hoverClass='login-button-hover'
             openType='getUserInfo'
-            disabled={!phone_number || !sms_code}
+            disabled={!phone_number || !sms_code || !privacy_checked}
             onGetUserInfo={this.onGetUserInfo}
-          // onClick={this.onLoginClick}
           >
             登录
           </Button>
