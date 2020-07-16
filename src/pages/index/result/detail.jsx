@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +26,19 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
+
+  onShareAppMessage(info) {
+    const { id } = this.$router.params
+    return {
+      title: '分享「错误报告」',
+      path: `/pages/index/result/detail?id=${id}`
+    }
+  }
 
   queryItem = async id => {
     try {
@@ -112,7 +120,7 @@ export default class Detail extends Component {
     return (
       <View className='page result'>
         <ResultDetail
-          {...(!!query_string ? { query: query_string } : {})}
+          query={query_string}
           data={result}
           onDocClick={this.onDocClick}
         />
@@ -120,6 +128,10 @@ export default class Detail extends Component {
           image={require('../../assets/delete.png')}
           onClick={this.onDeletePress}
         /> */}
+        <Floater
+          image={require('../../../assets/share.png')}
+          openType='share'
+        />
       </View>
     )
   }

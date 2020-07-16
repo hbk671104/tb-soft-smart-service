@@ -10,9 +10,9 @@ const Highlighter = ({ text, query }) => {
           style={
             part.toLowerCase() === query.toLowerCase()
               ? {
-                  fontWeight: 'bold',
-                  textDecoration: 'underline'
-                }
+                fontWeight: 'bold',
+                textDecoration: 'underline'
+              }
               : {}
           }
         >
@@ -26,8 +26,8 @@ const Highlighter = ({ text, query }) => {
 Highlighter.externalClasses = ['custom-class']
 
 Highlighter.defaultProps = {
-  text: 'text',
-  query: 'text'
+  text: '',
+  query: ''
 }
 
 export default Highlighter
