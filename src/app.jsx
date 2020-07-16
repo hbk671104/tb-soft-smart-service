@@ -12,18 +12,19 @@ import './utils/init'
 // }
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [
       'pages/launcher/launcher',
       'pages/login/login',
+      'pages/login/privacy/privacy',
       'pages/index/index',
       'pages/index/result/result',
       'pages/index/result/detail',

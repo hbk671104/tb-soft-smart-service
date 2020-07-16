@@ -65,14 +65,21 @@
 
 .button-group {
   margin-bottom: 144px;
-}
-
-.login-button {
-  // font-size: 32px;
-  background-color: rgb(186, 44, 40);
-  color: white;
-}
-
-.login-button-hover {
-  background-color: rgba(186, 44, 40, 0.8);
+  .privacy-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 36px;
+    .privacy-text { 
+      font-size: 26px;
+      margin-left: 12px;
+    }
+  }
+  .login-button {
+    background-color: rgb(186, 44, 40);
+    color: white;
+  }
+  .login-button-hover {
+    background-color: rgba(186, 44, 40, 0.8);
+  }
 }
