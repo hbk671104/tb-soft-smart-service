@@ -18,17 +18,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -188,7 +188,7 @@ export default class Login extends Component {
             openType='getUserInfo'
             disabled={!phone_number || !sms_code}
             onGetUserInfo={this.onGetUserInfo}
-          // onClick={this.onLoginClick}
+            // onClick={this.onLoginClick}
           >
             登录
           </Button>

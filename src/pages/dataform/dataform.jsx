@@ -12,16 +12,14 @@ import {
 } from '@tarojs/components'
 import './dataform.scss'
 
-import {
-  constructReportObject,
-} from '../../utils/leancloud'
+import { constructReportObject } from '../../utils/leancloud'
 import { getCurrentUser } from '../../utils/login'
 
 const radio_color = 'rgb(186, 44, 40)'
 
 export default class DataForm extends Component {
   state = {
-    serviced_at: null,
+    serviced_at: null
     // upload_files: null
   }
 
@@ -29,13 +27,13 @@ export default class DataForm extends Component {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '添加记录'
