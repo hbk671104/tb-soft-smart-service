@@ -1,4 +1,4 @@
-import Taro, { Component, hideToast } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
@@ -14,8 +14,6 @@ import './dataform.scss'
 
 import {
   constructReportObject,
-  buildDocument,
-  buildDocumentToDelete
 } from '../../utils/leancloud'
 import { getCurrentUser } from '../../utils/login'
 
@@ -24,20 +22,20 @@ const radio_color = 'rgb(186, 44, 40)'
 export default class DataForm extends Component {
   state = {
     serviced_at: null,
-    upload_files: null
+    // upload_files: null
   }
 
   componentWillMount() {
     this.currentUser = getCurrentUser()
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '添加记录'
@@ -68,10 +66,10 @@ export default class DataForm extends Component {
     const { username } = this.currentUser
     value.technican = username
     // add files
-    const { upload_files } = this.state
-    if (upload_files && upload_files.length > 0) {
-      value.related_files = upload_files
-    }
+    // const { upload_files } = this.state
+    // if (upload_files && upload_files.length > 0) {
+    //   value.related_files = upload_files
+    // }
     this.saveReport(value)
   }
 
@@ -82,7 +80,7 @@ export default class DataForm extends Component {
       let result = await report.save()
       result = result.toJSON()
       Taro.redirectTo({
-        url: `../result/detail?id=${result.objectId}`
+        url: `../index/result/detail?id=${result.objectId}`
       })
       Taro.showToast({
         title: '保存成功!',
@@ -96,74 +94,73 @@ export default class DataForm extends Component {
     }
   }
 
-  onDocChoose = async e => {
-    e.stopPropagation()
-    try {
-      const { tempFiles } = await Taro.chooseMessageFile({
-        count: 5,
-        type: 'file'
-      })
-      this.saveFile(tempFiles)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // onDocChoose = async e => {
+  //   e.stopPropagation()
+  //   try {
+  //     const { tempFiles } = await Taro.chooseMessageFile({
+  //       count: 5,
+  //       type: 'file'
+  //     })
+  //     this.saveFile(tempFiles)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
-  saveFile = async files => {
-    const docs = files.map(({ name, path }) => buildDocument(name, path))
-    try {
-      Taro.showLoading({ title: '上传中...' })
-      let result = await Promise.all(
-        docs.map(d => d.save({ keepFileName: true }))
-      )
-      result = result.map(r => r.toJSON())
-      this.setState(({ upload_files }) => {
-        return {
-          upload_files: !upload_files ? result : [...upload_files, ...result]
-        }
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
-  }
+  // saveFile = async files => {
+  //   const docs = files.map(({ name, path }) => buildDocument(name, path))
+  //   try {
+  //     Taro.showLoading({ title: '上传中...' })
+  //     let result = await Promise.all(
+  //       docs.map(d => d.save({ keepFileName: true }))
+  //     )
+  //     result = result.map(r => r.toJSON())
+  //     this.setState(({ upload_files }) => {
+  //       return {
+  //         upload_files: !upload_files ? result : [...upload_files, ...result]
+  //       }
+  //     })
+  //   } catch (error) {
+  //     console.error(error)
+  //   } finally {
+  //     Taro.hideLoading()
+  //   }
+  // }
 
-  onDeleteClick = item => async e => {
-    e.stopPropagation()
-    try {
-      const { confirm } = await Taro.showModal({
-        title: '提示',
-        content: `确认删除「${item.name}」吗？`,
-        confirmText: '删除',
-        confirmColor: '#BA2C28'
-      })
-      if (confirm) {
-        this.deleteFile(item.objectId)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // onDeleteClick = item => async e => {
+  //   e.stopPropagation()
+  //   try {
+  //     const { confirm } = await Taro.showModal({
+  //       title: '提示',
+  //       content: `确认删除「${item.name}」吗？`,
+  //       confirmText: '删除',
+  //       confirmColor: '#BA2C28'
+  //     })
+  //     if (confirm) {
+  //       this.deleteFile(item.objectId)
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
-  deleteFile = async id => {
-    const file = buildDocumentToDelete(id)
-    try {
-      Taro.showLoading({ title: '正在删除...' })
-      await file.destroy()
-      this.setState(({ upload_files }) => ({
-        upload_files: upload_files.filter(f => f.objectId !== id)
-      }))
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
-  }
+  // deleteFile = async id => {
+  //   const file = buildDocumentToDelete(id)
+  //   try {
+  //     Taro.showLoading({ title: '正在删除...' })
+  //     await file.destroy()
+  //     this.setState(({ upload_files }) => ({
+  //       upload_files: upload_files.filter(f => f.objectId !== id)
+  //     }))
+  //   } catch (error) {
+  //     console.error(error)
+  //   } finally {
+  //     Taro.hideLoading()
+  //   }
+  // }
 
-  // TODO: comment out technician section and autofill the field with username
   render() {
-    const { serviced_at, upload_files } = this.state
+    const { serviced_at } = this.state
     return (
       <View className='page data-form'>
         <Form onSubmit={this.onFormSubmit}>
@@ -191,18 +188,6 @@ export default class DataForm extends Component {
               </View>
             </Picker>
           </View>
-          {/* <View className='item-container'>
-						<Text className='item-title'>服务人员：</Text>
-						<View className='input-container'>
-							<Input
-								name='technican'
-								adjustPosition
-								className='input'
-								placeholderClass='input-placeholder'
-								placeholder='请输入服务人员'
-							/>
-						</View>
-					</View> */}
           <View className='item-container'>
             <Text className='item-title'>软件版本：</Text>
             <View className='input-container'>
@@ -306,7 +291,7 @@ export default class DataForm extends Component {
               />
             </View>
           </View>
-          <View className='item-container'>
+          {/* <View className='item-container'>
             <View className='document-title-container'>
               <Text className='item-title'>相关文档：</Text>
               <View style='display:flex;align-items:center;'>
@@ -335,7 +320,7 @@ export default class DataForm extends Component {
                 ))}
               </View>
             )}
-          </View>
+          </View> */}
           <View className='submit-button-container'>
             <Button
               className='submit-button'

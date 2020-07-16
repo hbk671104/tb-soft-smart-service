@@ -5,7 +5,7 @@ import './launcher.scss'
 import { isLoggedIn, setCurrentUser, initCurrentUser } from '../../utils/login'
 
 export default class Launcher extends Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
   async componentDidMount() {
     // check login status
@@ -23,11 +23,11 @@ export default class Launcher extends Component {
     }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   render() {
     return (
@@ -36,7 +36,7 @@ export default class Launcher extends Component {
           <Image className='logo' src={require('../../assets/logo.png')} />
         </View>
         <View className='content'>
-          <AtActivityIndicator size={48} color='#BA2C28' />
+          <AtActivityIndicator size={48} />
         </View>
       </View>
     )

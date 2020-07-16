@@ -18,17 +18,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -137,7 +137,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const { countdown } = this.state
+    const { countdown, phone_number, sms_code } = this.state
     return (
       <View className='page login'>
         <View className='group'>
@@ -168,7 +168,11 @@ export default class Login extends Component {
                 />
               </View>
               <View className='sms-button-container'>
-                <Button className='sms-button' onClick={this.onSMSRequestClick}>
+                <Button
+                  className='sms-button'
+                  disabled={countdown !== COUNTDOWN_LENGTH}
+                  onClick={this.onSMSRequestClick}
+                >
                   {countdown === COUNTDOWN_LENGTH
                     ? '发送验证码'
                     : `${countdown}秒后重试`}
@@ -182,8 +186,9 @@ export default class Login extends Component {
             className='login-button'
             hoverClass='login-button-hover'
             openType='getUserInfo'
+            disabled={!phone_number || !sms_code}
             onGetUserInfo={this.onGetUserInfo}
-            // onClick={this.onLoginClick}
+          // onClick={this.onLoginClick}
           >
             登录
           </Button>
