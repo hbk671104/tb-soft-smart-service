@@ -12,13 +12,13 @@ import './utils/init'
 // }
 
 class App extends Component {
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
-  componentDidCatchError() { }
+  componentDidCatchError() {}
 
   config = {
     pages: [

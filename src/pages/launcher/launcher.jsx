@@ -5,7 +5,7 @@ import './launcher.scss'
 import { isLoggedIn, setCurrentUser, initCurrentUser } from '../../utils/login'
 
 export default class Launcher extends Component {
-  componentWillMount() { }
+  componentWillMount() {}
 
   async componentDidMount() {
     // check login status
@@ -23,11 +23,11 @@ export default class Launcher extends Component {
     }
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   render() {
     return (

@@ -18,7 +18,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +26,11 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onShareAppMessage(info) {
     const { id } = this.$router.params

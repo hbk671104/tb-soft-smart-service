@@ -1,5 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Button, Checkbox, CheckboxGroup } from '@tarojs/components'
+import {
+  View,
+  Image,
+  Button,
+  Checkbox,
+  CheckboxGroup
+} from '@tarojs/components'
 import './login.scss'
 
 import {
@@ -19,17 +25,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -199,13 +205,15 @@ export default class Login extends Component {
         <View className='button-group'>
           <View className='privacy-group'>
             <CheckboxGroup onChange={this.onPrivacyCheckChange}>
-              <Checkbox value='agreed' color='#BA2C28' onChange={this.onPrivacyCheckChange} />
+              <Checkbox
+                value='agreed'
+                color='#BA2C28'
+                onChange={this.onPrivacyCheckChange}
+              />
             </CheckboxGroup>
             <Text className='privacy-text' onClick={this.onPrivacyTextClick}>
               阅读并同意
-              <Text style='color:blue;'>
-                《隐私协议》
-              </Text>
+              <Text style='color:blue;'>《隐私协议》</Text>
             </Text>
           </View>
           <Button

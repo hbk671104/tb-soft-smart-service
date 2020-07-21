@@ -13,9 +13,7 @@ import './dataform.scss'
 
 import dayjs from 'dayjs'
 import { AtNoticebar } from 'taro-ui'
-import {
-  constructReportObject,
-} from '../../utils/leancloud'
+import { constructReportObject } from '../../utils/leancloud'
 import { getCurrentUser } from '../../utils/login'
 
 const radio_color = 'rgb(186, 44, 40)'
@@ -34,11 +32,11 @@ export default class DataForm extends Component {
     this.getTempData()
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '添加记录'
@@ -159,31 +157,40 @@ export default class DataForm extends Component {
   // }
 
   onFieldInput = key => ({ detail: { value } }) => {
-    this.setState({
-      data: {
-        ...this.state.data,
-        [key]: value
-      }
-    }, this.setTempData)
+    this.setState(
+      {
+        data: {
+          ...this.state.data,
+          [key]: value
+        }
+      },
+      this.setTempData
+    )
   }
 
   onNoticeClick = e => {
     e.stopPropagation()
-    this.setState({
-      data: this.tempform
-    }, () => {
-      this.noticeBar.state.show = false
-      this.noticeBar.forceUpdate()
-    })
+    this.setState(
+      {
+        data: this.tempform
+      },
+      () => {
+        this.noticeBar.state.show = false
+        this.noticeBar.forceUpdate()
+      }
+    )
   }
 
   setTempData = () => {
     const { data } = this.state
     try {
-      Taro.setStorageSync('temp_dataform', JSON.stringify({
-        last_edit_at: dayjs().format('lll'),
-        data
-      }))
+      Taro.setStorageSync(
+        'temp_dataform',
+        JSON.stringify({
+          last_edit_at: dayjs().format('lll'),
+          data
+        })
+      )
     } catch (error) {
       console.error(error)
     }
@@ -229,8 +236,7 @@ export default class DataForm extends Component {
     } = this.state
     return (
       <View>
-        {
-          !!last_edit_at &&
+        {!!last_edit_at && (
           <AtNoticebar
             ref={ref => {
               this.noticeBar = ref
@@ -243,7 +249,7 @@ export default class DataForm extends Component {
           >
             上次编辑于 {last_edit_at}
           </AtNoticebar>
-        }
+        )}
         <View className='page data-form'>
           <View className='item-container'>
             <Text className='item-title'>客户名称：</Text>
