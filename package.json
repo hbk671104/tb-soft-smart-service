@@ -43,6 +43,7 @@
 		"@tarojs/taro-tt": "2.2.7",
 		"@tarojs/taro-weapp": "2.2.7",
 		"babel-runtime": "^6.26.0",
+		"dayjs": "^1.8.29",
 		"leancloud-storage": "^4.6.1",
 		"nerv-devtools": "^1.5.7",
 		"nervjs": "^1.5.7",
