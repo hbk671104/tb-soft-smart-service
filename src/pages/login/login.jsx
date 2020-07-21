@@ -25,17 +25,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '用户登录'
@@ -213,7 +213,7 @@ export default class Login extends Component {
             </CheckboxGroup>
             <Text className='privacy-text' onClick={this.onPrivacyTextClick}>
               阅读并同意
-              <Text style='color:blue;'>《隐私协议》</Text>
+              <Text style='color:blue;'>《服务及隐私协议》</Text>
             </Text>
           </View>
           <Button
