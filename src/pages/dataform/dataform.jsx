@@ -13,7 +13,11 @@ import './dataform.scss'
 
 import dayjs from 'dayjs'
 import { AtNoticebar } from 'taro-ui'
-import { constructReportObject } from '../../utils/leancloud'
+import {
+  constructReportObject,
+  constructSearchQuery,
+  constructReportObjectToWrite
+} from '../../utils/leancloud'
 import { getCurrentUser } from '../../utils/login'
 
 const radio_color = 'rgb(186, 44, 40)'
@@ -29,44 +33,85 @@ export default class DataForm extends Component {
   }
 
   componentDidMount() {
-    this.getTempData()
+    const { id } = this.$router.params
+    if (id) {
+      Taro.setNavigationBarTitle({ title: '更新记录' })
+      this.updateObject = constructReportObjectToWrite(id)
+      this.queryObject = constructSearchQuery()
+      this.queryItem(id)
+    } else {
+      Taro.setNavigationBarTitle({ title: '添加记录' })
+      this.getTempData()
+    }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  config = {
-    navigationBarTitleText: '添加记录'
+  queryItem = async id => {
+    try {
+      Taro.showNavigationBarLoading()
+      const report = await this.queryObject.get(id)
+      this.setState({
+        data: report.toJSON()
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideNavigationBarLoading()
+    }
   }
 
   onFormSubmit = e => {
     e.stopPropagation()
-    const { data } = this.state
-    if (
-      !data.error_detail &&
-      !data.ora_error_detail &&
-      !data.error_cause_detail &&
-      !data.solution_detail
-    ) {
+    const { id } = this.$router.params
+    if (id) {
+      this.updateReport()
+    } else {
+      const { data } = this.state
+      if (
+        !data.error_detail &&
+        !data.ora_error_detail &&
+        !data.error_cause_detail &&
+        !data.solution_detail
+      ) {
+        Taro.showToast({
+          title: '请填写报错信息/解决方案',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+      if (!data.software_version) {
+        data.software_version = '所有版本'
+      }
+      // add technician
+      const { username } = this.currentUser
+      data.technican = username
+
+      // save it
+      this.saveReport(data)
+    }
+  }
+
+  updateReport = async () => {
+    try {
+      Taro.showLoading({ title: '更新中...' })
+      await this.updateObject.save()
+      Taro.navigateBack()
       Taro.showToast({
-        title: '请填写报错信息/解决方案',
-        icon: 'none',
+        title: '保存成功!',
+        icon: 'success',
         duration: 2000
       })
-      return
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideLoading()
     }
-    if (!data.software_version) {
-      data.software_version = '所有版本'
-    }
-    // add technician
-    const { username } = this.currentUser
-    data.technican = username
-
-    // save it
-    this.saveReport(data)
   }
 
   saveReport = async value => {
@@ -164,7 +209,14 @@ export default class DataForm extends Component {
           [key]: value
         }
       },
-      this.setTempData
+      () => {
+        const { id } = this.$router.params
+        if (id) {
+          this.updateObject.set(key, value)
+        } else {
+          this.setTempData()
+        }
+      }
     )
   }
 

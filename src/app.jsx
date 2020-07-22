@@ -12,13 +12,13 @@ import './utils/init'
 // }
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [
@@ -55,7 +55,7 @@ class App extends Component {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '智能客服',
+      // navigationBarTitleText: '智能客服',
       navigationBarTextStyle: 'black'
     }
   }

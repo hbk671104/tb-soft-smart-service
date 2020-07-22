@@ -8,16 +8,16 @@ export const constructSearchQueryObject = query_string => {
   return queryObject
 }
 
-export const constructReportObject = form_data => {
+export const constructReportObject = form => {
   const report = new AV.Object('ErrorReport')
-  return avObjectMultiSet(form_data)(report)
+  return avObjectMultiSet(form)(report)
 }
 
 export const constructSearchQuery = () => {
   return new AV.Query('ErrorReport')
 }
 
-export const constructObjectToDelete = id => {
+export const constructReportObjectToWrite = id => {
   return AV.Object.createWithoutData('ErrorReport', id)
 }
 

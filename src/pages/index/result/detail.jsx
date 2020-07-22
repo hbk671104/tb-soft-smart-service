@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import './result.scss'
 
 import {
-  constructObjectToDelete,
+  constructReportObjectToWrite,
   constructSearchQuery
 } from '../../../utils/leancloud'
 import ResultDetail from '../../../components/ResultItem/detail'
@@ -43,20 +43,6 @@ export default class Detail extends Component {
     }
   }
 
-  queryItem = async id => {
-    try {
-      Taro.showLoading({ title: '获取中...' })
-      const report = await this.queryObject.get(id)
-      this.setState({
-        result: report.toJSON()
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
-  }
-
   onDeletePress = async e => {
     e.stopPropagation()
     try {
@@ -68,11 +54,33 @@ export default class Detail extends Component {
       })
       if (confirm) {
         const { result } = this.state
-        this.deleteObject = constructObjectToDelete(result.objectId)
+        this.deleteObject = constructReportObjectToWrite(result.objectId)
         this.deleteItem()
       }
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  onEditPress = e => {
+    e.stopPropagation()
+    const { result } = this.state
+    Taro.navigateTo({
+      url: `../../dataform/dataform?id=${result.objectId}`
+    })
+  }
+
+  queryItem = async id => {
+    try {
+      Taro.showNavigationBarLoading()
+      const report = await this.queryObject.get(id)
+      this.setState({
+        result: report.toJSON()
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      Taro.hideNavigationBarLoading()
     }
   }
 
@@ -84,8 +92,7 @@ export default class Detail extends Component {
       })
       Taro.showToast({
         title: '删除成功！',
-        icon: 'success',
-        duration: 2000
+        icon: 'success'
       })
     } catch (error) {
       console.error(error)
@@ -136,6 +143,7 @@ export default class Detail extends Component {
               <Floater
                 relative
                 image={require('../../../assets/edit.png')}
+                onClick={this.onEditPress}
               />
             </View>
             <View className='at-col at-col-4 floater-group'>
