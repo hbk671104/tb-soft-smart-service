@@ -8,6 +8,7 @@ import {
 } from '../../../utils/leancloud'
 import ResultDetail from '../../../components/ResultItem/detail'
 import Floater from '../../../components/Floater'
+import { getCurrentUser } from '../../../utils/login'
 
 export default class Detail extends Component {
   config = {
@@ -18,7 +19,9 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    this.currentUser = getCurrentUser()
+  }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -26,11 +29,11 @@ export default class Detail extends Component {
     this.queryItem(id)
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onShareAppMessage(info) {
     const { id } = this.$router.params
@@ -77,7 +80,7 @@ export default class Detail extends Component {
     try {
       const result = await this.deleteObject.destroy()
       Taro.reLaunch({
-        url: '../index/index'
+        url: '../index'
       })
       Taro.showToast({
         title: '删除成功！',
@@ -89,26 +92,27 @@ export default class Detail extends Component {
     }
   }
 
-  onDocClick = ({ name, url }) => e => {
-    e.stopPropagation()
-    Taro.showLoading({ title: '正在下载...' })
-    Taro.downloadFile({
-      url: url.replace(/^http/, 'https'),
-      filePath: `${Taro.env.USER_DATA_PATH}/${name}`,
-      success: async ({ filePath }) => {
-        try {
-          await Taro.openDocument({
-            filePath
-          })
-        } catch (error) {
-          console.error(error)
-        }
-      },
-      complete: () => {
-        Taro.hideLoading()
-      }
-    })
-  }
+
+  // onDocClick = ({ name, url }) => e => {
+  //   e.stopPropagation()
+  //   Taro.showLoading({ title: '正在下载...' })
+  //   Taro.downloadFile({
+  //     url: url.replace(/^http/, 'https'),
+  //     filePath: `${Taro.env.USER_DATA_PATH}/${name}`,
+  //     success: async ({ filePath }) => {
+  //       try {
+  //         await Taro.openDocument({
+  //           filePath
+  //         })
+  //       } catch (error) {
+  //         console.error(error)
+  //       }
+  //     },
+  //     complete: () => {
+  //       Taro.hideLoading()
+  //     }
+  //   })
+  // }
 
   render() {
     const { query_string } = this.$router.params
@@ -116,18 +120,33 @@ export default class Detail extends Component {
     if (!result) {
       return null
     }
-
+    const { technican } = result
+    const { username } = this.currentUser
     return (
       <View className='page result'>
         <ResultDetail
           query={query_string}
           data={result}
-          onDocClick={this.onDocClick}
+        // onDocClick={this.onDocClick}
         />
-        {/* <Floater
-          image={require('../../assets/delete.png')}
-          onClick={this.onDeletePress}
-        /> */}
+        {
+          technican === username &&
+          <View className='at-row at-row__justify--center operation-group'>
+            <View className='at-col at-col-4 floater-group'>
+              <Floater
+                relative
+                image={require('../../../assets/edit.png')}
+              />
+            </View>
+            <View className='at-col at-col-4 floater-group'>
+              <Floater
+                relative
+                image={require('../../../assets/delete.png')}
+                onClick={this.onDeletePress}
+              />
+            </View>
+          </View>
+        }
         <Floater
           image={require('../../../assets/share.png')}
           openType='share'

@@ -40,3 +40,13 @@
   color: rgba($color: #000000, $alpha: 0.4);
   margin-top: 12px;
 }
+
+.operation-group {
+  margin-top: 12px;
+}
+
+.floater-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -2,7 +2,7 @@ import { View, Text } from '@tarojs/components'
 import Highlighter from '../Highlighter'
 import './style.scss'
 
-const ResultDetail = ({ query, data, onClick, onDocClick }) => {
+const ResultDetail = ({ query, data, onClick }) => {
   const {
     client_name,
     serviced_at,
@@ -14,7 +14,7 @@ const ResultDetail = ({ query, data, onClick, onDocClick }) => {
     software_type,
     solution_detail,
     software_state,
-    related_files
+    // related_files
   } = data
   return (
     <View className='container' onClick={onClick}>
@@ -112,7 +112,7 @@ const ResultDetail = ({ query, data, onClick, onDocClick }) => {
           </View>
         </View>
       )}
-      {!!related_files && related_files.length > 0 && (
+      {/* {!!related_files && related_files.length > 0 && (
         <View className='item-container'>
           <Text className='title'>相关文档：</Text>
           <View className='content-container'>
@@ -128,7 +128,7 @@ const ResultDetail = ({ query, data, onClick, onDocClick }) => {
             ))}
           </View>
         </View>
-      )}
+      )} */}
     </View>
   )
 }
@@ -139,7 +139,7 @@ ResultDetail.defaultProps = {
     client_name: null
   },
   onClick: () => null,
-  onDocClick: () => null
+  // onDocClick: () => null
 }
 
 export default ResultDetail
