@@ -1,23 +1,25 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import { AtList, AtListItem } from 'taro-ui'
 import './mine.scss'
 
 import Floater from '../../components/Floater'
-import { getCurrentUser, logout } from '../../utils/login'
+import { logout } from '../../utils/login'
 
+@connect(({ user }) => ({
+  currentUser: user.current
+}))
 export default class Mine extends Component {
-  componentWillMount() {
-    this.currentUser = getCurrentUser()
-  }
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '我的',
@@ -29,6 +31,9 @@ export default class Mine extends Component {
     try {
       Taro.showLoading({ title: '正在登出...' })
       await logout()
+      this.props.dispatch({
+        type: 'user/removeCurrent'
+      })
       Taro.reLaunch({
         url: '../login/login'
       })
@@ -78,13 +83,13 @@ export default class Mine extends Component {
   }
 
   render() {
-    if (!this.currentUser) return null
+    if (!this.props.currentUser) return null
     const {
       nickName,
       avatarUrl,
       mobilePhoneNumber,
       username
-    } = this.currentUser
+    } = this.props.currentUser
     return (
       <View className='page mine'>
         <View className='header'>

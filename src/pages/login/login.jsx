@@ -6,17 +6,15 @@ import {
   Checkbox,
   CheckboxGroup
 } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './login.scss'
-
-import {
-  requestSMSCode,
-  smsLogin,
-  setCurrentUser,
-  initCurrentUser
-} from '../../utils/login'
 
 const COUNTDOWN_LENGTH = 30
 
+@connect(({ loading }) => ({
+  requestingSMSCode: loading.effects["user/requestSMSCode"],
+  smsLoggingIn: loading.effects["user/smsLogin"]
+}))
 export default class Login extends Component {
   state = {
     phone_number: null,
@@ -41,38 +39,32 @@ export default class Login extends Component {
     navigationBarTitleText: '用户登录'
   }
 
-  doLogin = async (number, code, misc) => {
-    try {
-      Taro.showLoading({ title: '登录中...' })
-      await smsLogin(number, code, misc)
-      const user = await initCurrentUser()
-      setCurrentUser(user)
-      Taro.hideLoading()
-      Taro.reLaunch({
-        url: '../index/index'
-      })
-    } catch (error) {
-      Taro.showToast({
-        title: error.message,
-        icon: 'none',
-        duration: 1500
-      })
-    }
+  doLogin = (number, code, misc) => {
+    this.props.dispatch({
+      type: 'user/smsLogin',
+      payload: {
+        number,
+        code,
+        misc
+      },
+      callback: () => {
+        Taro.reLaunch({
+          url: '../index/index'
+        })
+      }
+    })
   }
 
-  getSMSCode = async number => {
-    try {
-      Taro.showLoading({ title: '获取验证码...' })
-      await requestSMSCode(number)
-      Taro.hideLoading()
-      this.startCountdown()
-    } catch (error) {
-      Taro.showToast({
-        title: error.message,
-        icon: 'none',
-        duration: 1500
-      })
-    }
+  getSMSCode = number => {
+    this.props.dispatch({
+      type: 'user/requestSMSCode',
+      payload: {
+        number
+      },
+      callback: () => {
+        this.startCountdown()
+      }
+    })
   }
 
   startCountdown = () => {
@@ -158,6 +150,7 @@ export default class Login extends Component {
   }
 
   render() {
+    const { requestingSMSCode, smsLoggingIn } = this.props
     const { countdown, phone_number, sms_code, privacy_checked } = this.state
     return (
       <View className='page login'>
@@ -190,6 +183,7 @@ export default class Login extends Component {
               </View>
               <View className='sms-button-container'>
                 <Button
+                  loading={requestingSMSCode}
                   className='sms-button'
                   disabled={countdown !== COUNTDOWN_LENGTH}
                   onClick={this.onSMSRequestClick}
@@ -217,6 +211,7 @@ export default class Login extends Component {
             </Text>
           </View>
           <Button
+            loading={smsLoggingIn}
             className='login-button'
             hoverClass='login-button-hover'
             openType='getUserInfo'

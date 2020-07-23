@@ -2,7 +2,6 @@ import Taro from '@tarojs/taro'
 import AV from 'leancloud-storage/dist/av-weapp.js'
 import { WEAPP_ID, WEAPP_KEY } from './constant'
 import { avObjectMultiSet } from './util'
-import { set as setGlobalData, get as getGlobalData } from './global'
 
 export const wechatLogin = async () => {
   try {
@@ -32,27 +31,18 @@ export const requestSMSCode = async number => {
   }
 }
 
-export const smsLogin = async (number, code, misc = {}) => {
+export const smsLogin = async ({ number, code, misc = {} }) => {
   try {
     let user = await AV.User.logInWithMobilePhoneSmsCode(number, code)
     user = avObjectMultiSet(misc)(user)
     user = await user.save()
-    return Promise.resolve(user.toJSON())
+    return Promise.resolve(user)
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
-export const setCurrentUser = user => {
-  setGlobalData('currentUser', user)
-}
-
-export const getCurrentUser = () => {
-  return getGlobalData('currentUser')
-}
-
-export const initCurrentUser = async () => {
-  let user = AV.User.current()
+export const initCurrentUser = async user => {
   try {
     let roles = await user.getRoles()
     user = user.toJSON()
@@ -63,7 +53,7 @@ export const initCurrentUser = async () => {
   }
 }
 
-export const isLoggedIn = () => {
+export const getCurrentUser = () => {
   return AV.User.current()
 }
 

@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './result.scss'
 
 import {
@@ -8,8 +9,10 @@ import {
 } from '../../../utils/leancloud'
 import ResultDetail from '../../../components/ResultItem/detail'
 import Floater from '../../../components/Floater'
-import { getCurrentUser } from '../../../utils/login'
 
+@connect(({ user }) => ({
+  currentUser: user.current
+}))
 export default class Detail extends Component {
   config = {
     navigationBarTitleText: '报告详情'
@@ -19,9 +22,7 @@ export default class Detail extends Component {
     result: null
   }
 
-  componentWillMount() {
-    this.currentUser = getCurrentUser()
-  }
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -128,7 +129,7 @@ export default class Detail extends Component {
       return null
     }
     const { technican } = result
-    const { username } = this.currentUser
+    const { username } = this.props.currentUser
     return (
       <View className='page result'>
         <ResultDetail

@@ -1,33 +1,29 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import { AtActivityIndicator } from 'taro-ui'
 import './launcher.scss'
-import { isLoggedIn, setCurrentUser, initCurrentUser } from '../../utils/login'
 
+@connect(() => ({}))
 export default class Launcher extends Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
-  async componentDidMount() {
-    // check login status
-    const loggedIn = isLoggedIn()
-    if (loggedIn) {
-      const user = await initCurrentUser()
-      setCurrentUser(user)
-      Taro.reLaunch({
-        url: '../index/index'
-      })
-    } else {
-      Taro.reLaunch({
-        url: '../login/login'
-      })
-    }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'user/checkLoginStatus',
+      callback: isLoggedIn => {
+        Taro.reLaunch({
+          url: isLoggedIn ? '../index/index' : '../login/login'
+        })
+      }
+    })
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   render() {
     return (

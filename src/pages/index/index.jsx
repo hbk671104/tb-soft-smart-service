@@ -1,28 +1,29 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Text, Icon, Input, Button } from '@tarojs/components'
+import { View, Image, Icon, Input } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './index.scss'
 
 import Floater from '../../components/Floater'
-import { getCurrentUser } from '../../utils/login'
 
+@connect(({ user }) => ({
+  currentUser: user.current
+}))
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '自助查询'
   }
 
-  componentWillMount() {
-    this.currentUser = getCurrentUser()
-  }
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return
@@ -39,8 +40,8 @@ export default class Index extends Component {
   }
 
   render() {
-    if (!this.currentUser) return null
-    const { roles } = this.currentUser
+    if (!this.props.currentUser) return null
+    const { roles } = this.props.currentUser
     return (
       <View className='page index'>
         <View className='group'>

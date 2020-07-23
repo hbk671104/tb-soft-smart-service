@@ -9,6 +9,7 @@ import {
   Textarea,
   Button
 } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './dataform.scss'
 
 import dayjs from 'dayjs'
@@ -18,19 +19,19 @@ import {
   constructSearchQuery,
   constructReportObjectToWrite
 } from '../../utils/leancloud'
-import { getCurrentUser } from '../../utils/login'
 
 const radio_color = 'rgb(186, 44, 40)'
 
+@connect(({ user }) => ({
+  currentUser: user.current
+}))
 export default class DataForm extends Component {
   state = {
     last_edit_at: null,
     data: {}
   }
 
-  componentWillMount() {
-    this.currentUser = getCurrentUser()
-  }
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -89,7 +90,7 @@ export default class DataForm extends Component {
         data.software_version = '所有版本'
       }
       // add technician
-      const { username } = this.currentUser
+      const { username } = this.props.currentUser
       data.technican = username
 
       // save it

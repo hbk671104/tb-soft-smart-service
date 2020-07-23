@@ -1,11 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './entry.scss'
 
 import { constructSearchQuery } from '../../../utils/leancloud'
-import { getCurrentUser } from '../../../utils/login'
 import ResultDetail from '../../../components/ResultItem/detail'
 
+@connect(({ user }) => ({
+  currentUser: user.current
+}))
 export default class Entry extends Component {
   config = {
     navigationBarTitleText: '我的录入'
@@ -16,25 +19,23 @@ export default class Entry extends Component {
     total: 0
   }
 
-  componentWillMount() {
-    this.currentUser = getCurrentUser()
-  }
+  componentWillMount() { }
 
   componentDidMount() {
     this.queryObject = constructSearchQuery()
     this.queryMyEntry()
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   queryMyEntry = async () => {
     try {
       Taro.showLoading({ title: '加载中...' })
-      const { username } = this.currentUser
+      const { username } = this.props.currentUser
       this.queryObject.equalTo('technican', username)
       const reports = await this.queryObject.find()
       this.setState({
@@ -87,16 +88,16 @@ export default class Entry extends Component {
             </View>
           </View>
         ) : (
-          <View>
-            <View className='empty'>
-              <Image
-                className='empty-image'
-                src={require('../../../assets/empty.png')}
-              />
-              <Text className='empty-text'>暂无记录</Text>
+            <View>
+              <View className='empty'>
+                <Image
+                  className='empty-image'
+                  src={require('../../../assets/empty.png')}
+                />
+                <Text className='empty-text'>暂无记录</Text>
+              </View>
             </View>
-          </View>
-        )}
+          )}
       </View>
     )
   }
