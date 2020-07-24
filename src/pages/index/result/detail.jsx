@@ -123,7 +123,6 @@ export default class Detail extends Component {
   // }
 
   render() {
-    const { query_string } = this.$router.params
     const { result } = this.state
     if (!result) {
       return null
@@ -133,7 +132,6 @@ export default class Detail extends Component {
     return (
       <View className='page result'>
         <ResultDetail
-          query={query_string}
           data={result}
         // onDocClick={this.onDocClick}
         />

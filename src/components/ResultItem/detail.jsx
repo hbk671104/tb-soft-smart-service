@@ -1,8 +1,7 @@
 import { View, Text } from '@tarojs/components'
-import Highlighter from '../Highlighter'
 import './style.scss'
 
-const ResultDetail = ({ query, data, onClick }) => {
+const ResultDetail = ({ data, onClick }) => {
   const {
     client_name,
     serviced_at,
@@ -68,11 +67,7 @@ const ResultDetail = ({ query, data, onClick }) => {
         <View className='item-container'>
           <Text className='title'>报错代码信息（详细）：</Text>
           <View className='content-container'>
-            <Highlighter
-              custom-class='content'
-              text={error_detail}
-              query={query}
-            />
+            <Text className='content'>{error_detail}</Text>
           </View>
         </View>
       )}
@@ -80,11 +75,7 @@ const ResultDetail = ({ query, data, onClick }) => {
         <View className='item-container'>
           <Text className='title'>ORA 报错信息（详细）：</Text>
           <View className='content-container'>
-            <Highlighter
-              custom-class='content'
-              text={ora_error_detail}
-              query={query}
-            />
+            <Text className='content'>{ora_error_detail}</Text>
           </View>
         </View>
       )}
@@ -92,11 +83,7 @@ const ResultDetail = ({ query, data, onClick }) => {
         <View className='item-container'>
           <Text className='title'>故障原因（详细）：</Text>
           <View className='content-container'>
-            <Highlighter
-              custom-class='content'
-              text={error_cause_detail}
-              query={query}
-            />
+            <Text className='content'>{error_cause_detail}</Text>
           </View>
         </View>
       )}
@@ -104,11 +91,7 @@ const ResultDetail = ({ query, data, onClick }) => {
         <View className='item-container'>
           <Text className='title'>处理方案（详细）：</Text>
           <View className='content-container'>
-            <Highlighter
-              custom-class='content'
-              text={solution_detail}
-              query={query}
-            />
+            <Text className='content'>{solution_detail}</Text>
           </View>
         </View>
       )}
