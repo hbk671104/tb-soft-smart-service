@@ -77,6 +77,14 @@ export default {
           icon: 'none'
         })
       }
+    },
+    *fetchUploadReport({ }, { call, select }) {
+      try {
+        const user = yield select(state => state.user.current)
+
+      } catch (error) {
+        console.error(error)
+      }
     }
   },
 };
