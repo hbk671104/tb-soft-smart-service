@@ -4,14 +4,14 @@ import { connect } from '@tarojs/redux'
 import './result.scss'
 
 import {
-  constructReportObjectToWrite,
-  constructSearchQuery
+  constructReportObjectToWrite
 } from '../../../utils/leancloud'
 import ResultDetail from '../../../components/ResultItem/detail'
 import Floater from '../../../components/Floater'
 
-@connect(({ user }) => ({
-  currentUser: user.current
+@connect(({ user, report }) => ({
+  currentUser: user.current,
+  fromSearch: !!report.search
 }))
 export default class Detail extends Component {
   config = {
@@ -19,15 +19,13 @@ export default class Detail extends Component {
   }
 
   state = {
-    result: null
+    data: null
   }
 
   componentWillMount() { }
 
   componentDidMount() {
-    const { id } = this.$router.params
-    this.queryObject = constructSearchQuery()
-    this.queryItem(id)
+    this.queryItem()
   }
 
   componentWillUnmount() { }
@@ -54,8 +52,6 @@ export default class Detail extends Component {
         confirmColor: '#BA2C28'
       })
       if (confirm) {
-        const { result } = this.state
-        this.deleteObject = constructReportObjectToWrite(result.objectId)
         this.deleteItem()
       }
     } catch (error) {
@@ -65,41 +61,43 @@ export default class Detail extends Component {
 
   onEditPress = e => {
     e.stopPropagation()
-    const { result } = this.state
+    const { data } = this.state
     Taro.navigateTo({
-      url: `../../dataform/dataform?id=${result.objectId}`
+      url: `../../dataform/dataform?id=${data.objectId}`
     })
   }
 
-  queryItem = async id => {
-    try {
-      Taro.showNavigationBarLoading()
-      const report = await this.queryObject.get(id)
-      this.setState({
-        result: report.toJSON()
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideNavigationBarLoading()
-    }
+  queryItem = () => {
+    const { id } = this.$router.params
+    Taro.showNavigationBarLoading()
+    this.props.dispatch({
+      type: 'report/get',
+      id,
+      callback: data => {
+        this.setState({
+          data
+        })
+      },
+      complete: () => {
+        Taro.hideNavigationBarLoading()
+      }
+    })
   }
 
   deleteItem = async () => {
-    try {
-      const result = await this.deleteObject.destroy()
-      Taro.reLaunch({
-        url: '../index'
-      })
-      Taro.showToast({
-        title: '删除成功！',
-        icon: 'success'
-      })
-    } catch (error) {
-      console.error(error)
-    }
+    const { data: { objectId } } = this.state
+    this.props.dispatch({
+      type: 'report/delete',
+      id: objectId,
+      callback: () => {
+        Taro.navigateBack()
+        Taro.showToast({
+          title: '已删除',
+          icon: 'success'
+        })
+      }
+    })
   }
-
 
   // onDocClick = ({ name, url }) => e => {
   //   e.stopPropagation()
@@ -123,20 +121,20 @@ export default class Detail extends Component {
   // }
 
   render() {
-    const { result } = this.state
-    if (!result) {
+    const { data, fromSearch } = this.state
+    if (!data) {
       return null
     }
-    const { technican } = result
+    const { technican } = data
     const { username } = this.props.currentUser
     return (
       <View className='page result'>
         <ResultDetail
-          data={result}
+          data={data}
         // onDocClick={this.onDocClick}
         />
         {
-          technican === username &&
+          technican === username && !fromSearch &&
           <View className='at-row at-row__justify--center operation-group'>
             <View className='at-col at-col-4 floater-group'>
               <Floater

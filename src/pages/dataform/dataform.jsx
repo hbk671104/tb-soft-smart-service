@@ -14,16 +14,13 @@ import './dataform.scss'
 
 import dayjs from 'dayjs'
 import { AtNoticebar } from 'taro-ui'
-import {
-  constructReportObject,
-  constructSearchQuery,
-  constructReportObjectToWrite
-} from '../../utils/leancloud'
 
 const radio_color = 'rgb(186, 44, 40)'
 
-@connect(({ user }) => ({
-  currentUser: user.current
+@connect(({ user, loading }) => ({
+  currentUser: user.current,
+  creating: loading.effects["report/create"],
+  updating: loading.effects["report/update"],
 }))
 export default class DataForm extends Component {
   state = {
@@ -37,9 +34,7 @@ export default class DataForm extends Component {
     const { id } = this.$router.params
     if (id) {
       Taro.setNavigationBarTitle({ title: '更新记录' })
-      this.updateObject = constructReportObjectToWrite(id)
-      this.queryObject = constructSearchQuery()
-      this.queryItem(id)
+      this.queryItem()
     } else {
       Taro.setNavigationBarTitle({ title: '添加记录' })
       this.getTempData()
@@ -52,18 +47,21 @@ export default class DataForm extends Component {
 
   componentDidHide() { }
 
-  queryItem = async id => {
-    try {
-      Taro.showNavigationBarLoading()
-      const report = await this.queryObject.get(id)
-      this.setState({
-        data: report.toJSON()
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideNavigationBarLoading()
-    }
+  queryItem = () => {
+    const { id } = this.$router.params
+    Taro.showNavigationBarLoading()
+    this.props.dispatch({
+      type: 'report/get',
+      id,
+      callback: data => {
+        this.setState({
+          data
+        })
+      },
+      complete: () => {
+        Taro.hideNavigationBarLoading()
+      }
+    })
   }
 
   onFormSubmit = e => {
@@ -98,43 +96,51 @@ export default class DataForm extends Component {
     }
   }
 
-  updateReport = async () => {
-    try {
-      Taro.showLoading({ title: '更新中...' })
-      await this.updateObject.save()
-      Taro.navigateBack()
-      Taro.showToast({
-        title: '保存成功!',
-        icon: 'success',
-        duration: 2000
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
+  updateReport = () => {
+    // try {
+    //   Taro.showLoading({ title: '更新中...' })
+    //   await this.updateObject.save()
+    //   Taro.navigateBack()
+    //   Taro.showToast({
+    //     title: '已更新',
+    //     icon: 'success'
+    //   })
+    // } catch (error) {
+    //   console.error(error)
+    // } finally {
+    //   Taro.hideLoading()
+    // }
+    const { id } = this.$router.params
+    const { data } = this.state
+    this.props.dispatch({
+      type: 'report/update',
+      id,
+      payload: data,
+      callback: () => {
+        Taro.navigateBack()
+        Taro.showToast({
+          title: '已更新',
+          icon: 'success'
+        })
+      }
+    })
   }
 
-  saveReport = async value => {
-    const report = constructReportObject(value)
-    try {
-      Taro.showLoading({ title: '保存中...' })
-      let result = await report.save()
-      result = result.toJSON()
-      this.removeTempData()
-      Taro.redirectTo({
-        url: `../index/result/detail?id=${result.objectId}`
-      })
-      Taro.showToast({
-        title: '保存成功!',
-        icon: 'success',
-        duration: 2000
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
+  saveReport = value => {
+    this.props.dispatch({
+      type: 'report/create',
+      payload: value,
+      callback: result => {
+        Taro.redirectTo({
+          url: `../index/result/detail?id=${result.objectId}`
+        })
+        Taro.showToast({
+          title: '已创建',
+          icon: 'success'
+        })
+        this.removeTempData()
+      }
+    })
   }
 
   // onDocChoose = async e => {
@@ -212,11 +218,8 @@ export default class DataForm extends Component {
       },
       () => {
         const { id } = this.$router.params
-        if (id) {
-          this.updateObject.set(key, value)
-        } else {
-          this.setTempData()
-        }
+        if (id) return
+        this.setTempData()
       }
     )
   }
@@ -273,6 +276,7 @@ export default class DataForm extends Component {
   }
 
   render() {
+    const { creating, updating } = this.props
     const {
       last_edit_at,
       data: {
@@ -471,6 +475,7 @@ export default class DataForm extends Component {
           </View> */}
           <View className='submit-button-container'>
             <Button
+              loading={creating || updating}
               className='submit-button'
               hoverClass='submit-button-hover'
               onClick={this.onFormSubmit}

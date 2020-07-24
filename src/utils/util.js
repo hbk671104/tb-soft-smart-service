@@ -10,3 +10,11 @@ export const avObjectMultiSet = data => object => {
   }
   return object
 }
+
+export const deleteItemFromArray = (array, id) => array.filter(i => i.objectId !== id)
+export const updateItemFromArray = (array, item) => array.map(i => {
+  if (id.objectId === item.objectId) {
+    return item
+  }
+  return i
+})

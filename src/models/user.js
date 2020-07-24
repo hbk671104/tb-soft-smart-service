@@ -5,11 +5,16 @@ import {
   initCurrentUser,
   getCurrentUser
 } from '../utils/login'
+import { constructSearchQuery } from '../utils/leancloud'
+import { deleteItemFromArray, updateItemFromArray } from '../utils/util'
 
 export default {
   namespace: 'user',
   state: {
     current: null,
+    report: {
+      upload: null
+    }
   },
   reducers: {
     saveCurrent(state, { payload }) {
@@ -23,6 +28,15 @@ export default {
         ...state,
         current: null
       }
+    },
+    saveUploadReport(state, { payload }) {
+      return {
+        ...state,
+        report: {
+          ...state.report,
+          upload: payload
+        }
+      }
     }
   },
   effects: {
@@ -31,9 +45,9 @@ export default {
         let user = yield call(getCurrentUser)
         if (user) {
           user = yield call(initCurrentUser, user)
-          yield put({
-            type: 'saveCurrent',
-            payload: user
+          yield put.resolve({
+            type: 'global/init',
+            user
           })
         }
 
@@ -63,9 +77,9 @@ export default {
       try {
         let user = yield call(smsLogin, payload)
         user = yield call(initCurrentUser, user)
-        yield put({
-          type: 'saveCurrent',
-          payload: user
+        yield put.resolve({
+          type: 'global/init',
+          user
         })
 
         if (callback) {
@@ -78,13 +92,48 @@ export default {
         })
       }
     },
-    *fetchUploadReport({ }, { call, select }) {
+    *fetchUploadReport(_, { put, call, select }) {
       try {
-        const user = yield select(state => state.user.current)
+        const { username } = yield select(state => state.user.current)
+        const query = constructSearchQuery()
+        query.equalTo('technican', username)
 
+        let uploadReports = yield call(async () => await query.find())
+        uploadReports = uploadReports.map(i => i.toJSON())
+
+        yield put({
+          type: 'saveUploadReport',
+          payload: uploadReports
+        })
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+    *deleteItemFromReport({ id }, { put, select }) {
+      try {
+        let uploadReports = yield select(state => state.user.report.upload)
+        uploadReports = deleteItemFromArray(uploadReports, id)
+
+        yield put({
+          type: 'saveUploadReport',
+          payload: uploadReports
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    // *updateItemFromReport({ id }, { put, select }) {
+    //   try {
+    //     let uploadReports = yield select(state => state.user.report.upload)
+    //     uploadReports = updateItemFromArray(uploadReports, id)
+
+    //     yield put({
+    //       type: 'saveUploadReport',
+    //       payload: uploadReports
+    //     })
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // }
   },
 };

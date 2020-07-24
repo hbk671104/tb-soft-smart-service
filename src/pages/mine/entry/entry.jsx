@@ -3,51 +3,25 @@ import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './entry.scss'
 
-import { constructSearchQuery } from '../../../utils/leancloud'
 import ResultDetail from '../../../components/ResultItem/detail'
 
 @connect(({ user }) => ({
-  currentUser: user.current
+  data: user.report.upload
 }))
 export default class Entry extends Component {
   config = {
     navigationBarTitleText: '我的录入'
   }
 
-  state = {
-    result: null,
-    total: 0
-  }
-
   componentWillMount() { }
 
-  componentDidMount() {
-    this.queryObject = constructSearchQuery()
-    this.queryMyEntry()
-  }
+  componentDidMount() { }
 
   componentWillUnmount() { }
 
   componentDidShow() { }
 
   componentDidHide() { }
-
-  queryMyEntry = async () => {
-    try {
-      Taro.showLoading({ title: '加载中...' })
-      const { username } = this.props.currentUser
-      this.queryObject.equalTo('technican', username)
-      const reports = await this.queryObject.find()
-      this.setState({
-        result: reports.map(i => i.toJSON()),
-        total: reports.length
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
-  }
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
@@ -57,8 +31,8 @@ export default class Entry extends Component {
   }
 
   render() {
-    const { result, total } = this.state
-    if (!result) {
+    const { data } = this.props
+    if (!data) {
       return null
     }
 
@@ -67,14 +41,14 @@ export default class Entry extends Component {
         <View className='header'>
           <Text className='query-title'>
             <Text style={'font-weight: bold;text-decoration: underline;'}>
-              {total}
+              {data.length}
             </Text>{' '}
             条记录
           </Text>
         </View>
-        {result.length > 0 ? (
+        {data.length > 0 ? (
           <View>
-            {result.map(item => (
+            {data.map(item => (
               <ResultDetail
                 key={item.objectId}
                 data={item}
