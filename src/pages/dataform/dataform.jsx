@@ -10,10 +10,12 @@ import {
   Button
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import { AtNoticebar } from 'taro-ui'
 import './dataform.scss'
 
-import dayjs from 'dayjs'
-import { AtNoticebar } from 'taro-ui'
+import {
+  constructReportObjectToWrite
+} from '../../utils/leancloud'
 
 const radio_color = 'rgb(186, 44, 40)'
 
@@ -35,6 +37,7 @@ export default class DataForm extends Component {
     if (id) {
       Taro.setNavigationBarTitle({ title: '更新记录' })
       this.queryItem()
+      this.updateObject = constructReportObjectToWrite(id)
     } else {
       Taro.setNavigationBarTitle({ title: '添加记录' })
       this.getTempData()
@@ -97,25 +100,9 @@ export default class DataForm extends Component {
   }
 
   updateReport = () => {
-    // try {
-    //   Taro.showLoading({ title: '更新中...' })
-    //   await this.updateObject.save()
-    //   Taro.navigateBack()
-    //   Taro.showToast({
-    //     title: '已更新',
-    //     icon: 'success'
-    //   })
-    // } catch (error) {
-    //   console.error(error)
-    // } finally {
-    //   Taro.hideLoading()
-    // }
-    const { id } = this.$router.params
-    const { data } = this.state
     this.props.dispatch({
       type: 'report/update',
-      id,
-      payload: data,
+      object: this.updateObject,
       callback: () => {
         Taro.navigateBack()
         Taro.showToast({
@@ -218,8 +205,11 @@ export default class DataForm extends Component {
       },
       () => {
         const { id } = this.$router.params
-        if (id) return
-        this.setTempData()
+        if (id) {
+          this.updateObject.set(key, value)
+        } else {
+          this.setTempData()
+        }
       }
     )
   }

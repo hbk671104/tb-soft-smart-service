@@ -122,18 +122,18 @@ export default {
         console.error(error)
       }
     },
-    // *updateItemFromReport({ id }, { put, select }) {
-    //   try {
-    //     let uploadReports = yield select(state => state.user.report.upload)
-    //     uploadReports = updateItemFromArray(uploadReports, id)
+    *updateItemFromReport({ payload }, { put, select }) {
+      try {
+        let uploadReports = yield select(state => state.user.report.upload)
+        uploadReports = updateItemFromArray(uploadReports, payload)
 
-    //     yield put({
-    //       type: 'saveUploadReport',
-    //       payload: uploadReports
-    //     })
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // }
+        yield put({
+          type: 'saveUploadReport',
+          payload: uploadReports
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
 };

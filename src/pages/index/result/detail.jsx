@@ -3,23 +3,17 @@ import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './result.scss'
 
-import {
-  constructReportObjectToWrite
-} from '../../../utils/leancloud'
 import ResultDetail from '../../../components/ResultItem/detail'
 import Floater from '../../../components/Floater'
 
 @connect(({ user, report }) => ({
   currentUser: user.current,
+  data: report.detail,
   fromSearch: !!report.search
 }))
 export default class Detail extends Component {
   config = {
     navigationBarTitleText: '报告详情'
-  }
-
-  state = {
-    data: null
   }
 
   componentWillMount() { }
@@ -28,7 +22,11 @@ export default class Detail extends Component {
     this.queryItem()
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {
+    this.props.dispatch({
+      type: 'report/removeDetail'
+    })
+  }
 
   componentDidShow() { }
 
@@ -61,7 +59,7 @@ export default class Detail extends Component {
 
   onEditPress = e => {
     e.stopPropagation()
-    const { data } = this.state
+    const { data } = this.props
     Taro.navigateTo({
       url: `../../dataform/dataform?id=${data.objectId}`
     })
@@ -73,11 +71,6 @@ export default class Detail extends Component {
     this.props.dispatch({
       type: 'report/get',
       id,
-      callback: data => {
-        this.setState({
-          data
-        })
-      },
       complete: () => {
         Taro.hideNavigationBarLoading()
       }
@@ -85,7 +78,7 @@ export default class Detail extends Component {
   }
 
   deleteItem = async () => {
-    const { data: { objectId } } = this.state
+    const { data: { objectId } } = this.props
     this.props.dispatch({
       type: 'report/delete',
       id: objectId,
@@ -121,7 +114,7 @@ export default class Detail extends Component {
   // }
 
   render() {
-    const { data, fromSearch } = this.state
+    const { data, fromSearch } = this.props
     if (!data) {
       return null
     }

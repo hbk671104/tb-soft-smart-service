@@ -7,14 +7,21 @@ import {
 export default {
   namespace: 'report',
   state: {
-    search: null
+    search: null,
+    detail: null
   },
   reducers: {
-    save(state, { payload }) {
-      return { ...state, ...payload };
+    saveDetail(state, { payload }) {
+      return {
+        ...state,
+        detail: payload
+      };
     },
-    saveMore(state, { payload: list }) {
-      return { ...state, list: [...state.list, ...list] };
+    removeDetail(state) {
+      return {
+        ...state,
+        detail: null
+      };
     },
   },
   effects: {
@@ -24,7 +31,7 @@ export default {
         console.log(err)
       }
     },
-    *get({ id, callback, complete }, { call }) {
+    *get({ id, callback, complete }, { call, put }) {
       try {
         const query = constructSearchQuery()
         let report = yield call(async () => await query.get(id))
@@ -32,6 +39,11 @@ export default {
 
         if (callback) {
           yield call(callback, report)
+        } else {
+          yield put({
+            type: 'saveDetail',
+            payload: report
+          })
         }
       } catch (error) {
         console.error(error)
@@ -45,6 +57,7 @@ export default {
       try {
         const object = constructReportObjectToWrite(id)
         yield call(async () => await object.destroy())
+        // delete from my report list
         yield put({
           type: 'user/deleteItemFromReport',
           id
@@ -73,17 +86,26 @@ export default {
         console.log(error)
       }
     },
-    *update({ id, payload, callback }, { call, put }) {
+    *update({ object, callback }, { call, put, all }) {
       try {
         // TODO: set all the shit
-        const object = constructReportObjectToWrite(id)
-        yield call(async () => await object.save())
-        yield put({
-          type: 'user/fetchUploadReport'
-        })
+        let report = yield call(async () => await object.save())
+        report = report.toJSON()
+        yield all([
+          // reload detail
+          put({
+            type: 'get',
+            id: report.objectId
+          }),
+          // update my report list
+          put({
+            type: 'user/updateItemFromReport',
+            payload: report
+          })
+        ])
 
         if (callback) {
-          yield call(callback, result)
+          yield call(callback)
         }
       } catch (error) {
         console.log(error)
