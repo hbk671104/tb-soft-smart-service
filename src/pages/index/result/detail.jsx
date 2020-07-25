@@ -9,7 +9,7 @@ import Floater from '../../../components/Floater'
 @connect(({ user, report }) => ({
   currentUser: user.current,
   data: report.detail,
-  fromSearch: !!report.search
+  fromSearch: !!report.search.data
 }))
 export default class Detail extends Component {
   config = {

@@ -117,7 +117,7 @@ export default {
         console.error(error)
       }
     },
-    *create({ payload, callback }, { call }) {
+    *create({ payload, callback }, { call, put }) {
       try {
         const report = constructReportObject(payload)
         let result = yield call(async () => await report.save())
