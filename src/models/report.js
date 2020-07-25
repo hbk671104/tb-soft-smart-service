@@ -7,10 +7,28 @@ import {
 export default {
   namespace: 'report',
   state: {
-    search: null,
+    search: {
+      hit: null,
+      data: null
+    },
     detail: null
   },
   reducers: {
+    saveSearch(state, { payload }) {
+      return {
+        ...state,
+        search: payload
+      }
+    },
+    removeSearch(state) {
+      return {
+        ...state,
+        search: {
+          hit: null,
+          data: null
+        }
+      }
+    },
     saveDetail(state, { payload }) {
       return {
         ...state,
@@ -25,10 +43,39 @@ export default {
     },
   },
   effects: {
-    *search(_, { all, call, put }) {
+    *search({ object, callback, complete }, { select, call, put }) {
       try {
+        let reports = yield call(async () => await object.find())
+        reports = reports.map(r => r.toJSON())
+        const currentHits = yield select(state => state.report.search.hits)
+        const currentData = yield select(state => state.report.search.data)
+        if (currentHits) {
+          yield put({
+            type: 'saveSearch',
+            payload: {
+              hits: currentHits,
+              data: [...currentData, ...reports]
+            }
+          })
+        } else {
+          yield put({
+            type: 'saveSearch',
+            payload: {
+              hits: object.hits(),
+              data: reports
+            }
+          })
+        }
+
+        if (callback) {
+          yield call(callback)
+        }
       } catch (err) {
-        console.log(err)
+        console.error(err)
+      } finally {
+        if (complete) {
+          yield call(complete)
+        }
       }
     },
     *get({ id, callback, complete }, { call, put }) {

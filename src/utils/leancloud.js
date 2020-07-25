@@ -14,6 +14,8 @@ export const constructSearchQueryObject = query_string => {
   const queryObject = new AV.SearchQuery('ErrorReport')
   queryObject.queryString(query_string)
   queryObject.limit(15)
+  queryObject.addDescending('updatedAt')
+  queryObject.addDescending('createdAt')
   return queryObject
 }
 

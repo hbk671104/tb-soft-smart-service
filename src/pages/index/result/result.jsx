@@ -1,19 +1,19 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Icon } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import './result.scss'
 
 import { constructSearchQueryObject } from '../../../utils/leancloud'
 import ResultItem from '../../../components/ResultItem'
 
+@connect(({ report }) => ({
+  hits: report.search.hits,
+  data: report.search.data,
+}))
 export default class Result extends Component {
   config = {
     navigationBarTitleText: '查询结果',
     onReachBottomDistance: 360
-  }
-
-  state = {
-    result: null,
-    total: 0
   }
 
   componentWillMount() { }
@@ -24,7 +24,11 @@ export default class Result extends Component {
     this.queryReport()
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {
+    this.props.dispatch({
+      type: 'report/removeSearch'
+    })
+  }
 
   componentDidShow() { }
 
@@ -34,37 +38,21 @@ export default class Result extends Component {
     this.queryMore()
   }
 
-  queryReport = async () => {
-    try {
-      Taro.showLoading({ title: '查询中...' })
-      const reports = await this.queryObject.find()
-      this.setState({
-        result: reports.map(i => i.toJSON()),
-        total: this.queryObject.hits()
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
+  queryReport = () => {
+    Taro.showLoading({ title: '查询中...' })
+    this.props.dispatch({
+      type: 'report/search',
+      object: this.queryObject,
+      complete: () => {
+        Taro.hideLoading()
+      }
+    })
   }
 
-  queryMore = async () => {
-    const { total, result } = this.state
-    if (total === result.length) return
-    try {
-      Taro.showLoading({ title: '加载更多...' })
-      const reports = await this.queryObject.find()
-      this.setState(({ result: prevResult }) => {
-        return {
-          result: [...prevResult, ...reports.map(i => i.toJSON())]
-        }
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      Taro.hideLoading()
-    }
+  queryMore = () => {
+    const { hits, data } = this.props
+    if (hits === data.length) return
+    this.queryReport()
   }
 
   handleOnItemClick = item => e => {
@@ -77,8 +65,8 @@ export default class Result extends Component {
 
   render() {
     const { query_string } = this.$router.params
-    const { result, total } = this.state
-    if (!result) {
+    const { data, hits } = this.props
+    if (!data || !hits) {
       return null
     }
 
@@ -88,14 +76,14 @@ export default class Result extends Component {
           <Text className='query-title'>
             <Text style={'font-weight: bold;'}>"{query_string}"</Text> 共找到{' '}
             <Text style={'font-weight: bold;text-decoration: underline;'}>
-              {total}
+              {hits}
             </Text>{' '}
             条记录
           </Text>
         </View>
-        {result.length > 0 ? (
+        {data.length > 0 ? (
           <View>
-            {result.map(item => (
+            {data.map(item => (
               <ResultItem
                 key={item.objectId}
                 query={query_string}
