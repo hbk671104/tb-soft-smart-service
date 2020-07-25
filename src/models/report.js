@@ -135,7 +135,6 @@ export default {
     },
     *update({ object, callback }, { call, put, all }) {
       try {
-        // TODO: set all the shit
         let report = yield call(async () => await object.save())
         report = report.toJSON()
         yield all([

@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Block } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './result.scss'
 
@@ -126,29 +126,34 @@ export default class Detail extends Component {
           data={data}
         // onDocClick={this.onDocClick}
         />
-        {
-          technican === username && !fromSearch &&
-          <View className='at-row at-row__justify--center operation-group'>
-            <View className='at-col at-col-4 floater-group'>
-              <Floater
-                relative
-                image={require('../../../assets/edit.png')}
-                onClick={this.onEditPress}
-              />
-            </View>
-            <View className='at-col at-col-4 floater-group'>
-              <Floater
-                relative
-                image={require('../../../assets/delete.png')}
-                onClick={this.onDeletePress}
-              />
-            </View>
+        <View className='at-row at-row__justify--center operation-group'>
+          {
+            technican === username && !fromSearch &&
+            <Block>
+              <View className='at-col at-col-4 floater-group'>
+                <Floater
+                  relative
+                  image={require('../../../assets/edit.png')}
+                  onClick={this.onEditPress}
+                />
+              </View>
+              <View className='at-col at-col-4 floater-group'>
+                <Floater
+                  relative
+                  image={require('../../../assets/delete.png')}
+                  onClick={this.onDeletePress}
+                />
+              </View>
+            </Block>
+          }
+          <View className='at-col at-col-4 floater-group'>
+            <Floater
+              relative
+              image={require('../../../assets/share.png')}
+              openType='share'
+            />
           </View>
-        }
-        <Floater
-          image={require('../../../assets/share.png')}
-          openType='share'
-        />
+        </View>
       </View>
     )
   }
