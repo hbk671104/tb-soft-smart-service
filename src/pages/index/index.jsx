@@ -13,17 +13,17 @@ export default class Index extends Component {
     navigationBarTitleText: '自助查询'
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onConfirm = ({ detail: { value } }) => {
     if (!value.trim()) return

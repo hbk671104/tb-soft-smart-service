@@ -33,14 +33,14 @@ export default {
       return {
         ...state,
         detail: payload
-      };
+      }
     },
     removeDetail(state) {
       return {
         ...state,
         detail: null
-      };
-    },
+      }
+    }
   },
   effects: {
     *search({ object, callback, complete }, { select, call, put }) {
@@ -156,6 +156,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
-  },
-};
+    }
+  }
+}

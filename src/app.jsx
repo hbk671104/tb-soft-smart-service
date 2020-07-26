@@ -17,13 +17,13 @@ const dva = dvaInit()
 const store = dva.getStore()
 
 class App extends Component {
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
-  componentDidCatchError() { }
+  componentDidCatchError() {}
 
   config = {
     pages: [

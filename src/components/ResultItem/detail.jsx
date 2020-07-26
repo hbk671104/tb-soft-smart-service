@@ -12,7 +12,7 @@ const ResultDetail = ({ data, onClick }) => {
     error_cause_detail,
     software_type,
     solution_detail,
-    software_state,
+    software_state
     // related_files
   } = data
   return (
@@ -121,7 +121,7 @@ ResultDetail.defaultProps = {
   data: {
     client_name: null
   },
-  onClick: () => null,
+  onClick: () => null
   // onDocClick: () => null
 }
 

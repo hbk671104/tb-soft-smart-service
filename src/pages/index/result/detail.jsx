@@ -16,7 +16,7 @@ export default class Detail extends Component {
     navigationBarTitleText: '报告详情'
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     this.queryItem()
@@ -28,9 +28,9 @@ export default class Detail extends Component {
     })
   }
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onShareAppMessage(info) {
     const { id } = this.$router.params
@@ -78,7 +78,9 @@ export default class Detail extends Component {
   }
 
   deleteItem = async () => {
-    const { data: { objectId } } = this.props
+    const {
+      data: { objectId }
+    } = this.props
     this.props.dispatch({
       type: 'report/delete',
       id: objectId,
@@ -124,11 +126,10 @@ export default class Detail extends Component {
       <View className='page result'>
         <ResultDetail
           data={data}
-        // onDocClick={this.onDocClick}
+          // onDocClick={this.onDocClick}
         />
         <View className='at-row at-row__justify--center operation-group'>
-          {
-            technican === username && !fromSearch &&
+          {technican === username && !fromSearch && (
             <Block>
               <View className='at-col at-col-4 floater-group'>
                 <Floater
@@ -145,7 +146,7 @@ export default class Detail extends Component {
                 />
               </View>
             </Block>
-          }
+          )}
           <View className='at-col at-col-4 floater-group'>
             <Floater
               relative

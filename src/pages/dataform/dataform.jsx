@@ -14,16 +14,14 @@ import { AtNoticebar } from 'taro-ui'
 import dayjs from 'dayjs'
 import './dataform.scss'
 
-import {
-  constructReportObjectToWrite
-} from '../../utils/leancloud'
+import { constructReportObjectToWrite } from '../../utils/leancloud'
 
 const radio_color = 'rgb(186, 44, 40)'
 
 @connect(({ user, loading }) => ({
   currentUser: user.current,
-  creating: loading.effects["report/create"],
-  updating: loading.effects["report/update"],
+  creating: loading.effects['report/create'],
+  updating: loading.effects['report/update']
 }))
 export default class DataForm extends Component {
   state = {
@@ -31,7 +29,7 @@ export default class DataForm extends Component {
     data: {}
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -45,11 +43,11 @@ export default class DataForm extends Component {
     }
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryItem = () => {
     const { id } = this.$router.params

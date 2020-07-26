@@ -6,7 +6,7 @@ import './launcher.scss'
 
 @connect(() => ({}))
 export default class Launcher extends Component {
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     this.props.dispatch({
@@ -19,11 +19,11 @@ export default class Launcher extends Component {
     })
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   render() {
     return (

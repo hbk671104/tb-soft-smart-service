@@ -3,7 +3,11 @@ import './style.scss'
 
 const Floater = ({ image, openType, relative, onClick }) => {
   return (
-    <View className={`${relative ? 'relative-container' : 'container'} size custom-container`}>
+    <View
+      className={`${
+        relative ? 'relative-container' : 'container'
+      } size custom-container`}
+    >
       <Button className='button' openType={openType} onClick={onClick}>
         <Image className='image' src={image} />
       </Button>

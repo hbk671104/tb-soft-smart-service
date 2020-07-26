@@ -21,7 +21,7 @@ export default {
       return {
         ...state,
         current: payload
-      };
+      }
     },
     removeCurrent(state) {
       return {
@@ -135,5 +135,5 @@ export default {
         console.error(error)
       }
     }
-  },
-};
+  }
+}

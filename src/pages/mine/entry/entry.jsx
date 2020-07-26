@@ -13,15 +13,15 @@ export default class Entry extends Component {
     navigationBarTitleText: '我的录入'
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
@@ -62,16 +62,16 @@ export default class Entry extends Component {
             </View>
           </View>
         ) : (
-            <View>
-              <View className='empty'>
-                <Image
-                  className='empty-image'
-                  src={require('../../../assets/empty.png')}
-                />
-                <Text className='empty-text'>暂无记录</Text>
-              </View>
+          <View>
+            <View className='empty'>
+              <Image
+                className='empty-image'
+                src={require('../../../assets/empty.png')}
+              />
+              <Text className='empty-text'>暂无记录</Text>
             </View>
-          )}
+          </View>
+        )}
       </View>
     )
   }

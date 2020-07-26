@@ -12,8 +12,8 @@ import './login.scss'
 const COUNTDOWN_LENGTH = 30
 
 @connect(({ loading }) => ({
-  requestingSMSCode: loading.effects["user/requestSMSCode"],
-  smsLoggingIn: loading.effects["user/smsLogin"]
+  requestingSMSCode: loading.effects['user/requestSMSCode'],
+  smsLoggingIn: loading.effects['user/smsLogin']
 }))
 export default class Login extends Component {
   state = {
@@ -23,17 +23,17 @@ export default class Login extends Component {
     countdown: COUNTDOWN_LENGTH
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   componentDidShow() {
     Taro.hideHomeButton()
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   config = {
     navigationBarTitleText: '用户登录'
