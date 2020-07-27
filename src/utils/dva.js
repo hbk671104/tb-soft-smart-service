@@ -1,7 +1,8 @@
 import { create } from 'dva-core';
 import createLoading from 'dva-loading';
-import { Provider } from '@tarojs/redux'
+import { autoRehydrate } from 'redux-persist';
 import models from '../models'
+import { set as setGlobalData } from './global'
 
 const middlewares = []
 if (process.env.NODE_ENV === `development`) {
@@ -13,13 +14,14 @@ const initialOptions = {
   initialState: {},
   models,
   onAction: middlewares,
+  extraEnhancers: [autoRehydrate()],
   onError(e, dispatch) {
     // TODO: global error handling with dispath
     console.error(error)
   },
 }
 
-const init = (option = initialOptions) => {
+export const init = (option = initialOptions) => {
   const app = create(option)
 
   // HMR workaround
@@ -32,7 +34,6 @@ const init = (option = initialOptions) => {
   // get store
   app.getStore = () => app._store;
   app.start()
-  return app;
-}
 
-export default init
+  setGlobalData('dva', app)
+}

@@ -5,7 +5,7 @@ import './app.scss'
 
 // init
 import './utils/init'
-import dvaInit from './utils/dva'
+import { get as getGlobalData } from './utils/global'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -13,7 +13,7 @@ import dvaInit from './utils/dva'
 //   require('nerv-devtools')
 // }
 
-const dva = dvaInit()
+const dva = getGlobalData('dva')
 const store = dva.getStore()
 
 class App extends Component {
