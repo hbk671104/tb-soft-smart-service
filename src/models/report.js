@@ -40,7 +40,7 @@ export default {
         ...state,
         detail: null
       };
-    },
+    }
   },
   effects: {
     *search({ object, callback, complete }, { select, call, put }) {

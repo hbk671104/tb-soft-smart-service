@@ -34,7 +34,7 @@ const persist = () => {
   const store = dva.getStore()
   return new Promise((resolve) => {
     persistStore(store, {
-      whitelist: ['report'],
+      whitelist: ['user'],
       storage: engine
     }, () => {
       resolve()

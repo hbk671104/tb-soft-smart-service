@@ -22,6 +22,7 @@ const radio_color = 'rgb(186, 44, 40)'
 
 @connect(({ user, loading }) => ({
   currentUser: user.current,
+  temp: user.temp,
   creating: loading.effects["report/create"],
   updating: loading.effects["report/update"],
 }))
@@ -230,40 +231,30 @@ export default class DataForm extends Component {
 
   setTempData = () => {
     const { data } = this.state
-    try {
-      Taro.setStorageSync(
-        'temp_dataform',
-        JSON.stringify({
-          last_edit_at: dayjs().format('lll'),
-          data
-        })
-      )
-    } catch (error) {
-      console.error(error)
-    }
+    this.props.dispatch({
+      type: 'user/saveTemp',
+      payload: {
+        last_edit_at: dayjs().format('lll'),
+        data
+      }
+    })
   }
 
   getTempData = () => {
-    try {
-      const dataform = Taro.getStorageSync('temp_dataform')
-      if (dataform) {
-        const { last_edit_at, data } = JSON.parse(dataform)
-        this.tempform = data
-        this.setState({
-          last_edit_at
-        })
-      }
-    } catch (error) {
-      console.error(error)
+    const { temp } = this.props
+    if (temp) {
+      const { last_edit_at, data } = temp
+      this.tempform = data
+      this.setState({
+        last_edit_at
+      })
     }
   }
 
   removeTempData = () => {
-    try {
-      Taro.removeStorageSync('temp_dataform')
-    } catch (error) {
-      console.error(error)
-    }
+    this.props.dispatch({
+      type: 'user/removeTemp'
+    })
   }
 
   render() {

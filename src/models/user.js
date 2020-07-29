@@ -14,6 +14,10 @@ export default {
     current: null,
     report: {
       upload: null
+    },
+    temp: {
+      last_edit_at: null,
+      data: null
     }
   },
   reducers: {
@@ -37,7 +41,22 @@ export default {
           upload: payload
         }
       }
-    }
+    },
+    saveTemp(state, { payload }) {
+      return {
+        ...state,
+        temp: payload
+      }
+    },
+    removeTemp(state) {
+      return {
+        ...state,
+        temp: {
+          last_edit_at: null,
+          data: null
+        }
+      };
+    },
   },
   effects: {
     *checkLoginStatus({ callback }, { call, put }) {
