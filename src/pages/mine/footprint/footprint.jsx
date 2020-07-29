@@ -6,7 +6,7 @@ import './footprint.scss'
 import ResultDetail from '../../../components/ResultItem/detail'
 
 @connect(({ user }) => ({
-  data: user.report.footprint
+  data: user.report.footprint || []
 }))
 export default class Footprint extends Component {
   config = {
@@ -32,10 +32,6 @@ export default class Footprint extends Component {
 
   render() {
     const { data } = this.props
-    if (!data) {
-      return null
-    }
-
     return (
       <View className='page result'>
         <View className='header'>
