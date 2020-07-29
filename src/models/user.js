@@ -13,7 +13,8 @@ export default {
   state: {
     current: null,
     report: {
-      upload: null
+      upload: null,
+      footprint: null
     },
     temp: {
       last_edit_at: null,
@@ -39,6 +40,24 @@ export default {
         report: {
           ...state.report,
           upload: payload
+        }
+      }
+    },
+    saveFootprint(state, { payload }) {
+      // buffer
+      let footprint = state.report.footprint || []
+      if (footprint.length === 100) {
+        footprint.pop()
+      }
+      // remove duplicate
+      footprint = footprint.filter(i => i.data.objectId !== payload.data.objectId)
+      footprint.unshift(payload)
+
+      return {
+        ...state,
+        report: {
+          ...state.report,
+          footprint
         }
       }
     },

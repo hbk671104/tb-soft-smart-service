@@ -74,11 +74,10 @@ export default class Mine extends Component {
     })
   }
 
-  onBrowsingHistoryClick = e => {
+  onFootprintClick = e => {
     e.stopPropagation()
-    Taro.showToast({
-      title: '即将上线，敬请期待。',
-      icon: 'none'
+    Taro.navigateTo({
+      url: './footprint/footprint'
     })
   }
 
@@ -123,7 +122,7 @@ export default class Mine extends Component {
             <AtListItem
               className='list_item'
               title='我的足迹'
-              onClick={this.onBrowsingHistoryClick}
+              onClick={this.onFootprintClick}
               arrow='right'
               thumb={require('../../assets/footprint.png')}
             />

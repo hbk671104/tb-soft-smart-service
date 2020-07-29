@@ -35,7 +35,8 @@ class App extends Component {
       'pages/index/result/detail',
       'pages/dataform/dataform',
       'pages/mine/mine',
-      'pages/mine/entry/entry'
+      'pages/mine/entry/entry',
+      'pages/mine/footprint/footprint'
     ],
     tabBar: {
       color: '#9AA0A6',

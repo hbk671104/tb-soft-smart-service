@@ -1,8 +1,11 @@
 import { View, Text } from '@tarojs/components'
+import dayjs from 'dayjs'
 import './style.scss'
 
 const ResultDetail = ({ data, onClick }) => {
   const {
+    createdAt,
+    updatedAt,
     client_name,
     serviced_at,
     technican,
@@ -17,6 +20,22 @@ const ResultDetail = ({ data, onClick }) => {
   } = data
   return (
     <View className='container' onClick={onClick}>
+      <View className='item-container'>
+        <Text className='title'>
+          上传时间：
+          <Text className='content' style='text-decoration:underline;'>
+            {dayjs(createdAt).format('lll')}
+          </Text>
+        </Text>
+      </View>
+      <View className='item-container'>
+        <Text className='title'>
+          更新时间：
+          <Text className='content' style='text-decoration:underline;'>
+            {dayjs(updatedAt).format('lll')}
+          </Text>
+        </Text>
+      </View>
       {!!client_name && (
         <View className='item-container'>
           <Text className='title'>

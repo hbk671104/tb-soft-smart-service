@@ -5,11 +5,11 @@ import './result.scss'
 
 import ResultDetail from '../../../components/ResultItem/detail'
 import Floater from '../../../components/Floater'
+import dayjs from 'dayjs'
 
 @connect(({ user, report }) => ({
   currentUser: user.current,
-  data: report.detail,
-  fromSearch: !!report.search.data
+  data: report.detail
 }))
 export default class Detail extends Component {
   config = {
@@ -73,6 +73,18 @@ export default class Detail extends Component {
       id,
       complete: () => {
         Taro.hideNavigationBarLoading()
+        this.saveItemFootprint()
+      }
+    })
+  }
+
+  saveItemFootprint = () => {
+    const { data } = this.props
+    this.props.dispatch({
+      type: 'user/saveFootprint',
+      payload: {
+        data,
+        last_viewed_at: dayjs().format('lll')
       }
     })
   }
@@ -114,7 +126,8 @@ export default class Detail extends Component {
   // }
 
   render() {
-    const { data, fromSearch } = this.props
+    const { fromMyEntry } = this.$router.params
+    const { data } = this.props
     if (!data) {
       return null
     }
@@ -128,7 +141,7 @@ export default class Detail extends Component {
         />
         <View className='at-row at-row__justify--center operation-group'>
           {
-            technican === username && !fromSearch &&
+            technican === username && fromMyEntry &&
             <Block>
               <View className='at-col at-col-4 floater-group'>
                 <Floater

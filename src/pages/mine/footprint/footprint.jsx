@@ -1,16 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import './entry.scss'
+import './footprint.scss'
 
 import ResultDetail from '../../../components/ResultItem/detail'
 
 @connect(({ user }) => ({
-  data: user.report.upload
+  data: user.report.footprint
 }))
-export default class Entry extends Component {
+export default class Footprint extends Component {
   config = {
-    navigationBarTitleText: '我的录入'
+    navigationBarTitleText: '我的足迹'
   }
 
   componentWillMount() { }
@@ -26,7 +26,7 @@ export default class Entry extends Component {
   handleOnItemClick = item => e => {
     e.stopPropagation()
     Taro.navigateTo({
-      url: `../../index/result/detail?id=${item.objectId}&fromMyEntry=${true}`
+      url: `../../index/result/detail?id=${item.objectId}`
     })
   }
 
@@ -49,11 +49,20 @@ export default class Entry extends Component {
         {data.length > 0 ? (
           <View>
             {data.map(item => (
-              <ResultDetail
-                key={item.objectId}
-                data={item}
-                onClick={this.handleOnItemClick(item)}
-              />
+              <View key={item.objectId}>
+                <View className='item-header'>
+                  <Text className='viewed-at'>
+                    浏览于{' '}
+                    <Text style='text-decoration:underline;'>
+                      {item.last_viewed_at}
+                    </Text>
+                  </Text>
+                </View>
+                <ResultDetail
+                  data={item.data}
+                  onClick={this.handleOnItemClick(item.data)}
+                />
+              </View>
             ))}
             <View className='footer'>
               <Text className='footer-text'>

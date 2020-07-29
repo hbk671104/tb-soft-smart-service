@@ -1,0 +1,9 @@
+@import '../../index/result/result.scss';
+
+.item-header {
+    margin-bottom: 12px;
+    .viewed-at {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 24px;
+    }
+}
