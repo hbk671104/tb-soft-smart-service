@@ -26,7 +26,7 @@ export default class Entry extends Component {
   handleOnItemClick = item => e => {
     e.stopPropagation()
     Taro.navigateTo({
-      url: `../../index/result/detail?id=${item.objectId}`
+      url: `../../index/result/detail?id=${item.objectId}&fromMyEntry=${true}`
     })
   }
 

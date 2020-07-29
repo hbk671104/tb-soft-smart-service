@@ -13,7 +13,12 @@ export default {
   state: {
     current: null,
     report: {
-      upload: null
+      upload: null,
+      footprint: null
+    },
+    temp: {
+      last_edit_at: null,
+      data: null
     }
   },
   reducers: {
@@ -37,7 +42,40 @@ export default {
           upload: payload
         }
       }
-    }
+    },
+    saveFootprint(state, { payload }) {
+      // buffer
+      let footprint = state.report.footprint || []
+      if (footprint.length === 100) {
+        footprint.pop()
+      }
+      // remove duplicate
+      footprint = footprint.filter(i => i.data.objectId !== payload.data.objectId)
+      footprint.unshift(payload)
+
+      return {
+        ...state,
+        report: {
+          ...state.report,
+          footprint
+        }
+      }
+    },
+    saveTemp(state, { payload }) {
+      return {
+        ...state,
+        temp: payload
+      }
+    },
+    removeTemp(state) {
+      return {
+        ...state,
+        temp: {
+          last_edit_at: null,
+          data: null
+        }
+      };
+    },
   },
   effects: {
     *checkLoginStatus({ callback }, { call, put }) {
