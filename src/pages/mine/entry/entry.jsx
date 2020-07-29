@@ -6,7 +6,7 @@ import './entry.scss'
 import ResultDetail from '../../../components/ResultItem/detail'
 
 @connect(({ user }) => ({
-  data: user.report.upload
+  data: user.report.upload || []
 }))
 export default class Entry extends Component {
   config = {
@@ -32,10 +32,6 @@ export default class Entry extends Component {
 
   render() {
     const { data } = this.props
-    if (!data) {
-      return null
-    }
-
     return (
       <View className='page result'>
         <View className='header'>
