@@ -50,7 +50,9 @@ export default {
         footprint.pop()
       }
       // remove duplicate
-      footprint = footprint.filter(i => i.data.objectId !== payload.data.objectId)
+      footprint = footprint.filter(
+        i => i.data.objectId !== payload.data.objectId
+      )
       footprint.unshift(payload)
 
       return {
@@ -74,8 +76,8 @@ export default {
           last_edit_at: null,
           data: null
         }
-      };
-    },
+      }
+    }
   },
   effects: {
     *checkLoginStatus({ callback }, { call, put }) {

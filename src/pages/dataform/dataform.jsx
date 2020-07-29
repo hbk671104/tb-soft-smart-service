@@ -21,8 +21,8 @@ const radio_color = 'rgb(186, 44, 40)'
 @connect(({ user, loading }) => ({
   currentUser: user.current,
   temp: user.temp,
-  creating: loading.effects["report/create"],
-  updating: loading.effects["report/update"],
+  creating: loading.effects['report/create'],
+  updating: loading.effects['report/update']
 }))
 export default class DataForm extends Component {
   state = {
@@ -30,7 +30,7 @@ export default class DataForm extends Component {
     data: {}
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -44,11 +44,11 @@ export default class DataForm extends Component {
     }
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryItem = () => {
     const { id } = this.$router.params

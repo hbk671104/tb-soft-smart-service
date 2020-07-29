@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { persistStore } from 'redux-persist';
+import { persistStore } from 'redux-persist'
 import { get as getGlobalData } from './global'
 
 const engine = {
@@ -32,13 +32,17 @@ const engine = {
 const persist = () => {
   const dva = getGlobalData('dva')
   const store = dva.getStore()
-  return new Promise((resolve) => {
-    persistStore(store, {
-      whitelist: ['user'],
-      storage: engine
-    }, () => {
-      resolve()
-    })
+  return new Promise(resolve => {
+    persistStore(
+      store,
+      {
+        whitelist: ['user'],
+        storage: engine
+      },
+      () => {
+        resolve()
+      }
+    )
   })
 }
 

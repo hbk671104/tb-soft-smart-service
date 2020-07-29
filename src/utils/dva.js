@@ -1,6 +1,6 @@
-import { create } from 'dva-core';
-import createLoading from 'dva-loading';
-import { autoRehydrate } from 'redux-persist';
+import { create } from 'dva-core'
+import createLoading from 'dva-loading'
+import { autoRehydrate } from 'redux-persist'
 import models from '../models'
 import { set as setGlobalData } from './global'
 
