@@ -44,6 +44,15 @@ export default {
       }
     },
     saveFootprint(state, { payload }) {
+      if (Array.isArray(payload)) {
+        return {
+          ...state,
+          report: {
+            ...state.report,
+            footprint: payload
+          }
+        }
+      }
       // buffer
       let footprint = state.report.footprint || []
       if (footprint.length === 100) {
@@ -147,28 +156,44 @@ export default {
         console.error(error)
       }
     },
-    *deleteItemFromReport({ id }, { put, select }) {
+    *deleteItemFromReport({ id }, { all, put, select }) {
       try {
         let uploadReports = yield select(state => state.user.report.upload)
         uploadReports = deleteItemFromArray(uploadReports, id)
+        let footprintReports = yield select(state => state.user.report.footprint)
+        footprintReports = deleteItemFromArray(footprintReports, id)
 
-        yield put({
-          type: 'saveUploadReport',
-          payload: uploadReports
-        })
+        yield all([
+          put({
+            type: 'saveUploadReport',
+            payload: uploadReports
+          }),
+          put({
+            type: 'saveFootprint',
+            payload: footprintReports
+          })
+        ])
       } catch (error) {
         console.error(error)
       }
     },
-    *updateItemFromReport({ payload }, { put, select }) {
+    *updateItemFromReport({ payload }, { all, put, select }) {
       try {
         let uploadReports = yield select(state => state.user.report.upload)
         uploadReports = updateItemFromArray(uploadReports, payload)
+        let footprintReports = yield select(state => state.user.report.footprint)
+        footprintReports = updateItemFromArray(footprintReports, payload)
 
-        yield put({
-          type: 'saveUploadReport',
-          payload: uploadReports
-        })
+        yield all([
+          put({
+            type: 'saveUploadReport',
+            payload: uploadReports
+          }),
+          put({
+            type: 'saveFootprint',
+            payload: footprintReports
+          })
+        ])
       } catch (error) {
         console.error(error)
       }

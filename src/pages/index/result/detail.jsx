@@ -126,13 +126,11 @@ export default class Detail extends Component {
   // }
 
   render() {
-    const { fromMyEntry } = this.$router.params
     const { data } = this.props
     if (!data) {
       return null
     }
-    const { technican } = data
-    const { username } = this.props.currentUser
+    const { roles } = this.props.currentUser
     return (
       <View className='page result'>
         <ResultDetail
@@ -141,7 +139,7 @@ export default class Detail extends Component {
         />
         <View className='at-row at-row__justify--center operation-group'>
           {
-            technican === username && fromMyEntry &&
+            roles.includes('technician') &&
             <Block>
               <View className='at-col at-col-4 floater-group'>
                 <Floater
