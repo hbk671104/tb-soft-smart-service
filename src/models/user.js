@@ -160,7 +160,9 @@ export default {
       try {
         let uploadReports = yield select(state => state.user.report.upload)
         uploadReports = deleteItemFromArray(uploadReports, id)
-        let footprintReports = yield select(state => state.user.report.footprint)
+        let footprintReports = yield select(
+          state => state.user.report.footprint
+        )
         footprintReports = deleteItemFromArray(footprintReports, id)
 
         yield all([
@@ -181,7 +183,9 @@ export default {
       try {
         let uploadReports = yield select(state => state.user.report.upload)
         uploadReports = updateItemFromArray(uploadReports, payload)
-        let footprintReports = yield select(state => state.user.report.footprint)
+        let footprintReports = yield select(
+          state => state.user.report.footprint
+        )
         footprintReports = updateItemFromArray(footprintReports, payload)
 
         yield all([
