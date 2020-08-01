@@ -55,8 +55,8 @@ export default class Footprint extends Component {
                   </Text>
                 </View>
                 <ResultDetail
-                  data={item.data}
-                  onClick={this.handleOnItemClick(item.data)}
+                  data={item}
+                  onClick={this.handleOnItemClick(item)}
                 />
               </View>
             ))}

@@ -25,7 +25,10 @@ export const constructReportObject = form => {
 }
 
 export const constructSearchQuery = () => {
-  return new AV.Query('ErrorReport')
+  const queryObject = new AV.Query('ErrorReport')
+  queryObject.addDescending('updatedAt')
+  queryObject.addDescending('createdAt')
+  return queryObject
 }
 
 export const constructReportObjectToWrite = id => {

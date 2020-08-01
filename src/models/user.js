@@ -59,7 +59,7 @@ export default {
         footprint.pop()
       }
       // remove duplicate
-      footprint = footprint.filter(i => i.data.objectId !== payload.data.objectId)
+      footprint = footprint.filter(i => i.objectId !== payload.objectId)
       footprint.unshift(payload)
 
       return {

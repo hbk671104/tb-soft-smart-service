@@ -83,7 +83,7 @@ export default class Detail extends Component {
     this.props.dispatch({
       type: 'user/saveFootprint',
       payload: {
-        data,
+        ...data,
         last_viewed_at: dayjs().format('lll')
       }
     })
