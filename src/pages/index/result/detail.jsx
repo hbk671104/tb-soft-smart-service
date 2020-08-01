@@ -16,7 +16,7 @@ export default class Detail extends Component {
     navigationBarTitleText: '报告详情'
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     this.queryItem()
@@ -28,9 +28,9 @@ export default class Detail extends Component {
     })
   }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onShareAppMessage(info) {
     const { id } = this.$router.params
@@ -83,7 +83,7 @@ export default class Detail extends Component {
     this.props.dispatch({
       type: 'user/saveFootprint',
       payload: {
-        data,
+        ...data,
         last_viewed_at: dayjs().format('lll')
       }
     })
@@ -128,21 +128,20 @@ export default class Detail extends Component {
   // }
 
   render() {
-    const { fromMyEntry } = this.$router.params
     const { data } = this.props
     if (!data) {
       return null
     }
-    const { technican } = data
-    const { username } = this.props.currentUser
+    const { roles } = this.props.currentUser
     return (
       <View className='page result'>
         <ResultDetail
           data={data}
-          // onDocClick={this.onDocClick}
+        // onDocClick={this.onDocClick}
         />
         <View className='at-row at-row__justify--center operation-group'>
-          {technican === username && fromMyEntry && (
+          {
+            roles.includes('technician') &&
             <Block>
               <View className='at-col at-col-4 floater-group'>
                 <Floater
