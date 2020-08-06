@@ -10,9 +10,9 @@ export const init = () => {
   })
 }
 
-export const constructSearchQueryObject = query_string => {
+export const constructSearchQueryObject = queryString => {
   const queryObject = new AV.SearchQuery('ErrorReport')
-  queryObject.queryString(query_string)
+  queryObject.queryString(queryString)
   queryObject.limit(15)
   queryObject.addDescending('updatedAt')
   queryObject.addDescending('createdAt')
@@ -24,8 +24,8 @@ export const constructReportObject = form => {
   return avObjectMultiSet(form)(report)
 }
 
-export const constructSearchQuery = () => {
-  const queryObject = new AV.Query('ErrorReport')
+export const constructSearchQuery = (targetClass = 'ErrorReport') => {
+  const queryObject = new AV.Query(targetClass)
   queryObject.addDescending('updatedAt')
   queryObject.addDescending('createdAt')
   return queryObject
@@ -35,10 +35,17 @@ export const constructReportObjectToWrite = id => {
   return AV.Object.createWithoutData('ErrorReport', id)
 }
 
-export const buildDocument = (name, path) => {
+export const buildFile = (name, path) => {
   return new AV.File(name, { blob: { uri: path } })
 }
 
-export const buildDocumentToDelete = id => {
+export const buildDocument = (file, path) => {
+  const doc = new AV.Object('Document')
+  doc.set('path', path)
+  doc.set('file', file)
+  return doc
+}
+
+export const buildFileToDelete = id => {
   return AV.File.createWithoutData(id)
 }

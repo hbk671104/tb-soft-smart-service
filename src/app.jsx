@@ -17,13 +17,13 @@ const dva = getGlobalData('dva')
 const store = dva.getStore()
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [
@@ -34,6 +34,7 @@ class App extends Component {
       'pages/index/result/result',
       'pages/index/result/detail',
       'pages/dataform/dataform',
+      'pages/document/document',
       'pages/mine/mine',
       'pages/mine/entry/entry',
       'pages/mine/footprint/footprint'
@@ -49,6 +50,12 @@ class App extends Component {
           text: '首页',
           iconPath: './assets/tab/home.png',
           selectedIconPath: './assets/tab/home_selected.png'
+        },
+        {
+          pagePath: 'pages/document/document',
+          text: '文档',
+          iconPath: './assets/tab/document.png',
+          selectedIconPath: './assets/tab/document_selected.png'
         },
         {
           pagePath: 'pages/mine/mine',

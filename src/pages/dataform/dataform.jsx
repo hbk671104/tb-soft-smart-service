@@ -30,7 +30,7 @@ export default class DataForm extends Component {
     data: {}
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -44,11 +44,11 @@ export default class DataForm extends Component {
     }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   queryItem = () => {
     const { id } = this.$router.params
@@ -129,39 +129,6 @@ export default class DataForm extends Component {
       }
     })
   }
-
-  // onDocChoose = async e => {
-  //   e.stopPropagation()
-  //   try {
-  //     const { tempFiles } = await Taro.chooseMessageFile({
-  //       count: 5,
-  //       type: 'file'
-  //     })
-  //     this.saveFile(tempFiles)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  // saveFile = async files => {
-  //   const docs = files.map(({ name, path }) => buildDocument(name, path))
-  //   try {
-  //     Taro.showLoading({ title: '上传中...' })
-  //     let result = await Promise.all(
-  //       docs.map(d => d.save({ keepFileName: true }))
-  //     )
-  //     result = result.map(r => r.toJSON())
-  //     this.setState(({ upload_files }) => {
-  //       return {
-  //         upload_files: !upload_files ? result : [...upload_files, ...result]
-  //       }
-  //     })
-  //   } catch (error) {
-  //     console.error(error)
-  //   } finally {
-  //     Taro.hideLoading()
-  //   }
-  // }
 
   // onDeleteClick = item => async e => {
   //   e.stopPropagation()
