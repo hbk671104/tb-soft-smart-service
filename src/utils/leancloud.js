@@ -39,11 +39,15 @@ export const buildFile = (name, path) => {
   return new AV.File(name, { blob: { uri: path } })
 }
 
-export const buildDocument = (file, path) => {
+export const buildDocument = (file, category) => {
   const doc = new AV.Object('Document')
-  doc.set('path', path)
+  doc.set('category', category)
   doc.set('file', file)
   return doc
+}
+
+export const buildDocumentToDelete = id => {
+  return AV.Object.createWithoutData('Document', id);
 }
 
 export const buildFileToDelete = id => {

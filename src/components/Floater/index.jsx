@@ -1,12 +1,11 @@
 import { View, Button, Image } from '@tarojs/components'
 import './style.scss'
 
-const Floater = ({ image, openType, relative, onClick }) => {
+const Floater = ({ style, image, openType, relative, onClick }) => {
   return (
     <View
-      className={`${
-        relative ? 'relative-container' : 'container'
-      } size custom-container`}
+      className={`${relative ? 'relative-container' : 'container'} size`}
+      style={style}
     >
       <Button className='button' openType={openType} onClick={onClick}>
         <Image className='image' src={image} />
@@ -14,8 +13,6 @@ const Floater = ({ image, openType, relative, onClick }) => {
     </View>
   )
 }
-
-Floater.externalClasses = ['custom-container']
 
 Floater.defaultProps = {
   image: null,
