@@ -138,6 +138,26 @@ export default {
       } catch (error) {
         console.error(error)
       }
+    },
+    *changeCategory({ payload }, { select, put }) {
+      try {
+        yield put({
+          type: 'saveCategory',
+          payload
+        })
+        const { category } = payload
+        if (category) {
+          const { data } = yield select(state => state.document[category])
+          if (!data) {
+            yield put({
+              type: 'fetch',
+              category
+            })
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }
