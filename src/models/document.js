@@ -14,30 +14,10 @@ export default {
       name: null,
       category: null
     },
-    data: null,
-    product_intro: {
-      data: null
-    },
-    installation_and_test: {
-      data: null
-    },
-    software_technology: {
-      data: null
-    },
-    miscellaneous: {
-      data: null
-    }
+    data: null
   },
   reducers: {
-    save(state, { payload, category }) {
-      if (category) {
-        return {
-          ...state,
-          [category]: {
-            data: payload
-          }
-        }
-      }
+    save(state, { payload }) {
       return {
         ...state,
         data: payload
@@ -61,8 +41,7 @@ export default {
 
         yield put({
           type: 'save',
-          payload: docs,
-          category
+          payload: docs
         })
         if (callback) {
           yield call(callback)
@@ -139,22 +118,16 @@ export default {
         console.error(error)
       }
     },
-    *changeCategory({ payload }, { select, put }) {
+    *changeCategory({ payload }, { put }) {
       try {
         yield put({
           type: 'saveCategory',
           payload
         })
-        const { category } = payload
-        if (category) {
-          const { data } = yield select(state => state.document[category])
-          if (!data) {
-            yield put({
-              type: 'fetch',
-              category
-            })
-          }
-        }
+        yield put({
+          type: 'fetch',
+          category: payload.category
+        })
       } catch (error) {
         console.error(error)
       }
