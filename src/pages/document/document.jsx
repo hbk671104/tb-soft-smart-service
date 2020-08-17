@@ -1,24 +1,18 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Block } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtList, AtListItem, AtSwipeAction, AtSearchBar } from 'taro-ui'
+import { AtList, AtListItem, AtSwipeAction, AtSearchBar, AtActivityIndicator } from 'taro-ui'
 import './document.scss'
 
 import Floater from '../../components/Floater'
 import Empty from '../../components/Empty'
 
-@connect(({ user, document }) => {
-  const { category } = document.current
-  let data = document.data
-  if (category) {
-    data = document[category].data
-  }
-  return {
-    currentCategory: category,
-    currentUser: user.current,
-    data
-  }
-})
+@connect(({ user, document, loading }) => ({
+  currentCategory: document.current.category,
+  currentUser: user.current,
+  data: document.data,
+  fetching: loading.effects['document/fetch'],
+}))
 export default class Document extends Component {
 
   componentWillMount() { }
@@ -48,13 +42,9 @@ export default class Document extends Component {
 
   fetchDocs = () => {
     const { currentCategory } = this.props
-    Taro.showNavigationBarLoading()
     this.props.dispatch({
       type: 'document/fetch',
-      category: currentCategory,
-      callback: () => {
-        Taro.hideNavigationBarLoading()
-      }
+      category: currentCategory
     })
   }
 
@@ -136,75 +126,84 @@ export default class Document extends Component {
   render() {
     if (!this.props.currentUser) return null
     const { roles } = this.props.currentUser
-    const { currentCategory, data } = this.props
+    const { currentCategory, data, fetching } = this.props
     return (
-      <View className='page'>
+      <View className='page document'>
         {/* <AtSearchBar
           value={this.state.value}
           onChange={this.onChange.bind(this)}
         /> */}
         {
-          !currentCategory &&
-          <AtList hasBorder={false}>
-            <AtListItem
-              title='产品介绍'
-              onClick={this.onFolderClick({ name: '产品介绍', category: 'product_intro' })}
-              arrow='right'
-              thumb={require('../../assets/folder.png')}
-            />
-            <AtListItem
-              title='安装测试巡检文档'
-              onClick={this.onFolderClick({ name: '安装测试巡检文档', category: 'installation_and_test' })}
-              arrow='right'
-              thumb={require('../../assets/folder.png')}
-            />
-            <AtListItem
-              title='软件技术类文档'
-              onClick={this.onFolderClick({ name: '软件技术类文档', category: 'software_technology' })}
-              arrow='right'
-              thumb={require('../../assets/folder.png')}
-            />
-            <AtListItem
-              title='其它'
-              onClick={this.onFolderClick({ name: '其它', category: 'miscellaneous' })}
-              arrow='right'
-              thumb={require('../../assets/folder.png')}
-            />
-          </AtList>
-        }
-        {
-          !!data && data.length > 0 ? <AtList hasBorder={false}>
-            {
-              data.map(d => (
-                <AtSwipeAction
-                  key={d.objectId}
-                  autoClose
-                  onClick={this.onDocOptionClick(d)}
-                  options={[
-                    {
-                      text: '取消',
-                      style: {
-                        backgroundColor: '#6190E8'
-                      }
-                    },
-                    {
-                      text: '确认',
-                      style: {
-                        backgroundColor: '#ba2c28'
-                      }
-                    }
-                  ]}>
-                  <AtListItem
-                    title={d.file.name}
-                    onClick={this.onDocClick(d.file)}
-                    thumb={require('../../assets/document.png')}
-                  />
-                </AtSwipeAction>
-              ))
-            }
-          </AtList>
+          fetching ?
+            <View className='loading-container'>
+              <AtActivityIndicator size={48} />
+            </View>
             :
-            (!!currentCategory && <Empty text='暂无文档' />)
+            <Block>
+              {
+                !currentCategory &&
+                <AtList hasBorder={false}>
+                  <AtListItem
+                    title='产品介绍'
+                    onClick={this.onFolderClick({ name: '产品介绍', category: 'product_intro' })}
+                    arrow='right'
+                    thumb={require('../../assets/folder.png')}
+                  />
+                  <AtListItem
+                    title='安装测试巡检文档'
+                    onClick={this.onFolderClick({ name: '安装测试巡检文档', category: 'installation_and_test' })}
+                    arrow='right'
+                    thumb={require('../../assets/folder.png')}
+                  />
+                  <AtListItem
+                    title='软件技术类文档'
+                    onClick={this.onFolderClick({ name: '软件技术类文档', category: 'software_technology' })}
+                    arrow='right'
+                    thumb={require('../../assets/folder.png')}
+                  />
+                  <AtListItem
+                    title='其它'
+                    onClick={this.onFolderClick({ name: '其它', category: 'miscellaneous' })}
+                    arrow='right'
+                    thumb={require('../../assets/folder.png')}
+                  />
+                </AtList>
+              }
+              {
+                !!data && data.length > 0 ? <AtList hasBorder={false}>
+                  {
+                    data.map(d => (
+                      <AtSwipeAction
+                        key={d.objectId}
+                        autoClose
+                        onClick={this.onDocOptionClick(d)}
+                        options={[
+                          {
+                            text: '取消',
+                            style: {
+                              backgroundColor: '#6190E8'
+                            }
+                          },
+                          {
+                            text: '确认',
+                            style: {
+                              backgroundColor: '#ba2c28'
+                            }
+                          }
+                        ]}>
+                        <AtListItem
+                          title={d.file.name}
+                          onClick={this.onDocClick(d.file)}
+                          thumb={require('../../assets/document.png')}
+                        />
+                      </AtSwipeAction>
+                    ))
+                  }
+                </AtList>
+                  :
+                  <Empty text='暂无文档' />
+              }
+            </Block>
         }
         {roles.includes('technician') && (
           <Floater
