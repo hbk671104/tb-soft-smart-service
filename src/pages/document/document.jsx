@@ -5,6 +5,7 @@ import { AtList, AtListItem, AtSwipeAction, AtSearchBar } from 'taro-ui'
 import './document.scss'
 
 import Floater from '../../components/Floater'
+import Empty from '../../components/Empty'
 
 @connect(({ user, document }) => {
   const { category } = document.current
@@ -202,6 +203,9 @@ export default class Document extends Component {
               ))
             }
           </AtList>
+        }
+        {
+          !data && !!currentCategory && <Empty text='暂无文档' />
         }
         {roles.includes('technician') && (
           <Floater

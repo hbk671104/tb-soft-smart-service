@@ -5,6 +5,7 @@ import './result.scss'
 
 import { constructSearchQueryObject } from '../../../utils/leancloud'
 import ResultItem from '../../../components/ResultItem'
+import Empty from '../../../components/Empty'
 
 @connect(({ report }) => ({
   hits: report.search.hits,
@@ -16,7 +17,7 @@ export default class Result extends Component {
     onReachBottomDistance: 360
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     const { query_string } = this.$router.params
@@ -30,9 +31,9 @@ export default class Result extends Component {
     })
   }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   onReachBottom() {
     this.queryMore()
@@ -66,9 +67,6 @@ export default class Result extends Component {
   render() {
     const { query_string } = this.$router.params
     const { data, hits } = this.props
-    if (!data || !hits) {
-      return null
-    }
 
     return (
       <View className='page result'>
@@ -81,7 +79,7 @@ export default class Result extends Component {
             条记录
           </Text>
         </View>
-        {data.length > 0 ? (
+        {!!data && data.length > 0 ? (
           <View>
             {data.map(item => (
               <ResultItem
@@ -98,16 +96,8 @@ export default class Result extends Component {
             </View>
           </View>
         ) : (
-          <View>
-            <View className='empty'>
-              <Image
-                className='empty-image'
-                src={require('../../../assets/empty.png')}
-              />
-              <Text className='empty-text'>暂无记录</Text>
-            </View>
-          </View>
-        )}
+            <Empty />
+          )}
       </View>
     )
   }

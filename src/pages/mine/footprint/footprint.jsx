@@ -4,6 +4,7 @@ import { connect } from '@tarojs/redux'
 import './footprint.scss'
 
 import ResultDetail from '../../../components/ResultItem/detail'
+import Empty from '../../../components/Empty'
 
 @connect(({ user }) => ({
   data: user.report.footprint || []
@@ -13,15 +14,15 @@ export default class Footprint extends Component {
     navigationBarTitleText: '我的足迹'
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
@@ -67,16 +68,8 @@ export default class Footprint extends Component {
             </View>
           </View>
         ) : (
-          <View>
-            <View className='empty'>
-              <Image
-                className='empty-image'
-                src={require('../../../assets/empty.png')}
-              />
-              <Text className='empty-text'>暂无记录</Text>
-            </View>
-          </View>
-        )}
+            <Empty />
+          )}
       </View>
     )
   }

@@ -4,6 +4,7 @@ import { connect } from '@tarojs/redux'
 import './entry.scss'
 
 import ResultDetail from '../../../components/ResultItem/detail'
+import Empty from '../../../components/Empty'
 
 @connect(({ user }) => ({
   data: user.report.upload || []
@@ -13,15 +14,15 @@ export default class Entry extends Component {
     navigationBarTitleText: '我的录入'
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
@@ -58,16 +59,8 @@ export default class Entry extends Component {
             </View>
           </View>
         ) : (
-          <View>
-            <View className='empty'>
-              <Image
-                className='empty-image'
-                src={require('../../../assets/empty.png')}
-              />
-              <Text className='empty-text'>暂无记录</Text>
-            </View>
-          </View>
-        )}
+            <Empty />
+          )}
       </View>
     )
   }
