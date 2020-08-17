@@ -4,13 +4,8 @@ import './style.scss'
 const Empty = ({ image, text }) => {
   return (
     <View className='empty'>
-      <Image
-        className='empty-image'
-        src={image}
-      />
-      <Text className='empty-text'>
-        {text}
-      </Text>
+      <Image className='empty-image' src={image} />
+      <Text className='empty-text'>{text}</Text>
     </View>
   )
 }

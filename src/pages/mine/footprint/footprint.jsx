@@ -14,15 +14,15 @@ export default class Footprint extends Component {
     navigationBarTitleText: '我的足迹'
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
@@ -68,8 +68,8 @@ export default class Footprint extends Component {
             </View>
           </View>
         ) : (
-            <Empty />
-          )}
+          <Empty />
+        )}
       </View>
     )
   }

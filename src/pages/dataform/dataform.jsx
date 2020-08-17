@@ -30,7 +30,7 @@ export default class DataForm extends Component {
     data: {}
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { id } = this.$router.params
@@ -44,11 +44,11 @@ export default class DataForm extends Component {
     }
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   queryItem = () => {
     const { id } = this.$router.params

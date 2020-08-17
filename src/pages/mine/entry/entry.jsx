@@ -14,15 +14,15 @@ export default class Entry extends Component {
     navigationBarTitleText: '我的录入'
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   handleOnItemClick = item => e => {
     e.stopPropagation()
@@ -59,8 +59,8 @@ export default class Entry extends Component {
             </View>
           </View>
         ) : (
-            <Empty />
-          )}
+          <Empty />
+        )}
       </View>
     )
   }

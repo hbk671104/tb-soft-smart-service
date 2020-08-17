@@ -20,18 +20,17 @@ import Empty from '../../components/Empty'
   }
 })
 export default class Document extends Component {
-
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     this.fetchDocs()
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onUploadDocPress = async e => {
     e.stopPropagation()
@@ -143,70 +142,78 @@ export default class Document extends Component {
           value={this.state.value}
           onChange={this.onChange.bind(this)}
         /> */}
-        {
-          !currentCategory &&
+        {!currentCategory && (
           <AtList hasBorder={false}>
             <AtListItem
               title='产品介绍'
-              onClick={this.onFolderClick({ name: '产品介绍', category: 'product_intro' })}
+              onClick={this.onFolderClick({
+                name: '产品介绍',
+                category: 'product_intro'
+              })}
               arrow='right'
               thumb={require('../../assets/folder.png')}
             />
             <AtListItem
               title='安装测试巡检文档'
-              onClick={this.onFolderClick({ name: '安装测试巡检文档', category: 'installation_and_test' })}
+              onClick={this.onFolderClick({
+                name: '安装测试巡检文档',
+                category: 'installation_and_test'
+              })}
               arrow='right'
               thumb={require('../../assets/folder.png')}
             />
             <AtListItem
               title='软件技术类文档'
-              onClick={this.onFolderClick({ name: '软件技术类文档', category: 'software_technology' })}
+              onClick={this.onFolderClick({
+                name: '软件技术类文档',
+                category: 'software_technology'
+              })}
               arrow='right'
               thumb={require('../../assets/folder.png')}
             />
             <AtListItem
               title='其它'
-              onClick={this.onFolderClick({ name: '其它', category: 'miscellaneous' })}
+              onClick={this.onFolderClick({
+                name: '其它',
+                category: 'miscellaneous'
+              })}
               arrow='right'
               thumb={require('../../assets/folder.png')}
             />
           </AtList>
-        }
-        {
-          !!data && <AtList hasBorder={false}>
-            {
-              data.map(d => (
-                <AtSwipeAction
-                  key={d.objectId}
-                  autoClose
-                  onClick={this.onDocOptionClick(d)}
-                  options={[
-                    {
-                      text: '取消',
-                      style: {
-                        backgroundColor: '#6190E8'
-                      }
-                    },
-                    {
-                      text: '确认',
-                      style: {
-                        backgroundColor: '#ba2c28'
-                      }
+        )}
+        {!!data && (
+          <AtList hasBorder={false}>
+            {data.map(d => (
+              <AtSwipeAction
+                key={d.objectId}
+                autoClose
+                onClick={this.onDocOptionClick(d)}
+                options={[
+                  {
+                    text: '取消',
+                    style: {
+                      backgroundColor: '#6190E8'
                     }
-                  ]}>
-                  <AtListItem
-                    title={d.file.name}
-                    onClick={this.onDocClick(d.file)}
-                    thumb={require('../../assets/document.png')}
-                  />
-                </AtSwipeAction>
-              ))
-            }
+                  },
+                  {
+                    text: '确认',
+                    style: {
+                      backgroundColor: '#ba2c28'
+                    }
+                  }
+                ]}
+              >
+                <AtListItem
+                  title={d.file.name}
+                  onClick={this.onDocClick(d.file)}
+                  thumb={require('../../assets/document.png')}
+                />
+              </AtSwipeAction>
+            ))}
           </AtList>
-        }
-        {
-          !data && !!currentCategory && <Empty text='暂无文档' />
-        }
+        )}
+        {!data && !!currentCategory && <Empty text='暂无文档' />}
         {roles.includes('technician') && (
           <Floater
             image={require('../../assets/create_doc.png')}
