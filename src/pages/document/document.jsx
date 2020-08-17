@@ -74,7 +74,7 @@ export default class Document extends Component {
   onFolderClick = payload => e => {
     e.stopPropagation()
     this.props.dispatch({
-      type: 'document/saveCategory',
+      type: 'document/changeCategory',
       payload
     })
     Taro.setNavigationBarTitle({ title: payload.name })
@@ -120,7 +120,7 @@ export default class Document extends Component {
   onBackPress = e => {
     e.stopPropagation()
     this.props.dispatch({
-      type: 'document/saveCategory',
+      type: 'document/changeCategory',
       payload: {
         name: null,
         category: null
@@ -173,7 +173,7 @@ export default class Document extends Component {
           </AtList>
         }
         {
-          !!data && <AtList hasBorder={false}>
+          !!data && data.length > 0 ? <AtList hasBorder={false}>
             {
               data.map(d => (
                 <AtSwipeAction
@@ -203,9 +203,8 @@ export default class Document extends Component {
               ))
             }
           </AtList>
-        }
-        {
-          !data && !!currentCategory && <Empty text='暂无文档' />
+            :
+            (!!currentCategory && <Empty text='暂无文档' />)
         }
         {roles.includes('technician') && (
           <Floater
