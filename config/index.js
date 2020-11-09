@@ -32,6 +32,9 @@ const config = {
   defineConstants: {
   },
   mini: {
+    webpackChain(chain) {
+      chain.optimization.sideEffects(false)
+    },
     postcss: {
       pxtransform: {
         enable: true,

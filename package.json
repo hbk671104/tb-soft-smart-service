@@ -1,6 +1,6 @@
 {
 	"name": "tb-soft-smart-service",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"private": true,
 	"description": "九桥小助手",
 	"templateInfo": {
@@ -48,7 +48,7 @@
 		"dayjs": "^1.8.29",
 		"dva-core": "^2.0.2",
 		"dva-loading": "^3.0.20",
-		"leancloud-storage": "^4.6.1",
+		"leancloud-storage": "^4.7.0",
 		"nerv-devtools": "^1.5.7",
 		"nervjs": "^1.5.7",
 		"redux": "^4.0.5",

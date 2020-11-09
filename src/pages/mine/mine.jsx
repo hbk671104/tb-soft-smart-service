@@ -11,15 +11,15 @@ import { logout } from '../../utils/login'
   currentUser: user.current
 }))
 export default class Mine extends Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: '我的',
@@ -129,6 +129,11 @@ export default class Mine extends Component {
           </AtList>
         </View>
         <Floater
+          image={require('../../assets/feedback.png')}
+          openType='feedback'
+        />
+        <Floater
+          style='bottom:36px;'
           image={require('../../assets/logout.png')}
           onClick={this.onLogoutClick}
         />
