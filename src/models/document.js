@@ -53,8 +53,8 @@ export default {
     *upload({ payload, category, callback }, { put, call, all }) {
       try {
         yield all(
-          payload.map(
-            ({ name, path }) => call(async () => {
+          payload.map(({ name, path }) =>
+            call(async () => {
               let file = buildFile(name, path)
               file = await file.save({ keepFileName: true })
               let doc = buildDocument(file, category)
@@ -63,7 +63,7 @@ export default {
             })
           )
         )
-        // fetch 
+        // fetch
         yield put({
           type: 'fetch',
           category

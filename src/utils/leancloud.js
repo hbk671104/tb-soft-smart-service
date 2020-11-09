@@ -47,7 +47,7 @@ export const buildDocument = (file, category) => {
 }
 
 export const buildDocumentToDelete = id => {
-  return AV.Object.createWithoutData('Document', id);
+  return AV.Object.createWithoutData('Document', id)
 }
 
 export const buildFileToDelete = id => {

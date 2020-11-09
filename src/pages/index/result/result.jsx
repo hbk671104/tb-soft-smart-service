@@ -17,7 +17,7 @@ export default class Result extends Component {
     onReachBottomDistance: 360
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     const { query_string } = this.$router.params
@@ -31,9 +31,9 @@ export default class Result extends Component {
     })
   }
 
-  componentDidShow() { }
+  componentDidShow() {}
 
-  componentDidHide() { }
+  componentDidHide() {}
 
   onReachBottom() {
     this.queryMore()
@@ -96,8 +96,8 @@ export default class Result extends Component {
             </View>
           </View>
         ) : (
-            <Empty />
-          )}
+          <Empty />
+        )}
       </View>
     )
   }
